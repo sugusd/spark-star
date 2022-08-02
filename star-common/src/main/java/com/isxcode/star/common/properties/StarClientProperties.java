@@ -10,4 +10,6 @@ import java.util.Map;
 public class StarClientProperties {
 
     private Map<String, WorkerProperties> workers;
+
+    private Boolean checkWorker = true;
 }

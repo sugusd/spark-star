@@ -48,7 +48,7 @@ public class Demo{
                 .sql("select * from dev.demo_table")
                 .build();
 
-        StarResponse starResponse = starTemplate.build("work1").execute(starRequest);
+        StarResponse starResponse = starTemplate.build().sql().execute();
         
         System.out.println(starResponse.toString());
     }

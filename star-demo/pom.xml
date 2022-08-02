@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>com.isxcode.star</groupId>
-    <artifactId>star-template</artifactId>
+    <artifactId>star-demo</artifactId>
     <version>0.0.1</version>
-    <name>star-template</name>
+    <name>star-demo</name>
     <description>star-template</description>
 
     <properties>
@@ -23,24 +23,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <star-common.version>1.0.0</star-common.version>
+        <star-common.version>1.1.0</star-common.version>
         <log4j.version>2.17.1</log4j.version>
         <lombok.version>1.18.22</lombok.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>s01.apache.snapshots</id>
-            <name>S01 Apache Development Snapshot Repository</name>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
 

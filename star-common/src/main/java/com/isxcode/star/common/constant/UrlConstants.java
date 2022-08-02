@@ -44,4 +44,12 @@ public interface UrlConstants {
      * 执行sql 有返回结果
      */
     String QUICK_EXECUTE_QUERY_URL = "/quick/executeQuery";
+
+    /*
+     * 心跳检测
+     *
+     * @ispong
+     */
+    String HEART_CHECK_URL = "/heartCheck";
+
 }

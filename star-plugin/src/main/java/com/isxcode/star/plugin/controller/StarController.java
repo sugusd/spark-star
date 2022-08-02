@@ -6,10 +6,7 @@ import com.isxcode.star.common.response.StarRequest;
 import com.isxcode.star.plugin.response.SuccessResponse;
 import com.isxcode.star.plugin.service.StarBizService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
  * 插件api入口
@@ -71,5 +68,13 @@ public class StarController {
 
         return starBizService.stopJob(starRequest);
     }
+
+    @SuccessResponse
+    @GetMapping(UrlConstants.HEART_CHECK_URL)
+    public StarData heartCheck() {
+
+        return StarData.builder().log("正常").build();
+    }
+
 
 }
