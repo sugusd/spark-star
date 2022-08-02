@@ -2,7 +2,7 @@
     - [Spark Star 是什么](_homepage.md)
     - [快速使用](/zh-cn/start/快速使用.md)
 - [**使用手册**](_homepage.md)
-    - [插件配置说明](/zh-cn/guide/插件配置说明.md)
+    - [插件安装](/zh-cn/guide/插件安装.md)
     - [客户端配置说明](/zh-cn/guide/客户端配置说明.md)
     - [StarTemplate使用说明](/zh-cn/guide/StarTemplate使用说明.md)
 - [**常见问题**](/zh-cn/problem/常见问题.md)

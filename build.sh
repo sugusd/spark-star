@@ -39,7 +39,7 @@ mvn clean package -Dmaven.test.skip -pl star-common,star-plugin || exit
 echo "打包成功"
 
 # 创建star文件
-STAR_BUILD_DIR=${BASE_PATH}/build
+STAR_BUILD_DIR=${BASE_PATH}/build/star
 if [ -d "${STAR_BUILD_DIR}" ]; then
     rm -rf "${STAR_BUILD_DIR}"
 fi
