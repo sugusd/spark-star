@@ -33,8 +33,10 @@ public class StarBizService {
 
         if (!Strings.isEmpty(starRequest.getDb())) {
             sparkSession.sql("use " + starRequest.getDb());
+            log.debug("database: {} ", starRequest.getDb());
         }
 
+        log.debug("sql: {}", starRequest.getSql());
         sparkSession.sql(starRequest.getSql());
         return StarData.builder().log("运行成功").build();
     }
