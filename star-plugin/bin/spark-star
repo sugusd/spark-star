@@ -16,6 +16,6 @@ case ${exec_command} in
     log) star-log;;
     stop) star-stop;;
     version) echo "spark-star version is V1.0.0";;
-    config) vim "${BASE_PATH}"/../conf/application.yml;;
+    config) vim "${BASE_PATH}"/../conf/application-star.yml;;
     status) ps -e -o pid,command | grep star-plugin.jar;;
 esac
