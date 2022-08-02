@@ -83,7 +83,7 @@ public class StarTemplate {
             }
         }
 
-        public StarResponse execute(StarRequest starRequest) {
+        public StarResponse execute() {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_URL, workerProperties.getHost(), workerProperties.getPort());
             return requestAcornServer(executeUrl, starRequest);

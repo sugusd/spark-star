@@ -19,11 +19,7 @@ public class StarRequest {
 
     private String sql;
 
-    private List<String> sqls;
-
-    private List<String> columns;
-
-    private String database;
+    private List<String> columns;;
 
     private Integer page;
 
@@ -34,4 +30,6 @@ public class StarRequest {
     private Integer limit;
 
     private String appId;
+
+    private String db;
 }

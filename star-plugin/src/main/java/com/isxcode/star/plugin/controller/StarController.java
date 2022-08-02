@@ -31,7 +31,7 @@ public class StarController {
     @PostMapping(UrlConstants.EXECUTE_URL)
     public StarData executeSql(@RequestBody StarRequest starRequest) {
 
-        return starBizService.executeSyncWork(starRequest, UrlConstants.EXECUTE_URL);
+        return starBizService.executeSql(starRequest);
     }
 
     @SuccessResponse

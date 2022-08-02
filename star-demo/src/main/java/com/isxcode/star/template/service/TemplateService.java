@@ -38,7 +38,7 @@ public class TemplateService {
             .sql(templateReq.getSql())
             .build();
 
-        StarResponse starResponse = starTemplate.build().execute(starRequest);
+        StarResponse starResponse = starTemplate.build().execute();
         log.info("调用状态" + starResponse.toString());
     }
 
@@ -66,7 +66,6 @@ public class TemplateService {
 
         StarRequest starRequest = StarRequest.builder()
             .executeId(UUID.randomUUID().toString())
-            .sqls(sqlList)
             .build();
 
         StarResponse starResponse = starTemplate.build().executeMultiSql(starRequest);

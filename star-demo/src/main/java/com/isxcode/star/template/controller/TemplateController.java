@@ -2,12 +2,11 @@ package com.isxcode.star.template.controller;
 
 import com.isxcode.star.common.response.StarResponse;
 import com.isxcode.star.common.template.StarTemplate;
+import com.isxcode.star.template.pojo.TemplateReq;
 import com.isxcode.star.template.service.TemplateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
@@ -24,7 +23,16 @@ public class TemplateController {
 
         StarResponse starResponse = starTemplate.build().queryDBs();
 
-        log.debug("starResponse {}", starResponse);
+        log.debug("starResponse {}", starResponse.toString());
+    }
+
+    @PostMapping("/executeSql")
+    public void executeSql(@RequestBody TemplateReq templateReq) {
+
+        StarResponse starResponse = starTemplate.build().sql(templateReq.getSql()).execute();
+//        StarResponse starResponse = starTemplate.build().sql(templateReq.getSql()).limit(-1).query();
+
+        log.debug("starResponse {}", starResponse.toString());
     }
 
     @GetMapping("/executePageQuery")
