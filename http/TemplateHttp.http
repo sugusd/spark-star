@@ -6,10 +6,8 @@ POST http://localhost:8080/executeSql
 Content-Type: application/json
 
 {
-    "sql": "select * from ispong_table;"
+    "sql": "CREATE TABLE IF NOT EXISTS demo_table( username STRING COMMENT 'comment for username',age INT COMMENT 'comment for age')ROW FORMAT DELIMITED FIELDS TERMINATED BY '001' STORED AS TEXTFILE;"
 }
-
-//CREATE TABLE IF NOT EXISTS demo_table( username STRING COMMENT 'comment for username',age INT COMMENT 'comment for age')ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\001' LINES TERMINATED BY '\n' STORED AS TEXTFILE
 
 ### 执行sql 有返回结果  无分页
 
