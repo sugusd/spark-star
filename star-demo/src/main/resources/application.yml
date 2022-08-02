@@ -5,3 +5,9 @@ star:
         host: 192.168.66.66
         port: 30156
         key: star-key
+
+logging:
+  level:
+    star: debug
+  group:
+    star: com.isxcode.star

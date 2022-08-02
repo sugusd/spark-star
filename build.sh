@@ -59,9 +59,12 @@ if [ -d "${TMP_BUILD_DIR}" ]; then
 fi
 mkdir -p "${TMP_BUILD_DIR}"
 unzip "${BASE_PATH}"/star-plugin/target/star-plugin.jar -d "${TMP_BUILD_DIR}"/
+
 # 删除spark下面的旧依赖
 rm -f "${TMP_BUILD_DIR}"/BOOT-INF/lib/janino-*.jar
 cp "${SPARK_HOME}"/jars/janino-*.jar "${TMP_BUILD_DIR}"/BOOT-INF/lib/
+rm -f "${TMP_BUILD_DIR}"/BOOT-INF/lib/hive-*.jar
+cp "${HIVE_HOME}"/lib/hive-*.jar "${TMP_BUILD_DIR}"/BOOT-INF/lib/
 rm -f "${TMP_BUILD_DIR}"/BOOT-INF/lib/*.pom
 cp "${HADOOP_HOME}"/etc/hadoop/* "${TMP_BUILD_DIR}"/BOOT-INF/classes/
 cd "${TMP_BUILD_DIR}" && jar -cvfM0 star-plugin.jar ./*

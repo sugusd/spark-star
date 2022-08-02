@@ -4,6 +4,7 @@ import com.isxcode.star.common.exception.StarExceptionEnum;
 import com.isxcode.star.common.response.StarResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.hadoop.hive.common.classification.*;
 
 @RestController
 @RequestMapping("/exception")
