@@ -1,35 +1,32 @@
 package com.isxcode.star.template.controller;
 
-import com.isxcode.star.template.pojo.TemplateReq;
+import com.isxcode.star.common.response.StarResponse;
+import com.isxcode.star.common.template.StarTemplate;
 import com.isxcode.star.template.service.TemplateService;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/template")
+@RequestMapping
+@RequiredArgsConstructor
+@Slf4j
 public class TemplateController {
 
     private final TemplateService templateService;
 
-    public TemplateController(TemplateService templateService) {
-        this.templateService = templateService;
+    private final StarTemplate starTemplate;
+
+    @PostMapping("/queryDatabases")
+    public void queryDatabases() {
+
+        StarResponse starResponse = starTemplate.build().queryDBs();
+
+        log.debug("starResponse {}", starResponse);
     }
-
-    @GetMapping("/executeQuery")
-    public String executeQuery() {
-
-        templateService.executeQuery();
-
-        return "运行成功等待结果";
-    }
-
-    @PostMapping("/execute")
-    public String execute(@RequestBody TemplateReq templateReq) {
-
-        templateService.execute(templateReq);
-
-        return "运行成功等待结果";
-    }
-
 
     @GetMapping("/executePageQuery")
     public String executePageQuery() {

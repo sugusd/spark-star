@@ -24,4 +24,6 @@ public class StarData {
     private String log;
 
     private String eventType;
+
+    private List<String> databases;
 }

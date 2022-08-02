@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,8 @@ public class StarTemplate {
 
     public static class Builder {
 
+        public StarRequest starRequest = new StarRequest();
+
         private final WorkerProperties workerProperties;
 
         public Builder(WorkerProperties workerProperties) {
@@ -60,6 +63,12 @@ public class StarTemplate {
             workerProperties.setPort(port);
             workerProperties.setKey(key);
             this.workerProperties = workerProperties;
+        }
+
+        public Builder sql(String sql) {
+
+            starRequest.setSql(sql);
+            return this;
         }
 
         public StarResponse requestAcornServer(String url, StarRequest starRequest) {
@@ -107,6 +116,12 @@ public class StarTemplate {
         public StarResponse stopJob(StarRequest starRequest) {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.STOP_JOB_URL, workerProperties.getHost(), workerProperties.getPort());
+            return requestAcornServer(executeUrl, starRequest);
+        }
+
+        public StarResponse queryDBs() {
+
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUERY_DBS_URL, workerProperties.getHost(), workerProperties.getPort());
             return requestAcornServer(executeUrl, starRequest);
         }
 

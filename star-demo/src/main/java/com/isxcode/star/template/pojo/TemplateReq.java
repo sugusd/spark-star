@@ -5,5 +5,7 @@ import lombok.Data;
 @Data
 public class TemplateReq {
 
-    public String sql;
+    private String sql;
+
+    private String executeId;
 }

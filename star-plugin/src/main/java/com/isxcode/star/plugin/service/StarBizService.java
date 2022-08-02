@@ -7,9 +7,14 @@ import com.isxcode.star.common.utils.CommandUtils;
 import com.isxcode.star.plugin.exception.StarException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -19,6 +24,8 @@ public class StarBizService {
     private final StarSyncService starSyncService;
 
     private final StarService starService;
+
+    private final SparkSession sparkSession;
 
     public StarData executeSyncWork(StarRequest starRequest, String url) {
 
@@ -62,5 +69,18 @@ public class StarBizService {
     public StarData quickExecuteQuerySql(StarRequest starRequest) {
 
         return starService.queryData(starRequest);
+    }
+
+    public StarData queryDbs(StarRequest starRequest) {
+
+        List<String> databasesStr = new ArrayList<>();
+        Dataset<Row> databases = sparkSession.sql("show databases");
+
+        List<Row> rows = databases.collectAsList();
+        rows.forEach(e -> {
+            databasesStr.add(e.getString(0));
+        });
+
+        return StarData.builder().databases(databasesStr).build();
     }
 }

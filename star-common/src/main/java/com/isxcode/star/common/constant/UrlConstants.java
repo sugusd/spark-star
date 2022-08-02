@@ -41,6 +41,11 @@ public interface UrlConstants {
     String STOP_JOB_URL = "/stopJob";
 
     /**
+     * 查询所有的数据源
+     */
+    String QUERY_DBS_URL = "/queryDbs";
+
+    /**
      * 执行sql 有返回结果
      */
     String QUICK_EXECUTE_QUERY_URL = "/quick/executeQuery";

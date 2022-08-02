@@ -76,5 +76,11 @@ public class StarController {
         return StarData.builder().log("正常").build();
     }
 
+    @SuccessResponse
+    @GetMapping(UrlConstants.QUERY_DBS_URL)
+    public StarData queryDBs(@RequestBody StarRequest starRequest) {
+
+        return starBizService.queryDbs(starRequest);
+    }
 
 }

@@ -34,7 +34,7 @@ public class TemplateService {
     public void execute(TemplateReq templateReq) {
 
         StarRequest starRequest = StarRequest.builder()
-            .executeId(UUID.randomUUID().toString())
+            .executeId(templateReq.getSql())
             .sql(templateReq.getSql())
             .build();
 
