@@ -1,3 +1,7 @@
+### 查询数据源列表
+GET http://localhost:8080/queryDatabases
+
+
 ### 执行sql 无返回结果
 
 ### 执行sql 有返回结果  无分页

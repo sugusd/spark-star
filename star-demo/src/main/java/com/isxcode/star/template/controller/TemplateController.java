@@ -6,7 +6,6 @@ import com.isxcode.star.template.service.TemplateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,7 @@ public class TemplateController {
 
     private final StarTemplate starTemplate;
 
-    @PostMapping("/queryDatabases")
+    @GetMapping("/queryDatabases")
     public void queryDatabases() {
 
         StarResponse starResponse = starTemplate.build().queryDBs();

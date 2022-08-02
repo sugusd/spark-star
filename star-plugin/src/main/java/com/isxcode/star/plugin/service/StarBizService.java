@@ -71,15 +71,13 @@ public class StarBizService {
         return starService.queryData(starRequest);
     }
 
-    public StarData queryDbs(StarRequest starRequest) {
+    public StarData queryDbs() {
 
         List<String> databasesStr = new ArrayList<>();
         Dataset<Row> databases = sparkSession.sql("show databases");
 
         List<Row> rows = databases.collectAsList();
-        rows.forEach(e -> {
-            databasesStr.add(e.getString(0));
-        });
+        rows.forEach(e -> databasesStr.add(e.getString(0)));
 
         return StarData.builder().databases(databasesStr).build();
     }

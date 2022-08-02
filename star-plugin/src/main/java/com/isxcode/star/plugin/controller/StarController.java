@@ -78,9 +78,9 @@ public class StarController {
 
     @SuccessResponse
     @GetMapping(UrlConstants.QUERY_DBS_URL)
-    public StarData queryDBs(@RequestBody StarRequest starRequest) {
+    public StarData queryDBs(@RequestBody(required = false) StarRequest starRequest) {
 
-        return starBizService.queryDbs(starRequest);
+        return starBizService.queryDbs();
     }
 
 }
