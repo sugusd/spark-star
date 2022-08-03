@@ -2,10 +2,8 @@ server:
   port: 30156
 
 logging:
-  group:
-    star: com.isxcode.star
   level:
-    star: debug
+    root: debug
 
 star:
   plugin:
