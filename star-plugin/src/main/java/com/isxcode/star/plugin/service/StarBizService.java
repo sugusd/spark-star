@@ -7,7 +7,6 @@ import com.isxcode.star.common.utils.CommandUtils;
 import com.isxcode.star.plugin.constant.SqlConstants;
 import com.isxcode.star.plugin.exception.StarException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -15,11 +14,12 @@ import org.apache.spark.sql.SparkSession;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StarBizService {
@@ -34,10 +34,10 @@ public class StarBizService {
 
         if (!Strings.isEmpty(starRequest.getDb())) {
             sparkSession.sql(SqlConstants.USE_SQL + starRequest.getDb());
-            log.debug("database: {}", starRequest.getDb());
+            System.out.println("database: " + starRequest.getDb());
         }
 
-        log.debug("sql: {}", starRequest.getSql());
+        System.out.println("sql: " + starRequest.getSql());
         sparkSession.sql(starRequest.getSql());
         return StarData.builder().log("运行成功").build();
     }
@@ -46,10 +46,10 @@ public class StarBizService {
 
         if (!Strings.isEmpty(starRequest.getDb())) {
             sparkSession.sql(SqlConstants.USE_SQL + starRequest.getDb());
-            log.debug("database: {}", starRequest.getDb());
+            System.out.println("database: " + starRequest.getDb());
         }
 
-        log.debug("sql: {}", starRequest.getSql());
+        System.out.println("sql: " + starRequest.getSql());
         Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
 
         // 初始化返回对象
@@ -57,6 +57,7 @@ public class StarBizService {
 
         // 获取字段列名
         String[] columns = rowDataset.columns();
+        System.out.println("columns: " + Arrays.toString(columns));
         starDataBuilder.columnNames(Arrays.asList(columns));
 
         // 获取数据值
@@ -69,6 +70,7 @@ public class StarBizService {
             }
             dataList.add(metaData);
         });
+        System.out.println("dataList: " + dataList);
 
         // 返回结果
         return starDataBuilder.dataList(dataList).build();
