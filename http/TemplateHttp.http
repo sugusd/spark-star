@@ -6,7 +6,7 @@ POST http://localhost:8080/executeSql
 Content-Type: application/json
 
 {
-    "sql": "create database ispong;"
+    "sql": "show databases;"
 }
 
 ### 执行sql 有返回结果  无分页
