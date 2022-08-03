@@ -94,7 +94,6 @@ public class StarBizService {
             String log = CommandUtils.executeBackCommand(getLogCommand);
             return StarData.builder().log(log).build();
         } catch (IOException e) {
-            log.debug(e.getMessage());
             throw new StarException(StarExceptionEnum.COMMAND_EXECUTE_ERROR);
         }
     }
@@ -110,7 +109,6 @@ public class StarBizService {
             CommandUtils.executeNoBackCommand(killJobCommand);
             return StarData.builder().build();
         } catch (IOException e) {
-            log.debug(e.getMessage());
             throw new StarException(StarExceptionEnum.COMMAND_EXECUTE_ERROR);
         }
     }
