@@ -16,7 +16,6 @@ star:
       spark.ui.port: 30128
       spark.executor.memory: 4g
       spark.executor.cores: 1
-      spark.sql.hive.metastore.version: 2.3.9
       spark.driver.memory: 1g
       spark.num.executors: 1
       hive.metastore.uris: thrift://localhost:9083
