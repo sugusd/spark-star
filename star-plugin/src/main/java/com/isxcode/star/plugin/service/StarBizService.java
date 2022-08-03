@@ -7,6 +7,7 @@ import com.isxcode.star.common.utils.CommandUtils;
 import com.isxcode.star.plugin.constant.SqlConstants;
 import com.isxcode.star.plugin.exception.StarException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -14,13 +15,12 @@ import org.apache.spark.sql.SparkSession;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class StarBizService {
 
@@ -44,6 +44,7 @@ public class StarBizService {
 
     public StarData executeQuerySql(StarRequest starRequest) {
 
+        log.debug("开始执行 executeQuerySql");
         System.out.println("starRequest: " + starRequest.toString());
 
         if (!Strings.isEmpty(starRequest.getDb())) {
