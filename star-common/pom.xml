@@ -130,7 +130,6 @@
 <!--                        </goals>-->
 <!--                        <configuration>-->
 <!--                            <executable>gpg</executable>-->
-<!--                            <keyname>0x7219EB0C</keyname>-->
 <!--                        </configuration>-->
 <!--                    </execution>-->
 <!--                </executions>-->
