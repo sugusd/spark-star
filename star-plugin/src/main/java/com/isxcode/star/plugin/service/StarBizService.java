@@ -44,13 +44,14 @@ public class StarBizService {
 
     public StarData executeQuerySql(StarRequest starRequest) {
 
+        System.out.println("starRequest: " + starRequest.toString());
+
         if (!Strings.isEmpty(starRequest.getDb())) {
             sparkSession.sql(SqlConstants.USE_SQL + starRequest.getDb());
-            System.out.println("database: " + starRequest.getDb());
         }
 
-        System.out.println("sql: " + starRequest.getSql());
         Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+        System.out.println("rowDataset: 获取dataset");
 
         // 初始化返回对象
         StarData.StarDataBuilder starDataBuilder = StarData.builder();
