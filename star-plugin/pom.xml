@@ -68,7 +68,12 @@
             <artifactId>hive-common</artifactId>
             <version>${hive.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-standalone-metastore</artifactId>
+            <version>${hive.version}</version>
+        </dependency>
+        
         <!-- spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

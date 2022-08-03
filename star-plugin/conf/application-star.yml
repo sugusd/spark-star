@@ -11,7 +11,7 @@ star:
   plugin:
     server-key: star-key
     app-name-prefix: spark-star
-    master: yarn
+    master: yarn # yarn or local
     spark-config:
       spark.ui.port: 30128
       spark.executor.memory: 4g
