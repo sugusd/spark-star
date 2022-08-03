@@ -17,6 +17,8 @@
 ### 📒 文档
 
 - [快速使用](https://spark-star.isxcode.com/#/zh-cn/start/快速使用)
+- [维护手册](https://spark-star.isxcode.com/#/zh-cn/start/contributing)
+- [版本历史](https://spark-star.isxcode.com/#/zh-cn/start/changelog)
 
 ### 📦 使用说明
 
@@ -34,7 +36,7 @@
 star:
   client:
     workers:
-      worker1:
+      default:
         host: 39.99.140.167
         port: 30156
         key: star-key
@@ -42,20 +44,27 @@ star:
 
 ```java
 public class Demo{
-    public void demo(){
-        
-        StarRequest starRequest = StarRequest.builder()
-                .sql("select * from dev.demo_table")
-                .build();
 
-        StarResponse starResponse = starTemplate.build().sql().execute();
+    private final StarTemplate starTemplate;
+    
+    public void demo(){
+
+        StarResponse starResponse = starTemplate.build()
+            .db("default")
+            .sql("select * from userinfo")
+            .limit(10)
+            .query();
         
-        System.out.println(starResponse.toString());
+        log.debug("starResponse {}", starResponse.toString());
     }
 }
 ```
 
+```log
+2022-08-03 12:11:27.926 DEBUG 21256 --- [nio-8080-exec-3] c.i.s.t.controller.TemplateController    : starResponse StarResponse(code=200, message=操作成功, starData=StarData(columnNames=[id, username, sex, birth, address, school, job, length, color, app], dataList=[[999bdcf0-8b01-11ec-adf2-9078414180e2, 澹申毋, 中, 2012-01-30, 山西省, 硕士, 品质管制工程师, 218, 靛, 喜马拉雅], [999c520c-8b01-11ec-902d-9078414180e2, 连丘, 中, 2003-04-26, 北京市, 初中, 职业运动员, 152, 橙, 微博], [999c520d-8b01-11ec-a5a7-9078414180e2, 满丰, 男, 1982-03-24, 海南省, 硕士, 时装模特儿, 163, 红, 喜马拉雅], [999c520e-8b01-11ec-8a7f-9078414180e2, 充邢, 中, 1980-12-08, 云南省, 高中, 水电工, 152, 黄, 高德]], appId=null, appState=null, log=null, eventType=null, databases=null))
+```
+
 ### 👏 社区开发
 
-欢迎一同维护开发，具体请参照[开发文档](https://github.com/ispong/spark-star/blob/main/CONTRIBUTING.md) 。
-如需加入我们，请联系邮箱 `ispong@outlook.com` 。
+- 欢迎一同维护开发，具体请参照[开发文档](https://spark-star.isxcode.com/#/zh-cn/contributing) 。
+- 如需加入我们，请联系邮箱 `ispong@outlook.com` 。

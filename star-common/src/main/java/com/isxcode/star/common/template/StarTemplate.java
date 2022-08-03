@@ -83,7 +83,7 @@ public class StarTemplate {
             return this;
         }
 
-        public StarResponse requestAcornServer(String url, StarRequest starRequest) {
+        public StarResponse requestStarServer(String url, StarRequest starRequest) {
 
             Map<String, String> headers = new HashMap<>();
             headers.put(SecurityConstants.HEADER_AUTHORIZATION, workerProperties.getKey());
@@ -98,43 +98,43 @@ public class StarTemplate {
         public StarResponse execute() {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse query() {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse executePageQuery(StarRequest starRequest) {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_PAGE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse executeMultiSql(StarRequest starRequest) {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_MULTI_SQL_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse getLog(StarRequest starRequest) {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.GET_JOB_LOG_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse stopJob(StarRequest starRequest) {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.STOP_JOB_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse queryDBs() {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUERY_DBS_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse quickExecuteQuery(StarRequest starRequest) {
@@ -144,7 +144,7 @@ public class StarTemplate {
             }
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUICK_EXECUTE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
-            return requestAcornServer(executeUrl, starRequest);
+            return requestStarServer(executeUrl, starRequest);
         }
     }
 

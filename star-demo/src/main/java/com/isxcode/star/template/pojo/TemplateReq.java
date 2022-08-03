@@ -8,4 +8,8 @@ public class TemplateReq {
     private String sql;
 
     private String executeId;
+
+    private Integer limit;
+
+    private String database;
 }

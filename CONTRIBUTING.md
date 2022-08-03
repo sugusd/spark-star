@@ -1,3 +1,3 @@
 ## CONTRIBUTING
 
-- https://spark-star.isxcode.com/zh-cn/contributing
+- https://spark-star.isxcode.com/#/zh-cn/contributing

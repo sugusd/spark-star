@@ -36,7 +36,7 @@ public class TemplateController {
     @PostMapping("/executeQuery")
     public void executeQuery(@RequestBody TemplateReq templateReq) {
 
-        StarResponse starResponse = starTemplate.build().sql(templateReq.getSql()).query();
+        StarResponse starResponse = starTemplate.build().db(templateReq.getDatabase()).sql(templateReq.getSql()).limit(templateReq.getLimit()).query();
         log.debug("starResponse {}", starResponse.toString());
     }
 
