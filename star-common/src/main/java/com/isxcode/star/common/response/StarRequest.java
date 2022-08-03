@@ -27,7 +27,7 @@ public class StarRequest {
 
     private String tableName;
 
-    private Integer limit;
+    private Integer limit = 100;
 
     private String appId;
 

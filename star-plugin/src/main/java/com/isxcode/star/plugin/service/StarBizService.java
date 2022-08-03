@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -32,13 +33,45 @@ public class StarBizService {
     public StarData executeSql(StarRequest starRequest) {
 
         if (!Strings.isEmpty(starRequest.getDb())) {
-            sparkSession.sql("use " + starRequest.getDb());
-            System.out.println("database: " + starRequest.getDb());
+            sparkSession.sql(SqlConstants.USE_SQL + starRequest.getDb());
+            log.debug("database: {}", starRequest.getDb());
         }
 
-        System.out.println("sql: " + starRequest.getSql());
+        log.debug("sql: {}", starRequest.getSql());
         sparkSession.sql(starRequest.getSql());
         return StarData.builder().log("运行成功").build();
+    }
+
+    public StarData executeQuerySql(StarRequest starRequest) {
+
+        if (!Strings.isEmpty(starRequest.getDb())) {
+            sparkSession.sql(SqlConstants.USE_SQL + starRequest.getDb());
+            log.debug("database: {}", starRequest.getDb());
+        }
+
+        log.debug("sql: {}", starRequest.getSql());
+        Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+
+        // 初始化返回对象
+        StarData.StarDataBuilder starDataBuilder = StarData.builder();
+
+        // 获取字段列名
+        String[] columns = rowDataset.columns();
+        starDataBuilder.columnNames(Arrays.asList(columns));
+
+        // 获取数据值
+        List<List<String>> dataList = new ArrayList<>();
+        List<Row> rows = rowDataset.collectAsList();
+        rows.forEach(e -> {
+            List<String> metaData = new ArrayList<>();
+            for (int i = 0; i < e.size(); i++) {
+                metaData.add(String.valueOf(e.get(i)));
+            }
+            dataList.add(metaData);
+        });
+
+        // 返回结果
+        return starDataBuilder.dataList(dataList).build();
     }
 
     public StarData executeSyncWork(StarRequest starRequest, String url) {

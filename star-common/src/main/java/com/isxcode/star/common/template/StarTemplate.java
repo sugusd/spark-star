@@ -71,6 +71,18 @@ public class StarTemplate {
             return this;
         }
 
+        public Builder limit(Integer limit) {
+
+            starRequest.setLimit(limit);
+            return this;
+        }
+
+        public Builder db(String database) {
+
+            starRequest.setDb(database);
+            return this;
+        }
+
         public StarResponse requestAcornServer(String url, StarRequest starRequest) {
 
             Map<String, String> headers = new HashMap<>();
@@ -89,7 +101,7 @@ public class StarTemplate {
             return requestAcornServer(executeUrl, starRequest);
         }
 
-        public StarResponse executeQuery(StarRequest starRequest) {
+        public StarResponse query() {
 
             String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
             return requestAcornServer(executeUrl, starRequest);
