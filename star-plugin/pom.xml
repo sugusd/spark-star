@@ -33,7 +33,7 @@
         <!-- 组件版本 -->
         <spark.version>3.1.1</spark.version>
         <scala.version>2.12</scala.version>
-        <hive.version>3.1.2</hive.version>
+        <hive.version>2.3.9</hive.version>
     </properties>
 
     <dependencies>

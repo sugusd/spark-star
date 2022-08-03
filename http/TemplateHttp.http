@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "database": "default",
-    "sql": "select * from userinfo",
+    "sql": "select * from demo_table2",
     "limit": 4
 }
 
