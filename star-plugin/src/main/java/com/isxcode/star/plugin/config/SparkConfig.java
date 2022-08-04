@@ -57,7 +57,7 @@ public class SparkConfig {
             result = checkConfigFile(new File(confPath, name));
             if (result == null) {
                 String homePath = System.getenv("HIVE_HOME");
-                String nameInConf = "conf" + File.pathSeparator + name;
+                String nameInConf = "conf" + File.separator + name;
                 result = checkConfigFile(new File(homePath, nameInConf));
                 if (result == null) {
                     URI jarUri = null;
