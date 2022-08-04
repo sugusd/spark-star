@@ -16,6 +16,7 @@ star:
       spark.ui.port: 30128
       spark.executor.memory: 4g
       spark.sql.hive.metastore.version: 2.3.7
+      spark.sql.hive.metastore.jars: /opt/hive/lib/*
       spark.executor.cores: 1
       spark.driver.memory: 1g
       spark.num.executors: 1
