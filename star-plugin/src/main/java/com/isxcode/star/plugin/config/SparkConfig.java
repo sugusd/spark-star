@@ -62,7 +62,8 @@ public class SparkConfig {
                 if (result == null) {
                     URI jarUri = null;
                     try {
-                        jarUri = HiveConf.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+                        URL sourceUrl = HiveConf.class.getProtectionDomain().getCodeSource().getLocation();
+                        jarUri = sourceUrl.getProtocol().equalsIgnoreCase("jar") ? new URI(sourceUrl.getPath()) : sourceUrl.toURI();
                     } catch (Throwable e) {
                         System.err.println("Cannot get jar URI: " + e.getMessage());
                     }
