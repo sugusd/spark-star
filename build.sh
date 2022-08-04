@@ -65,7 +65,7 @@ rm -f "${TMP_BUILD_DIR}"/BOOT-INF/lib/janino-*.jar
 cp "${SPARK_HOME}"/jars/janino-*.jar "${TMP_BUILD_DIR}"/BOOT-INF/lib/
 rm -f "${TMP_BUILD_DIR}"/BOOT-INF/lib/*.pom
 cp "${HADOOP_HOME}"/etc/hadoop/* "${TMP_BUILD_DIR}"/BOOT-INF/classes/
-cp "${HIVE_HOME}"/conf/* "${TMP_BUILD_DIR}"/BOOT-INF/classes/
+#cp "${HIVE_HOME}"/conf/* "${TMP_BUILD_DIR}"/BOOT-INF/classes/
 cd "${TMP_BUILD_DIR}" && jar -cvfM0 star-plugin.jar ./*
 
 # 创建lib文件夹
