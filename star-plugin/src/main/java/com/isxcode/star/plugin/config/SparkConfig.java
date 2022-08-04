@@ -17,6 +17,10 @@ public class SparkConfig {
     @Bean("sparkSession")
     public SparkSession sparkSession() {
 
+        String confPath = System.getenv("HIVE_CONF_DIR");
+        String homePath = System.getenv("HIVE_HOME");
+        System.out.println("打印环境变量" + confPath + ":" + homePath);
+
         log.debug("初始化sparkSession");
         SparkSession.Builder sparkBuilder = SparkSession
             .builder()
