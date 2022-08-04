@@ -68,7 +68,10 @@ public class SparkConfig {
                     }
                     System.out.println("jarUri:" + jarUri);
                     System.out.println("nameInConf:" + nameInConf);
-                    result = checkConfigFile(new File(new File(jarUri).getParentFile(), nameInConf));
+                    File parentFile = new File(jarUri).getParentFile();
+                    if(parentFile!=null){
+                        result = checkConfigFile(new File(parentFile, nameInConf));
+                    }
                 }
             }
         }
