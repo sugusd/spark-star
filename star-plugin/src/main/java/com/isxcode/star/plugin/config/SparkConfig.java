@@ -22,13 +22,6 @@ public class SparkConfig {
     @Bean("sparkSession")
     public SparkSession sparkSession() {
 
-        String confPath = System.getenv("HIVE_CONF_DIR");
-        String homePath = System.getenv("HIVE_HOME");
-        System.out.println("打印环境变量" + confPath + ":" + homePath);
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        findConfigFile(classLoader, "hivemetastore-site.xml", false);
-        System.out.println("获取成功");
-
         log.debug("初始化sparkSession");
         SparkSession.Builder sparkBuilder = SparkSession
             .builder()
@@ -39,43 +32,5 @@ public class SparkConfig {
         starPluginProperties.getSparkConfig().forEach(sparkBuilder::config);
 
         return sparkBuilder.getOrCreate();
-    }
-
-    private static URL checkConfigFile(File f) {
-        try {
-            return (f.exists() && f.isFile()) ? f.toURI().toURL() : null;
-        } catch (Throwable e) {
-            System.err.println("Error looking for config " + f + ": " + e.getMessage());
-            return null;
-        }
-    }
-
-    private static URL findConfigFile(ClassLoader classLoader, String name, boolean doLog) {
-        URL result = classLoader.getResource(name);
-        if (result == null) {
-            String confPath = System.getenv("HIVE_CONF_DIR");
-            result = checkConfigFile(new File(confPath, name));
-            if (result == null) {
-                String homePath = System.getenv("HIVE_HOME");
-                String nameInConf = "conf" + File.separator + name;
-                result = checkConfigFile(new File(homePath, nameInConf));
-                if (result == null) {
-                    URI jarUri = null;
-                    try {
-                        URL sourceUrl = HiveConf.class.getProtectionDomain().getCodeSource().getLocation();
-                        jarUri = sourceUrl.getProtocol().equalsIgnoreCase("jar") ? new URI(sourceUrl.getPath()) : sourceUrl.toURI();
-                    } catch (Throwable e) {
-                        System.err.println("Cannot get jar URI: " + e.getMessage());
-                    }
-                    System.out.println("jarUri:" + jarUri);
-                    System.out.println("nameInConf:" + nameInConf);
-                    File parentFile = new File(jarUri).getParentFile();
-                    if(parentFile!=null){
-                        result = checkConfigFile(new File(parentFile, nameInConf));
-                    }
-                }
-            }
-        }
-        return result;
     }
 }
