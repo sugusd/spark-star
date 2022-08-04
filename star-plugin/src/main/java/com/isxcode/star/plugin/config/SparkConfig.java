@@ -66,6 +66,8 @@ public class SparkConfig {
                     } catch (Throwable e) {
                         System.err.println("Cannot get jar URI: " + e.getMessage());
                     }
+                    System.out.println("jarUri:" + jarUri);
+                    System.out.println("nameInConf:" + nameInConf);
                     result = checkConfigFile(new File(new File(jarUri).getParentFile(), nameInConf));
                 }
             }
