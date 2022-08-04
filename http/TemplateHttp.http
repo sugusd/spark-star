@@ -6,7 +6,7 @@ POST http://localhost:8080/executeSql
 Content-Type: application/json
 
 {
-    "sql": "show databases;"
+    "sql": "insert into demo_table(username, age) values ('ispong', 18);"
 }
 
 ### 执行sql 有返回结果  无分页
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "database": "default",
-    "sql": "select * from demo_table2",
+    "sql": "show tables",
     "limit": 4
 }
 
