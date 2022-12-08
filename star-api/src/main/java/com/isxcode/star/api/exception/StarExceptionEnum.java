@@ -1,15 +1,9 @@
 package com.isxcode.star.api.exception;
 
+import com.isxcode.oxygen.common.response.AbstractExceptionEnum;
 import lombok.Getter;
 
-/**
- * 所有返回异常
- */
-public enum StarExceptionEnum {
-
-    KEY_IS_NULL("50001", "key为null"),
-
-    KEY_IS_ERROR("50002", "key不正确"),
+public enum StarExceptionEnum implements AbstractExceptionEnum {
 
     REQUEST_VALUE_EMPTY("50003", "缺少输入参数"),
 
@@ -22,10 +16,10 @@ public enum StarExceptionEnum {
     private final String code;
 
     @Getter
-    private final String message;
+    private final String msg;
 
-    StarExceptionEnum(String code, String message) {
+    StarExceptionEnum(String code, String msg) {
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 }

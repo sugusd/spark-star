@@ -1,0 +1,13 @@
+star:
+  check-servers: true
+  servers:
+    default:
+      host: localhost
+      port: 30180
+      key: star-key
+
+logging:
+  level:
+    star: debug
+  group:
+    star: com.isxcode.star

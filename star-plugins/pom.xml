@@ -11,8 +11,10 @@
     </parent>
 
     <artifactId>star-plugins</artifactId>
-    <version>1.2.0</version>
-    <name>star-plugins</name>
-    <description>star-plugins</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>star-sql-plugin</module>
+    </modules>
 
 </project>

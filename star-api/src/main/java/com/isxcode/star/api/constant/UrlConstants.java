@@ -1,8 +1,5 @@
 package com.isxcode.star.api.constant;
 
-/**
- * 所有请求路径
- */
 public interface UrlConstants {
 
     /**

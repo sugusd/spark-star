@@ -1,8 +1,5 @@
 package com.isxcode.star.api.constant;
 
-/**
- * 返回信息的静态常量
- */
 public interface MsgConstants {
 
     String SUCCESS_CODE = "200";

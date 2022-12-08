@@ -1,11 +1,11 @@
 package com.isxcode.star.client.config;
 
+import com.isxcode.oxygen.common.properties.CommonProperties;
 import com.isxcode.star.api.constant.MsgConstants;
-import com.isxcode.star.api.constant.SecurityConstants;
 import com.isxcode.star.api.constant.UrlConstants;
 import com.isxcode.star.api.pojo.StarResponse;
-import com.isxcode.star.api.properties.StarClientProperties;
-import com.isxcode.star.api.properties.StarPluginProperties;
+import com.isxcode.star.api.properties.ServerInfoProperties;
+import com.isxcode.star.api.properties.StarProperties;
 import com.isxcode.star.api.utils.HttpUtils;
 import com.isxcode.star.client.template.StarTemplate;
 import lombok.RequiredArgsConstructor;
@@ -18,49 +18,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableConfigurationProperties({StarPluginProperties.class, StarClientProperties.class})
+@EnableConfigurationProperties({StarProperties.class, ServerInfoProperties.class})
 @RequiredArgsConstructor
 public class StarAutoConfig {
 
-    private final StarClientProperties starClientProperties;
+    private final StarProperties starProperties;
 
-    /**
-     * 初始化用户默认配置的节点信息
-     *
-     * @param starClientProperties 结点配置信息
-     * @return starTemplate
-     */
+    private final CommonProperties commonProperties;
+
     @Bean("starTemplate")
-    public StarTemplate starTemplate(StarClientProperties starClientProperties) {
+    public StarTemplate starTemplate(StarProperties starProperties,  CommonProperties commonProperties) {
 
-        return new StarTemplate(starClientProperties);
+        return new StarTemplate(starProperties, commonProperties);
     }
 
-    /*
-     * 测试插件连接是否正常
-     *
-     * @ispong
-     */
     @Bean
-    @ConditionalOnProperty(prefix = "star.client.workers.default", name = {"host", "port", "key"})
+    @ConditionalOnProperty(prefix = "star.servers.default", name = {"host", "port", "key"})
     public void checkServerStatus() {
 
-        if (!starClientProperties.getCheckWorker()) {
+        if (!starProperties.getCheckServers()) {
             return;
         }
 
-        if (starClientProperties.getWorkers() == null) {
+        if (starProperties.getServers() == null) {
             System.out.println("Star配置中未找到server配置");
             return;
         }
 
         System.out.println("=================检查节点=======================");
-        starClientProperties.getWorkers().forEach((k, v) -> {
+        starProperties.getServers().forEach((k, v) -> {
             try {
                 // 检查用户配置的节点是否有效
                 String heartCheckUrl = String.format(UrlConstants.BASE_URL + UrlConstants.HEART_CHECK_URL, v.getHost(), v.getPort());
                 Map<String, String> headers = new HashMap<>();
-                headers.put(SecurityConstants.HEADER_AUTHORIZATION, v.getKey());
+                headers.put("star-key", v.getKey());
                 StarResponse starResponse = HttpUtils.doGet(heartCheckUrl, headers, StarResponse.class);
 
                 if (MsgConstants.SUCCESS_CODE.equals(starResponse.getCode())) {

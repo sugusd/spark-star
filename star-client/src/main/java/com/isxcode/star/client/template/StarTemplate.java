@@ -1,12 +1,13 @@
 package com.isxcode.star.client.template;
 
-import com.isxcode.star.api.constant.SecurityConstants;
+import com.isxcode.oxygen.common.properties.CommonProperties;
 import com.isxcode.star.api.constant.UrlConstants;
-import com.isxcode.star.api.properties.StarClientProperties;
-import com.isxcode.star.api.properties.WorkerProperties;
-import com.isxcode.star.api.utils.HttpUtils;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.StarResponse;
+import com.isxcode.star.api.properties.ServerInfoProperties;
+import com.isxcode.star.api.properties.StarProperties;
+import com.isxcode.star.api.utils.HttpUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,54 +15,53 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * starTemplate 提供快捷方式访问
- */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class StarTemplate {
 
-    private final StarClientProperties starClientProperties;
+    private final StarProperties starProperties;
 
-    public StarTemplate(StarClientProperties starClientProperties) {
+    private final CommonProperties commonProperties;
 
-        this.starClientProperties = starClientProperties;
-    }
+    public StarTemplate.Builder build(String workerName, CommonProperties commonProperties) {
 
-    public StarTemplate.Builder build(String workerName) {
-
-        WorkerProperties workerProperties = starClientProperties.getWorkers().get(workerName);
-        return new Builder(workerProperties);
+        ServerInfoProperties workerProperties = starProperties.getServers().get(workerName);
+        return new Builder(workerProperties, commonProperties);
     }
 
     public StarTemplate.Builder build() {
 
-        return build("default");
+        return build("default", commonProperties);
     }
 
     public StarTemplate.Builder build(String host, int port, String key) {
 
-        return new Builder(host, port, key);
+        return new Builder(host, port, key, commonProperties);
     }
 
     public static class Builder {
 
         public StarRequest starRequest = new StarRequest();
 
-        private final WorkerProperties workerProperties;
+        private final ServerInfoProperties serverInfoProperties;
 
-        public Builder(WorkerProperties workerProperties) {
+        private final CommonProperties commonProperties;
 
-            this.workerProperties = workerProperties;
+        public Builder(ServerInfoProperties serverInfoProperties, CommonProperties commonProperties) {
+
+            this.serverInfoProperties = serverInfoProperties;
+            this.commonProperties = commonProperties;
         }
 
-        public Builder(String host, int port, String key) {
+        public Builder(String host, int port, String key, CommonProperties commonProperties) {
 
-            WorkerProperties workerProperties = new WorkerProperties();
+            ServerInfoProperties workerProperties = new ServerInfoProperties();
             workerProperties.setHost(host);
             workerProperties.setPort(port);
             workerProperties.setKey(key);
-            this.workerProperties = workerProperties;
+            this.serverInfoProperties = workerProperties;
+            this.commonProperties = commonProperties;
         }
 
         public Builder sql(String sql) {
@@ -85,7 +85,7 @@ public class StarTemplate {
         public StarResponse requestStarServer(String url, StarRequest starRequest) {
 
             Map<String, String> headers = new HashMap<>();
-            headers.put(SecurityConstants.HEADER_AUTHORIZATION, workerProperties.getKey());
+            headers.put("star-key", serverInfoProperties.getKey());
 
             try {
                 return HttpUtils.doPost(url, headers, starRequest, StarResponse.class);
@@ -96,43 +96,43 @@ public class StarTemplate {
 
         public StarResponse execute() {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse query() {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_QUERY_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse executePageQuery(StarRequest starRequest) {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_PAGE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_PAGE_QUERY_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse executeMultiSql(StarRequest starRequest) {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_MULTI_SQL_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.EXECUTE_MULTI_SQL_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse getLog(StarRequest starRequest) {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.GET_JOB_LOG_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.GET_JOB_LOG_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse stopJob(StarRequest starRequest) {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.STOP_JOB_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.STOP_JOB_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
         public StarResponse queryDBs() {
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUERY_DBS_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUERY_DBS_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
 
@@ -142,7 +142,7 @@ public class StarTemplate {
                 starRequest.setLimit(100);
             }
 
-            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUICK_EXECUTE_QUERY_URL, workerProperties.getHost(), workerProperties.getPort());
+            String executeUrl = String.format(UrlConstants.BASE_URL + UrlConstants.QUICK_EXECUTE_QUERY_URL, serverInfoProperties.getHost(), serverInfoProperties.getPort());
             return requestStarServer(executeUrl, starRequest);
         }
     }
