@@ -28,7 +28,7 @@ public class StarBizService {
 
         SparkLauncher sparkLauncher = new SparkLauncher(env)
             .setSparkHome(System.getenv("SPARK_HOME"))
-            .setMaster("yarn-client")
+            .setMaster("yarn")
             .setDeployMode("cluster")
             .setAppName("star-test " + starRequest.getExecuteId())
             .setVerbose(true)

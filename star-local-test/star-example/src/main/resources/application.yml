@@ -2,8 +2,8 @@ star:
   check-servers: true
   servers:
     default:
-      host: localhost
-      port: 30180
+      host: definesys
+      port: 30156
       key: star-key
 
 logging:
