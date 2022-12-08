@@ -1,3 +1,3 @@
 ## CHANGELOG
 
-- https://spark-star.isxcode.com/zh-cn/changelog
+- https://spark-star.isxcode.com/#/zh-cn/changelog

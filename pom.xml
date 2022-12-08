@@ -5,20 +5,44 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.7.RELEASE</version>
+        <relativePath/>
+    </parent>
+
 	<groupId>com.isxcode.star</groupId>
-	<artifactId>spark-star</artifactId>
-	<version>0.0.1</version>
+	<artifactId>spark-star-parent</artifactId>
+	<version>1.2.0</version>
 	<name>spark-star</name>
 	<description>spark-star</description>
 	<packaging>pom</packaging>
 
 	<modules>
-        <module>star-plugin</module>
-        <module>star-common</module>
-		<module>star-demo</module>
-        <module>star-executor</module>
-<!--        <module>demos/demo1</module>-->
-<!--        <module>demos/demo2</module>-->
+        <module>star-api</module>
+        <module>star-client</module>
+		<module>star-server</module>
+        <module>star-plugins</module>
+        <module>star-dist</module>
     </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring-oxygen.version>1.10.3</spring-oxygen.version>
+        <star-api.version>1.2.0</star-api.version>
+        <lombok.version>1.18.22</lombok.version>
+        <log4j.version>[2.16.0,)</log4j.version>
+        <fastjson.version>1.2.79</fastjson.version>
+        <spark.version>3.1.1</spark.version>
+        <scala.version>2.12</scala.version>
+        <hive.version>3.1.2</hive.version>
+        <hadoop.version>3.2.2</hadoop.version>
+        <janino.version>3.0.8</janino.version>
+    </properties>
 
 </project>

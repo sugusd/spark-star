@@ -1,3 +1,3 @@
 ## SECURITY
 
-- https://spark-star.isxcode.com/zh-cn/security
+- https://spark-star.isxcode.com/#/zh-cn/security
