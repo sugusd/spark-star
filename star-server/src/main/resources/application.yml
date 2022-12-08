@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: star
+  banner:
+    location: classpath:banner.txt
+
+server:
+  port: 30180
+  servlet:
+    context-path: /spark-star
+
+oxygen:
+  common:
+    header-authorization: star-key
+    secret: star-key
+    enable: true
