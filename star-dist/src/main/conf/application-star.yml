@@ -14,7 +14,7 @@ oxygen:
 
 star:
   plugin:
-    app-name-prefix: spark-star
+    app-name-prefix: star
     master: yarn # yarn or local
     spark-config:
       spark.ui.port: 30128
