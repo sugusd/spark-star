@@ -27,7 +27,6 @@ public class StarBizService {
         env.put("YARN_CONF_DIR", System.getenv("YARN_CONF_DIR"));
 
         SparkLauncher sparkLauncher = new SparkLauncher(env)
-            .setJavaHome(System.getenv("JAVA_HOME"))
             .setSparkHome(System.getenv("SPARK_HOME"))
             .setMaster("yarn-client")
             .setDeployMode("cluster")
