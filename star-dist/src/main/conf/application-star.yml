@@ -7,9 +7,13 @@ logging:
   level:
     star: debug
 
+oxygen:
+  common:
+    header-authorization: star-key
+    secret: star-key
+
 star:
   plugin:
-    server-key: star-key
     app-name-prefix: spark-star
     master: yarn # yarn or local
     spark-config:
