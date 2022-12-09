@@ -20,6 +20,8 @@ public class StarBizService {
 
     public StarData execute(StarRequest starRequest) throws IOException {
 
+        log.info("starRequest: {}", starRequest);
+
         // 获取star目录位置
         String starHomePath = System.getenv("STAR_HOME");
         if (starHomePath == null) {
