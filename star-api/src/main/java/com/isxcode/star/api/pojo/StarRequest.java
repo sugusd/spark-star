@@ -21,6 +21,11 @@ public class StarRequest {
         this.sparkConfig.put("spark.executor.memory", "2g");
         this.sparkConfig.put("spark.driver.memory", "1g");
         this.sparkConfig.put("hive.metastore.uris", "thrift://localhost:9083");
+
+        this.yarnJobConfig = new YarnJobConfig();
+        this.yarnJobConfig.setAppName("spark-star job");
+        this.yarnJobConfig.setMainClass("com.isxcode.star.Execute");
+        this.yarnJobConfig.setAppResourceName("star-sql-plugin");
     }
 
     private String executeId;
@@ -45,5 +50,5 @@ public class StarRequest {
 
     private Map<String, String> sparkConfig;
 
-    private YarnJobConfig yarnJobConfig = new YarnJobConfig();
+    private YarnJobConfig yarnJobConfig;
 }
