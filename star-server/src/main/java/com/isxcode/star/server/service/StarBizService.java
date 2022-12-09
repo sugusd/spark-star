@@ -30,16 +30,17 @@ public class StarBizService {
 
         // 封装launcher
         SparkLauncher sparkLauncher = new SparkLauncher()
+            .setSparkHome("D://")
             .setMaster("yarn")
             .setDeployMode("cluster")
             .setAppName(starRequest.getYarnJobConfig().getAppName())
             .setVerbose(true)
             .setMainClass(starRequest.getYarnJobConfig().getMainClass())
-            .setAppResource(starHomePath + "/plugins/" + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
+            .setAppResource(starHomePath + File.separator + "plugins" + File.separator + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
             .addAppArgs(JSON.toJSONString(starRequest));
 
         // 添加依赖包
-        File[] jars = new File(starHomePath + "/lib/").listFiles();
+        File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();
         if (jars != null) {
             for (File jar : jars) {
                 sparkLauncher.addJar(jar.toURI().toURL().toString());
@@ -51,6 +52,9 @@ public class StarBizService {
             @Override
             public void stateChanged(SparkAppHandle sparkAppHandle) {
                 log.info("stateChanged: {}", sparkAppHandle.getState());
+                if ("RUNNING".equals(sparkAppHandle.getState().toString())) {
+                    log.info("applicationId :{}", sparkAppHandle.getAppId());
+                }
             }
 
             @Override
@@ -58,6 +62,12 @@ public class StarBizService {
                 log.info("infoChanged: {}", sparkAppHandle.getState());
             }
         });
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         return StarData.builder().applicationId(sparkAppHandle.getAppId()).build();
     }
