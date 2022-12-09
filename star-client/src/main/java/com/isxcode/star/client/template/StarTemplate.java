@@ -30,6 +30,11 @@ public class StarTemplate {
         return new Builder(workerProperties, commonProperties);
     }
 
+    public StarTemplate.Builder build(String workerName) {
+
+        return build(workerName, commonProperties);
+    }
+
     public StarTemplate.Builder build() {
 
         return build("default", commonProperties);
