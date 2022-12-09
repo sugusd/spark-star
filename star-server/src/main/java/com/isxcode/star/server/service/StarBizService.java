@@ -28,7 +28,7 @@ public class StarBizService {
             throw new StarException("50010", "请配置STAR_HOME环境变量");
         }
 
-        // 封装launcher
+        // 封装launcher1
         SparkLauncher sparkLauncher = new SparkLauncher()
             .setMaster("yarn")
             .setDeployMode("cluster")
@@ -62,13 +62,15 @@ public class StarBizService {
             }
         });
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        String applicationId = null;
+        while (!SparkAppHandle.State.RUNNING.equals(sparkAppHandle.getState())) {
+            applicationId = sparkAppHandle.getAppId();
+            if (applicationId != null) {
+                break;
+            }
         }
 
-        return StarData.builder().applicationId(sparkAppHandle.getAppId()).build();
+        return StarData.builder().applicationId(applicationId).build();
     }
 
 }
