@@ -1,5 +1,7 @@
 package com.isxcode.star;
 
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 public class Execute {
@@ -11,8 +13,14 @@ public class Execute {
             .config("spark.executor.memory", "2g")
             .getOrCreate();
 
+        Dataset<Row> rowDataset = sparkSession.sql("select * from ispong_db.users");
+
         // 执行spark
-        System.out.println("开始执行");
+        System.out.println("===> 返回");
+
+        rowDataset.foreach(e -> {
+            System.out.println(e.get(0));
+        });
 
         // 停止session
         sparkSession.stop();
