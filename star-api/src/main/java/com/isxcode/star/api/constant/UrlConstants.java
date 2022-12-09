@@ -12,6 +12,12 @@ public interface UrlConstants {
      */
     String EXECUTE_URL = "/execute";
 
+    String GET_WORK_STATUS_URL = "/getWorkStatus";
+
+    String GET_WORK_LOG_URL = "/getWorkLog";
+
+    String GET_WORK_DATA_URL = "/getWorkData";
+
     /**
      * 执行sql 有返回结果
      */

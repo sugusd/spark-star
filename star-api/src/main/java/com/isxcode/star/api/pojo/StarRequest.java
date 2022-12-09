@@ -43,7 +43,7 @@ public class StarRequest {
 
     private Integer limit = 100;
 
-    private String appId;
+    private String applicationId;
 
     private String db;
 

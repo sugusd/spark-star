@@ -26,6 +26,27 @@ public class StarController {
     }
 
     @SuccessResponse
+    @PostMapping(UrlConstants.GET_WORK_STATUS_URL)
+    public StarData getWorkStatus(@RequestBody StarRequest starRequest) throws IOException {
+
+        return starBizService.getWorkStatus(starRequest);
+    }
+
+    @SuccessResponse
+    @PostMapping(UrlConstants.GET_WORK_LOG_URL)
+    public StarData getWorkLog(@RequestBody StarRequest starRequest) throws IOException {
+
+        return starBizService.execute(starRequest);
+    }
+
+    @SuccessResponse
+    @PostMapping(UrlConstants.GET_WORK_DATA_URL)
+    public StarData getWorkData(@RequestBody StarRequest starRequest) throws IOException {
+
+        return starBizService.execute(starRequest);
+    }
+
+    @SuccessResponse
     @GetMapping(UrlConstants.HEART_CHECK_URL)
     public StarData heartCheck() {
 
