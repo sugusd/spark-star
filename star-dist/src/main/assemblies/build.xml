@@ -19,6 +19,11 @@
 			<outputDirectory>lib/</outputDirectory>
 			<fileMode>0644</fileMode>
 		</file>
+        <file>
+            <source>../star-api/target/star-api.jar</source>
+            <outputDirectory>lib/</outputDirectory>
+            <fileMode>0644</fileMode>
+        </file>
 
         <!-- readme -->
         <file>

@@ -28,4 +28,8 @@
 
     </dependencies>
 
+    <build>
+        <finalName>star-api</finalName>
+    </build>
+
 </project>

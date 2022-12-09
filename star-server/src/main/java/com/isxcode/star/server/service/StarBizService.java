@@ -47,9 +47,18 @@ public class StarBizService {
         }
 
         // 提交作业到yarn
-        SparkAppHandle sparkAppHandle = sparkLauncher.startApplication();
+        SparkAppHandle sparkAppHandle = sparkLauncher.startApplication(new SparkAppHandle.Listener() {
+            @Override
+            public void stateChanged(SparkAppHandle sparkAppHandle) {
+                log.info("stateChanged: {}", sparkAppHandle.getState());
+            }
 
-        // 返回结果
+            @Override
+            public void infoChanged(SparkAppHandle sparkAppHandle) {
+                log.info("infoChanged: {}", sparkAppHandle.getState());
+            }
+        });
+
         return StarData.builder().applicationId(sparkAppHandle.getAppId()).build();
     }
 
