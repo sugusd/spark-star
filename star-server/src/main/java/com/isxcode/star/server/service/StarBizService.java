@@ -30,7 +30,6 @@ public class StarBizService {
 
         // 封装launcher
         SparkLauncher sparkLauncher = new SparkLauncher()
-            .setSparkHome("D://")
             .setMaster("yarn")
             .setDeployMode("cluster")
             .setAppName(starRequest.getYarnJobConfig().getAppName())
