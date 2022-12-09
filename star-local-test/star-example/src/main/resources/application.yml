@@ -5,10 +5,10 @@ star:
       host: definesys
       port: 30156
       key: star-key
-    local:
-      host: localhost
-      port: 30180
-      key: star-key
+#    local:
+#      host: localhost
+#      port: 30180
+#      key: star-key
 
 logging:
   level:

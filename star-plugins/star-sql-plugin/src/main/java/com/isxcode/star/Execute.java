@@ -66,7 +66,7 @@ public class Execute {
     public static void main(String[] args) {
 
         // 解析请求参数
-        StarRequest starRequest = JSON.parseObject(String.valueOf(args[0]), StarRequest.class);
+        StarRequest starRequest = JSON.parseObject(String.valueOf(args[0]) + "}}", StarRequest.class);
 
         // 校验请求参数
         checkRequest(starRequest);
