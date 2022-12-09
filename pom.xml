@@ -36,14 +36,14 @@
 
         <spring-oxygen.version>1.10.3</spring-oxygen.version>
         <star-api.version>1.2.0</star-api.version>
-        <lombok.version>1.18.22</lombok.version>
         <log4j.version>[2.16.0,)</log4j.version>
-        <fastjson.version>1.2.79</fastjson.version>
         <spark.version>3.1.1</spark.version>
         <scala.version>2.12</scala.version>
         <hive.version>3.1.2</hive.version>
         <hadoop.version>3.2.2</hadoop.version>
         <janino.version>3.0.8</janino.version>
+        <fastjson.version>2.0.20</fastjson.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <dependencies>
@@ -53,6 +53,12 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
 
     </dependencies>

@@ -1,10 +1,8 @@
 package com.isxcode.star.server.service;
 
-import com.isxcode.star.api.constant.MsgConstants;
+import com.alibaba.fastjson.JSON;
 import com.isxcode.star.api.exception.StarException;
-import com.isxcode.star.api.exception.StarExceptionEnum;
 import com.isxcode.star.api.pojo.StarRequest;
-import com.isxcode.star.api.pojo.StarResponse;
 import com.isxcode.star.api.pojo.dto.StarData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,50 +10,45 @@ import org.apache.spark.launcher.SparkAppHandle;
 import org.apache.spark.launcher.SparkLauncher;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StarBizService {
 
-    public void execute(StarRequest starRequest) throws IOException {
+    public StarData execute(StarRequest starRequest) throws IOException {
 
-        Map<String, String> env = new HashMap<>();
-        env.put("YARN_CONF_DIR", System.getenv("YARN_CONF_DIR"));
+        // 获取star目录位置
+        String starHomePath = System.getenv("STAR_HOME");
+        if (starHomePath == null) {
+            throw new StarException("50010", "请配置STAR_HOME环境变量");
+        }
 
-        SparkLauncher sparkLauncher = new SparkLauncher(env)
-            .setSparkHome(System.getenv("SPARK_HOME"))
+        // 封装launcher
+        SparkLauncher sparkLauncher = new SparkLauncher()
             .setMaster("yarn")
             .setDeployMode("cluster")
-            .setAppName("star-test " + starRequest.getExecuteId())
+            .setAppName(starRequest.getYarnJobConfig().getAppName())
             .setVerbose(true)
-            .setMainClass("com.isxcode.star.Execute")
-            .setAppResource("/opt/star/plugins/star-sql-plugin.jar")
-//            .addJar("/home/cdh/spark-star/star/lib/star-common.jar")
-            .addAppArgs("hello");
+            .setMainClass(starRequest.getYarnJobConfig().getMainClass())
+            .setAppResource(starHomePath + "/plugins/" + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
+            .addAppArgs(JSON.toJSONString(starRequest));
 
-        try {
-            sparkLauncher.startApplication(new SparkAppHandle.Listener() {
-
-                @Override
-                public void stateChanged(SparkAppHandle sparkAppHandle) {
-                    StarData starData = StarData.builder().appId(sparkAppHandle.getAppId()).appState(sparkAppHandle.getState().toString()).build();
-                    StarResponse starResponse = new StarResponse(MsgConstants.SUCCESS_CODE, MsgConstants.SUCCESS_RESPONSE_MSG, starData);
-                    System.out.println(starResponse);
-                }
-
-                @Override
-                public void infoChanged(SparkAppHandle sparkAppHandle) {
-                    System.out.println(sparkAppHandle.getState().toString());
-                }
-            });
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new StarException(StarExceptionEnum.SPARK_LAUNCHER_ERROR);
+        // 添加依赖包
+        File[] jars = new File(starHomePath + "/lib/").listFiles();
+        if (jars != null) {
+            for (File jar : jars) {
+                sparkLauncher.addJar(jar.toURI().toURL().toString());
+            }
         }
+
+        // 提交作业到yarn
+        SparkAppHandle sparkAppHandle = sparkLauncher.startApplication();
+
+        // 返回结果
+        return StarData.builder().applicationId(sparkAppHandle.getAppId()).build();
     }
 
 }

@@ -22,9 +22,7 @@ public class StarController {
     @PostMapping(UrlConstants.EXECUTE_URL)
     public StarData executeSql(@RequestBody StarRequest starRequest) throws IOException {
 
-        starBizService.execute(starRequest);
-
-        return StarData.builder().build();
+        return starBizService.execute(starRequest);
     }
 
     @SuccessResponse

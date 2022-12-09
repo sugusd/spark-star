@@ -1,33 +1,54 @@
 package com.isxcode.star;
 
+import com.isxcode.star.api.pojo.StarRequest;
+import com.isxcode.star.api.pojo.dto.StarData;
+import com.isxcode.star.api.utils.ArgsUtils;
 import org.apache.logging.log4j.util.Strings;
+import org.apache.spark.SparkConf;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.eclipse.jetty.util.ajax.JSON;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Execute {
 
-    public static void main(String[] args) {
+    public static SparkSession initSparkSession(StarRequest starRequest) {
 
-        SparkSession sparkSession = SparkSession.builder()
-            .config("spark.driver.memory", "1g")
-            .config("spark.executor.memory", "2g")
-            .config("hive.metastore.uris", "thrift://localhost:9083")
+        SparkSession.Builder sparkSessionBuilder = SparkSession.builder();
+
+        SparkConf conf = new SparkConf();
+        for (Map.Entry<String, String> entry : starRequest.getSparkConfig().entrySet()) {
+            conf.set(entry.getKey(), entry.getValue());
+        }
+
+        return sparkSessionBuilder
+            .config(conf)
             .enableHiveSupport()
             .getOrCreate();
+    }
 
-        Dataset<Row> rowDataset = sparkSession.sql("select * from ispong_db.users").limit(10);
-        System.out.println("rowDataset: 获取dataset");
-        System.out.println("===> 返回");
+    public static void checkRequest(StarRequest starRequest) {
 
+        if (Strings.isEmpty(starRequest.getSql())) {
+            throw new RuntimeException("sql is empty");
+        }
+
+        if (starRequest.getLimit() > 500) {
+            throw new RuntimeException("limit must low than 500");
+        }
+    }
+
+    public static void exportResult(Dataset<Row> rowDataset) {
+
+        StarData.StarDataBuilder starDataBuilder = StarData.builder();
+
+        // 获取列信息
         String[] columns = rowDataset.columns();
-        System.out.println("columns: " + Arrays.toString(columns));
+        starDataBuilder.columnNames(Collections.singletonList(Arrays.toString(columns)));
 
-        // 获取数据值
+        // 获取数据
         List<List<String>> dataList = new ArrayList<>();
         List<Row> rows = rowDataset.collectAsList();
         rows.forEach(e -> {
@@ -37,9 +58,30 @@ public class Execute {
             }
             dataList.add(metaData);
         });
-        System.out.println("dataList: " + dataList);
+        starDataBuilder.dataList(dataList);
 
-        // 停止session
+        // 打印结果
+        System.out.println(JSON.toString(starDataBuilder.build()));
+    }
+
+    public static void main(String[] args) {
+
+        // 解析请求参数
+        StarRequest starRequest = ArgsUtils.parse(args);
+
+        // 校验请求参数
+        checkRequest(starRequest);
+
+        // 初始化sparkSession
+        SparkSession sparkSession = initSparkSession(starRequest);
+
+        // 执行sql
+        Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+
+        // 导出输出
+        exportResult(rowDataset);
+
+        // 停止sparkSession
         sparkSession.stop();
     }
 }

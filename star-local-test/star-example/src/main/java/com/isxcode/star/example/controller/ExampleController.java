@@ -17,11 +17,9 @@ public class ExampleController {
     private final StarTemplate starTemplate;
 
     @GetMapping("/execute")
-    public void execute() {
+    public StarResponse execute() {
 
-        StarResponse starResponse = starTemplate.build().execute();
-
-        log.debug("starResponse {}", starResponse.toString());
+        return starTemplate.build().sql("select * from ispong_db.users").execute();
     }
 
 }

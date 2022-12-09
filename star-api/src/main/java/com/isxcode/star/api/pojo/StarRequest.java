@@ -1,17 +1,27 @@
 package com.isxcode.star.api.pojo;
 
+import com.isxcode.star.api.pojo.dto.YarnJobConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class StarRequest {
+
+    {
+        this.sparkConfig = new HashMap<>();
+        this.sparkConfig.put("spark.executor.memory", "2g");
+        this.sparkConfig.put("spark.driver.memory", "1g");
+        this.sparkConfig.put("hive.metastore.uris", "thrift://localhost:9083");
+    }
 
     private String executeId;
 
@@ -32,4 +42,8 @@ public class StarRequest {
     private String appId;
 
     private String db;
+
+    private Map<String, String> sparkConfig;
+
+    private YarnJobConfig yarnJobConfig;
 }

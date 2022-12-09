@@ -17,7 +17,7 @@ public class StarData {
 
     private List<List<String>> dataList;
 
-    private String appId;
+    private String applicationId;
 
     private String appState;
 
