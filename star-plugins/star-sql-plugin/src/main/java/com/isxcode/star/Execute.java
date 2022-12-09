@@ -11,7 +11,7 @@ public class Execute {
         SparkSession sparkSession = SparkSession.builder()
             .config("spark.driver.memory", "1g")
             .config("spark.executor.memory", "2g")
-            .config("hive.metastore.uris", "thrift://localhost:30104")
+            .config("hive.metastore.uris", "thrift://localhost:9083")
             .enableHiveSupport()
             .getOrCreate();
 
