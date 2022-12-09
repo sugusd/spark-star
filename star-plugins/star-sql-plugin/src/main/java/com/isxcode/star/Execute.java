@@ -11,6 +11,8 @@ public class Execute {
         SparkSession sparkSession = SparkSession.builder()
             .config("spark.driver.memory", "1g")
             .config("spark.executor.memory", "2g")
+            .config("hive.metastore.uris", "thrift://localhost:30104")
+            .enableHiveSupport()
             .getOrCreate();
 
         Dataset<Row> rowDataset = sparkSession.sql("select * from ispong_db.users");
