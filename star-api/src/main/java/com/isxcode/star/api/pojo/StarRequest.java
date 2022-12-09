@@ -13,10 +13,9 @@ import java.util.Map;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class StarRequest {
 
-    {
+    public StarRequest() {
         this.sparkConfig = new HashMap<>();
         this.sparkConfig.put("spark.executor.memory", "2g");
         this.sparkConfig.put("spark.driver.memory", "1g");
