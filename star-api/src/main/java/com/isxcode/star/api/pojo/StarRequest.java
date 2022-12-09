@@ -45,5 +45,5 @@ public class StarRequest {
 
     private Map<String, String> sparkConfig;
 
-    private YarnJobConfig yarnJobConfig;
+    private YarnJobConfig yarnJobConfig = new YarnJobConfig();
 }
