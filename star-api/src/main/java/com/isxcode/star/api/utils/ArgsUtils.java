@@ -18,8 +18,6 @@ public class ArgsUtils {
         Options options = new Options();
         options.addOption("star", true, "desc for star");
 
-        log.info("args: {}", args[1]);
-
         DefaultParser parser = new DefaultParser();
         CommandLine cl;
         try {

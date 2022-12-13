@@ -23,7 +23,7 @@ public class Demo {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        String value = cl.getOptionValue("star");
+        String value = cl.getOptionValue("--star");
         System.out.println(JSON.parseObject(value, StarRequest.class));
     }
 }
