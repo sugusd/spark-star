@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.isxcode.star</groupId>
             <artifactId>star-api</artifactId>
-            <version>${star-api.version}</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
@@ -42,9 +42,5 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <finalName>star-executor</finalName>
-    </build>
 
 </project>

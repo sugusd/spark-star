@@ -13,18 +13,16 @@
     <name>star-sql-plugin</name>
     <description>star-sql-plugin</description>
 
+    <properties>
+        <hive.version>3.1.2</hive.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
             <groupId>com.isxcode.star</groupId>
             <artifactId>star-api</artifactId>
-            <version>${star-api.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>

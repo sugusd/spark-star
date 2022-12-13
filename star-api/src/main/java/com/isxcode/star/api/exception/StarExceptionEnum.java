@@ -1,6 +1,5 @@
 package com.isxcode.star.api.exception;
 
-import com.isxcode.oxygen.common.response.AbstractExceptionEnum;
 import lombok.Getter;
 
 public enum StarExceptionEnum implements AbstractExceptionEnum {

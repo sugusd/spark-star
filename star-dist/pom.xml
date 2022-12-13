@@ -22,6 +22,12 @@
 
         <dependency>
             <groupId>com.isxcode.star</groupId>
+            <artifactId>star-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.isxcode.star</groupId>
             <artifactId>star-client</artifactId>
             <version>${project.version}</version>
         </dependency>

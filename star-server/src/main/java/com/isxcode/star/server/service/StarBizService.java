@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.isxcode.star.api.exception.StarException;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
+import com.isxcode.star.server.utils.LogUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
@@ -14,11 +15,7 @@ import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.apache.spark.launcher.SparkAppHandle;
 import org.apache.spark.launcher.SparkLauncher;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
@@ -120,50 +117,22 @@ public class StarBizService {
         return StarData.builder().appState(applicationReport.getYarnApplicationState().toString()).build();
     }
 
-    public StarData getWorkLog(StarRequest starRequest) throws IOException, YarnException {
+    public StarData getWorkLog(StarRequest starRequest)  {
 
-        // 获取hadoop的配置文件目录
-        String hadoopConfDir = System.getenv("HADOOP_CONF_DIR");
 
-        // 读取配置yarn-site.yml文件
-        Configuration hadoopConf = new Configuration(false);
-        Path path = Paths.get(hadoopConfDir + File.separator + "yarn-site.xml");
-        hadoopConf.addResource(Files.newInputStream(path));
-        YarnConfiguration yarnConfig = new YarnConfiguration(hadoopConf);
+        Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
+        String stdErrLog = map.get("stderr");
 
-        // 获取yarn客户端
-        YarnClient yarnClient = YarnClient.createYarnClient();
-        yarnClient.init(yarnConfig);
-        yarnClient.start();
+        return StarData.builder().log(stdErrLog).build();
+    }
 
-        // 获取 yarn.resourcemanager.webapp.address 配置
-        String managerAddress = hadoopConf.get("yarn.resourcemanager.webapp.address");
+    public StarData queryData(StarRequest starRequest)  {
 
-        // 获取应用的信息
-        Map appInfoMap = new RestTemplate().getForObject("http://" + managerAddress + "/ws/v1/cluster/apps/" + starRequest.getApplicationId(), Map.class);
 
-        // 获取amContainerLogs的Url
-        assert appInfoMap != null;
-        Map<String, Map<String, Object>> appMap = (Map<String, Map<String, Object>>) appInfoMap.get("app");
-        String amContainerLogsUrl = String.valueOf(appMap.get("amContainerLogs"));
+        Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
+        String stdoutLog = map.get("stdout");
 
-        // 通过url获取html的内容
-        Document doc = Jsoup.connect(amContainerLogsUrl).get();
-        Elements el = doc.getElementsByClass("content");
-
-        // 获取jobManager日志内容url
-        Elements afs = el.get(0).select("a[href]");
-        String jobManagerLogUrl = afs.attr("href");
-        String jobHistoryAddress = hadoopConf.get("mapreduce.jobhistory.webapp.address");
-
-        // 使用Jsoup爬取jobManager的日志
-        Document managerDoc = Jsoup.connect("http://" + jobHistoryAddress + jobManagerLogUrl).get();
-
-        System.out.println("====================yarn jobManager Log=================>");
-        System.out.println(managerDoc.body().text());
-        System.out.println("============================================>");
-
-        return null;
+        return JSON.parseObject(stdoutLog, StarData.class);
     }
 
 }

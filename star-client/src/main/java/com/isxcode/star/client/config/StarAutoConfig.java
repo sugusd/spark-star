@@ -1,8 +1,6 @@
 package com.isxcode.star.client.config;
 
-import com.isxcode.oxygen.common.properties.CommonProperties;
-import com.isxcode.star.api.constant.MsgConstants;
-import com.isxcode.star.api.constant.UrlConstants;
+import com.isxcode.star.api.constant.URLs;
 import com.isxcode.star.api.pojo.StarResponse;
 import com.isxcode.star.api.properties.ServerInfoProperties;
 import com.isxcode.star.api.properties.StarProperties;
@@ -24,12 +22,10 @@ public class StarAutoConfig {
 
     private final StarProperties starProperties;
 
-    private final CommonProperties commonProperties;
-
     @Bean("starTemplate")
-    public StarTemplate starTemplate(StarProperties starProperties,  CommonProperties commonProperties) {
+    public StarTemplate starTemplate(StarProperties starProperties) {
 
-        return new StarTemplate(starProperties, commonProperties);
+        return new StarTemplate(starProperties);
     }
 
     @Bean
@@ -41,20 +37,19 @@ public class StarAutoConfig {
         }
 
         if (starProperties.getServers() == null) {
-            System.out.println("Star配置中未找到server配置");
             return;
         }
 
         System.out.println("=================检查节点=======================");
         starProperties.getServers().forEach((k, v) -> {
             try {
-                // 检查用户配置的节点是否有效
-                String heartCheckUrl = String.format(UrlConstants.BASE_URL + UrlConstants.HEART_CHECK_URL, v.getHost(), v.getPort());
+
+                String heartCheckUrl = String.format(URLs.HTTP + URLs.BASE_URL + URLs.HEART_CHECK_URL, v.getHost(), v.getPort());
                 Map<String, String> headers = new HashMap<>();
                 headers.put("star-key", v.getKey());
                 StarResponse starResponse = HttpUtils.doGet(heartCheckUrl, headers, StarResponse.class);
 
-                if (MsgConstants.SUCCESS_CODE.equals(starResponse.getCode())) {
+                if ("200".equals(starResponse.getCode())) {
                     System.out.println(k + ":" + v.getHost() + ":[ok]");
                 } else {
                     System.out.println(k + ":" + v.getHost() + ":[error]");

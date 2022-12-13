@@ -21,11 +21,12 @@
 
 	<modules>
         <module>star-api</module>
+        <module>star-common</module>
         <module>star-client</module>
 		<module>star-server</module>
         <module>star-plugins</module>
         <module>star-dist</module>
-        <module>star-local-test/star-example</module>
+        <module>star-local-test/use-client-example</module>
     </modules>
 
     <properties>
@@ -34,16 +35,13 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring-oxygen.version>1.10.3</spring-oxygen.version>
-        <star-api.version>1.2.0</star-api.version>
-        <log4j.version>[2.16.0,)</log4j.version>
         <spark.version>3.1.1</spark.version>
         <scala.version>2.12</scala.version>
-        <hive.version>3.1.2</hive.version>
         <hadoop.version>3.2.2</hadoop.version>
-        <janino.version>3.0.8</janino.version>
+        <jsoup.vesion>1.15.3</jsoup.vesion>
         <fastjson.version>2.0.20</fastjson.version>
         <lombok.version>1.18.24</lombok.version>
+        <log4j.version>[2.16.0,)</log4j.version>
     </properties>
 
     <dependencies>

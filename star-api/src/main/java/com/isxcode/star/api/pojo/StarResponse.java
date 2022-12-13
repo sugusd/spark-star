@@ -1,6 +1,5 @@
 package com.isxcode.star.api.pojo;
 
-import com.isxcode.oxygen.common.response.BaseResponse;
 import com.isxcode.star.api.pojo.dto.StarData;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,5 @@
 package com.isxcode.star.api.exception;
 
-import com.isxcode.oxygen.common.response.AbstractException;
-import com.isxcode.oxygen.common.response.AbstractExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

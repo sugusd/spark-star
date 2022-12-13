@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.isxcode.oxygen.common.config.CommonAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=
