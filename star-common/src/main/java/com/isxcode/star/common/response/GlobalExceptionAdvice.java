@@ -1,5 +1,7 @@
 package com.isxcode.star.common.response;
 
+import com.isxcode.star.api.exception.AbstractException;
+import com.isxcode.star.api.pojo.BaseResponse;
 import com.isxcode.star.common.constant.ResponseConstant;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

@@ -9,25 +9,13 @@ public interface URLs {
 
     String EXECUTE_URL = "/execute";
 
-    String GET_WORK_STATUS_URL = "/getWorkStatus";
+    String GET_DATA_URL = "/getData";
 
-    String GET_WORK_LOG_URL = "/getWorkLog";
+    String GET_STATUS_URL = "/getStatus";
 
-    String GET_WORK_DATA_URL = "/getWorkData";
-
-    String EXECUTE_QUERY_URL = "/executeQuery";
-
-    String EXECUTE_PAGE_QUERY_URL = "/executePageQuery";
-
-    String EXECUTE_MULTI_SQL_URL = "/executeMultiSql";
-
-    String GET_JOB_LOG_URL = "/getJobLog";
+    String GET_LOG_URL = "/getLog";
 
     String STOP_JOB_URL = "/stopJob";
-
-    String QUERY_DBS_URL = "/queryDbs";
-
-    String QUICK_EXECUTE_QUERY_URL = "/quick/executeQuery";
 
     String HEART_CHECK_URL = "/heartCheck";
 }

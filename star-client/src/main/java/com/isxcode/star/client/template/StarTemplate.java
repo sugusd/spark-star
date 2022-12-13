@@ -81,45 +81,27 @@ public class StarTemplate {
             return requestStarServer(executeUrl, starRequest);
         }
 
-        public StarResponse query() {
+        public StarResponse getData() {
 
-            String executeUrl = parseExecuteUrl(URLs.EXECUTE_QUERY_URL);
+            String executeUrl = parseExecuteUrl(URLs.GET_DATA_URL);
             return requestStarServer(executeUrl, starRequest);
         }
 
-        public StarResponse executePageQuery(StarRequest starRequest) {
+        public StarResponse getStatus() {
 
-            String executeUrl = parseExecuteUrl(URLs.EXECUTE_PAGE_QUERY_URL);
+            String executeUrl = parseExecuteUrl(URLs.GET_STATUS_URL);
             return requestStarServer(executeUrl, starRequest);
         }
 
-        public StarResponse executeMultiSql(StarRequest starRequest) {
+        public StarResponse getLog() {
 
-            String executeUrl = parseExecuteUrl(URLs.EXECUTE_MULTI_SQL_URL);
+            String executeUrl = parseExecuteUrl(URLs.GET_LOG_URL);
             return requestStarServer(executeUrl, starRequest);
         }
 
-        public StarResponse getLog(StarRequest starRequest) {
-
-            String executeUrl = parseExecuteUrl(URLs.GET_JOB_LOG_URL);
-            return requestStarServer(executeUrl, starRequest);
-        }
-
-        public StarResponse stopJob(StarRequest starRequest) {
+        public StarResponse stopJob() {
 
             String executeUrl = parseExecuteUrl(URLs.STOP_JOB_URL);
-            return requestStarServer(executeUrl, starRequest);
-        }
-
-        public StarResponse queryDBs() {
-
-            String executeUrl = parseExecuteUrl(URLs.QUERY_DBS_URL);
-            return requestStarServer(executeUrl, starRequest);
-        }
-
-        public StarResponse quickExecuteQuery(StarRequest starRequest) {
-
-            String executeUrl = parseExecuteUrl(URLs.QUICK_EXECUTE_QUERY_URL);
             return requestStarServer(executeUrl, starRequest);
         }
 

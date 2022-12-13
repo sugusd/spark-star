@@ -36,7 +36,7 @@
 			<fileMode>0644</fileMode>
 		</file>
         <file>
-            <source>../star-api/target/star-api.jar</source>
+            <source>../star-api/target/star-api-${project.version}.jar</source>
             <outputDirectory>lib/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>
@@ -57,7 +57,7 @@
 
         <!--  sql-plugin -->
         <file>
-            <source>../star-plugins/star-sql-plugin/target/star-sql-plugin.jar</source>
+            <source>../star-plugins/star-sql-plugin/target/star-sql-plugin-${project.version}.jar</source>
             <outputDirectory>plugins/</outputDirectory>
             <fileMode>0644</fileMode>
         </file>

@@ -1,7 +1,7 @@
 package com.isxcode.star.common.filter;
 
+import com.isxcode.star.api.properties.StarProperties;
 import com.isxcode.star.common.constant.CommonConstants;
-import com.isxcode.star.common.properties.CommonProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -17,23 +17,19 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class CommonKeyFilter extends OncePerRequestFilter {
 
-    private final CommonProperties commonProperties;
+    private final StarProperties starProperties;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if (!commonProperties.getEnable()) {
-            doFilter(request, response, filterChain);
-        }
-
-        String authorization = request.getHeader(commonProperties.getHeaderAuthorization());
+        String authorization = request.getHeader("star-key");
 
         if (authorization == null) {
             request.getRequestDispatcher(CommonConstants.KEY_IS_NULL_EXCEPTION).forward(request, response);
             return;
         }
 
-        if (!authorization.equals(commonProperties.getSecret())) {
+        if (!authorization.equals(starProperties.getSecret())) {
             request.getRequestDispatcher(CommonConstants.KEY_IS_ERROR_EXCEPTION).forward(request, response);
             return;
         }

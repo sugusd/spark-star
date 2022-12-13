@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,9 +30,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StarBizService {
 
-    public StarData execute(StarRequest starRequest) throws IOException {
-
-        log.info("starRequest: {}", starRequest);
+    public StarData execute(StarRequest starRequest) {
 
         // 获取star目录位置
         String starHomePath = System.getenv("STAR_HOME");
@@ -39,7 +38,7 @@ public class StarBizService {
             throw new StarException("50010", "请配置STAR_HOME环境变量");
         }
 
-        // 封装launcher1
+        // 封装launcher
         SparkLauncher sparkLauncher = new SparkLauncher()
             .setMaster("yarn")
             .setDeployMode("cluster")
@@ -53,32 +52,42 @@ public class StarBizService {
         File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();
         if (jars != null) {
             for (File jar : jars) {
-                sparkLauncher.addJar(jar.toURI().toURL().toString());
+                try {
+                    sparkLauncher.addJar(jar.toURI().toURL().toString());
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
         // 提交作业到yarn
-        SparkAppHandle sparkAppHandle = sparkLauncher.startApplication(new SparkAppHandle.Listener() {
-            @Override
-            public void stateChanged(SparkAppHandle sparkAppHandle) {
-                log.info("stateChanged: {}", sparkAppHandle.getState());
-                if ("RUNNING".equals(sparkAppHandle.getState().toString())) {
-                    log.info("applicationId :{}", sparkAppHandle.getAppId());
-                }
-            }
+        SparkAppHandle sparkAppHandle;
+        try {
+            sparkAppHandle = sparkLauncher.startApplication(new SparkAppHandle.Listener() {
 
-            @Override
-            public void infoChanged(SparkAppHandle sparkAppHandle) {
-                log.info("infoChanged: {}", sparkAppHandle.getState());
-            }
-        });
+                @Override
+                public void stateChanged(SparkAppHandle sparkAppHandle) {
+                    log.info("stateChanged: {}", sparkAppHandle.getState());
+                    if ("RUNNING".equals(sparkAppHandle.getState().toString())) {
+                        log.info("applicationId :{}", sparkAppHandle.getAppId());
+                    }
+                }
+
+                @Override
+                public void infoChanged(SparkAppHandle sparkAppHandle) {
+                    log.info("infoChanged: {}", sparkAppHandle.getState());
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // 返回结果
         StarData.StarDataBuilder starDataBuilder = StarData.builder();
 
         // 默认10秒超时
         long timeoutExpiredMs = System.currentTimeMillis() + 10000;
-        String applicationId = null;
+        String applicationId;
         while (!SparkAppHandle.State.RUNNING.equals(sparkAppHandle.getState())) {
             long waitMillis = timeoutExpiredMs - System.currentTimeMillis();
             if (waitMillis <= 0) {
@@ -96,29 +105,39 @@ public class StarBizService {
         return starDataBuilder.build();
     }
 
-    public StarData getWorkStatus(StarRequest starRequest) throws IOException, YarnException {
+    public StarData getStatus(StarRequest starRequest) {
 
         // 获取hadoop的配置文件目录
-        String hadoopConfDir = System.getenv("HADOOP_CONF_DIR");
+        String yarnConfDir = System.getenv("YARN_CONF_DIR");
 
         // 读取配置yarn-site.yml文件
-        Configuration hadoopConf = new Configuration(false);
-        Path path = Paths.get(hadoopConfDir + File.separator + "yarn-site.xml");
-        hadoopConf.addResource(Files.newInputStream(path));
-        YarnConfiguration yarnConfig = new YarnConfiguration(hadoopConf);
+        Configuration yarnConf = new Configuration(false);
+        Path path = Paths.get(yarnConfDir + File.separator + "yarn-site.xml");
+        try {
+            yarnConf.addResource(Files.newInputStream(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        YarnConfiguration yarnConfig = new YarnConfiguration(yarnConf);
 
         // 获取yarn客户端
         YarnClient yarnClient = YarnClient.createYarnClient();
         yarnClient.init(yarnConfig);
         yarnClient.start();
 
-        ApplicationReport applicationReport = yarnClient.getApplicationReport(ApplicationId.fromString(starRequest.getApplicationId()));
+        ApplicationReport applicationReport;
+        try {
+            applicationReport = yarnClient.getApplicationReport(ApplicationId.fromString(starRequest.getApplicationId()));
+        } catch (YarnException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return StarData.builder().appState(applicationReport.getYarnApplicationState().toString()).build();
     }
 
-    public StarData getWorkLog(StarRequest starRequest)  {
-
+    public StarData getLog(StarRequest starRequest)  {
 
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
@@ -126,13 +145,41 @@ public class StarBizService {
         return StarData.builder().log(stdErrLog).build();
     }
 
-    public StarData queryData(StarRequest starRequest)  {
-
+    public StarData getData(StarRequest starRequest) {
 
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdoutLog = map.get("stdout");
 
         return JSON.parseObject(stdoutLog, StarData.class);
+    }
+
+    public StarData stopJob(StarRequest starRequest) {
+
+        // 获取hadoop的配置文件目录
+        String yarnConfDir = System.getenv("YARN_CONF_DIR");
+
+        // 读取配置yarn-site.yml文件
+        Configuration yarnConf = new Configuration(false);
+        Path path = Paths.get(yarnConfDir + File.separator + "yarn-site.xml");
+        try {
+            yarnConf.addResource(Files.newInputStream(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        YarnConfiguration yarnConfig = new YarnConfiguration(yarnConf);
+
+        // 获取yarn客户端
+        YarnClient yarnClient = YarnClient.createYarnClient();
+        yarnClient.init(yarnConfig);
+        yarnClient.start();
+
+        try {
+            yarnClient.killApplication(ApplicationId.fromString(starRequest.getApplicationId()));
+        } catch (YarnException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return StarData.builder().build();
     }
 
 }
