@@ -1,3 +1,5 @@
+import com.alibaba.fastjson.JSON;
+import com.isxcode.star.api.pojo.StarRequest;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
@@ -9,7 +11,7 @@ public class Demo {
     @Test
     public void testDemo() {
 
-        String[] args = new String[]{"-star", "desc for star"};
+        String[] args = new String[]{"-star", JSON.toJSONString(new StarRequest())};
 
         Options options = new Options();
         options.addOption("star", true, "desc for star");
@@ -22,6 +24,6 @@ public class Demo {
             throw new RuntimeException(e);
         }
         String value = cl.getOptionValue("star");
-        System.out.println(value);
+        System.out.println(JSON.parseObject(value, StarRequest.class));
     }
 }
