@@ -5,10 +5,10 @@ GET http://localhost:8080/execute
 GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0001
 
 ### 获取日志
-GET http://localhost:8080/getLog?applicationId=application_1670911887748_0001
+GET http://localhost:8080/getLog?applicationId=application_1670911887748_0011
 
 ### 查询返回值
-GET http://localhost:8080/getData?applicationId=application_1670911887748_0001
+GET http://localhost:8080/getData?applicationId=application_1670911887748_0011
 
 ### 停止作业
 GET http://localhost:8080/stopJob?applicationId=application_1670911887748_0001
