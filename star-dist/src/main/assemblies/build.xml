@@ -23,7 +23,6 @@
             <includes>
                 <include>com.alibaba:fastjson</include>
                 <include>org.apache.logging.log4j:log4j-api</include>
-                <include>commons-cli:commons-cli</include>
             </includes>
         </dependencySet>
     </dependencySets>

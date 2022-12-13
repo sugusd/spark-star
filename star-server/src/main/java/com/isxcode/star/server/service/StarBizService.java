@@ -50,7 +50,7 @@ public class StarBizService {
             .setVerbose(true)
             .setMainClass(starRequest.getYarnJobConfig().getMainClass())
             .setAppResource(starHomePath + File.separator + "plugins" + File.separator + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
-            .addAppArgs("--star", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
+            .addAppArgs(Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
 
         // 添加依赖包
         File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();
