@@ -126,7 +126,7 @@ public class StarBizService {
             throw new RuntimeException(e);
         }
 
-        return StarData.builder().appState(applicationReport.getYarnApplicationState().toString()).build();
+        return StarData.builder().appState(String.valueOf(applicationReport.getYarnApplicationState())).appFinalStatus(String.valueOf(applicationReport.getFinalApplicationStatus())).build();
     }
 
     public StarData getLog(StarRequest starRequest)  {

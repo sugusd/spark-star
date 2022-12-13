@@ -15,9 +15,9 @@ public class ExampleController {
     private final StarTemplate starTemplate;
 
     @GetMapping("/execute")
-    public StarResponse execute() {
+    public StarResponse execute(@RequestParam String sql) {
 
-        return starTemplate.build().sql("show databases").execute();
+        return starTemplate.build().sql(sql).execute();
     }
 
     @GetMapping("/getStatus")

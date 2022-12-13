@@ -19,6 +19,8 @@ public class StarData {
 
     private String applicationId;
 
+    private String appFinalStatus;
+
     private String appState;
 
     private List<String> logList;
