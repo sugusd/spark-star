@@ -1,23 +1,15 @@
-package com.isxcode.star.api.utils;
-
-import com.alibaba.fastjson.JSON;
-import com.isxcode.star.api.pojo.StarRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.junit.jupiter.api.Test;
 
-@Slf4j
-public class ArgsUtils {
+public class Demo {
 
-    public static StarRequest parse(String[] args) {
+    @Test
+    public void testDemo() {
 
-        if (args == null || args.length < 1) {
-            return new StarRequest();
-        }
-
-        log.info("args {}", args[0]);
+        String[] args = new String[]{"-star", "desc for star"};
 
         Options options = new Options();
         options.addOption("star", true, "desc for star");
@@ -30,10 +22,6 @@ public class ArgsUtils {
             throw new RuntimeException(e);
         }
         String value = cl.getOptionValue("star");
-
-        log.info("request info:{}", value);
-
-        return JSON.parseObject(value, StarRequest.class);
+        System.out.println(value);
     }
-
 }

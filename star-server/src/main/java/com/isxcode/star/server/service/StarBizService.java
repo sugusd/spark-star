@@ -47,7 +47,7 @@ public class StarBizService {
             .setVerbose(true)
             .setMainClass(starRequest.getYarnJobConfig().getMainClass())
             .setAppResource(starHomePath + File.separator + "plugins" + File.separator + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
-            .addAppArgs("--star "+JSON.toJSONString(starRequest));
+            .addAppArgs("-star", JSON.toJSONString(starRequest));
 
         // 添加依赖包
         File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();
