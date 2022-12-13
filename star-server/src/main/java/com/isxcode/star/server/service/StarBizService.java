@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class StarBizService {
             .setVerbose(true)
             .setMainClass(starRequest.getYarnJobConfig().getMainClass())
             .setAppResource(starHomePath + File.separator + "plugins" + File.separator + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
-            .addAppArgs("star", JSON.toJSONString(starRequest));
+            .addAppArgs("star", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
 
         // 添加依赖包
         File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();

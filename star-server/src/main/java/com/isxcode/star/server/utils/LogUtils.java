@@ -84,7 +84,7 @@ public class LogUtils {
             String logStr;
             if (!logUrl.isEmpty()) {
                 try {
-                    logStr = Jsoup.connect(URLs.HTTP + jobHistoryAddress + logUrl).get().body().text();
+                    logStr = Jsoup.connect(URLs.HTTP + jobHistoryAddress + logUrl).get().body().getElementsByTag("pre").text();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

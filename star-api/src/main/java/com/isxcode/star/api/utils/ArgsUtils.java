@@ -8,17 +8,12 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import java.util.Base64;
+
 @Slf4j
 public class ArgsUtils {
 
     public static StarRequest parse(String[] args) {
-
-        if (args == null || args.length < 1) {
-            return new StarRequest();
-        }
-
-        log.info("args {}", args[0]);
-        log.info("request {}", args[1]);
 
         Options options = new Options();
         options.addOption("star", true, "desc for star");
@@ -30,11 +25,7 @@ public class ArgsUtils {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        String value = cl.getOptionValue("star");
 
-        log.info("request info:{}", value);
-
-        return JSON.parseObject(value, StarRequest.class);
+        return JSON.parseObject(Base64.getDecoder().decode(cl.getOptionValue("star")), StarRequest.class);
     }
-
 }
