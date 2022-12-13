@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -89,9 +90,17 @@ public class StarBizService {
         long timeoutExpiredMs = System.currentTimeMillis() + 10000;
         String applicationId;
         while (!SparkAppHandle.State.RUNNING.equals(sparkAppHandle.getState())) {
+
             long waitMillis = timeoutExpiredMs - System.currentTimeMillis();
             if (waitMillis <= 0) {
+                starDataBuilder.appState("TIMEOUT");
+                break;
+            }
+
+            if(SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
+                Optional<Throwable> error = sparkAppHandle.getError();
                 starDataBuilder.appState("FAILED");
+                starDataBuilder.log(error.toString());
                 break;
             }
 

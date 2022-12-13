@@ -1,2 +1,5 @@
 ### 执行远程jar
 GET http://localhost:8080/execute
+
+### 获取状态
+GET http://localhost:8080/getLog
