@@ -26,7 +26,7 @@
 		<module>star-server</module>
         <module>star-plugins</module>
         <module>star-dist</module>
-<!--        <module>star-local-test/use-client-example</module>-->
+        <module>star-local-test/use-client-example</module>
     </modules>
 
     <properties>

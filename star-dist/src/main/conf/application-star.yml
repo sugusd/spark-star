@@ -1,28 +1,5 @@
 server:
   port: 30156
 
-logging:
-  group:
-    star: com.isxcode.star
-  level:
-    star: debug
-
-oxygen:
-  common:
-    header-authorization: star-key
-    secret: star-key
-
 star:
-  plugin:
-    app-name-prefix: star
-    master: yarn # yarn or local
-    spark-config:
-      spark.ui.port: 30128
-      spark.executor.memory: 1g
-      spark.sql.hive.metastore.version: 2.3.7  # 和下面那个要配一起配
-      spark.sql.hive.metastore.jars: /opt/hive/lib/*
-      spark.executor.cores: 1
-      spark.driver.memory: 1g
-      spark.num.executors: 1
-      hive.metastore.uris: thrift://localhost:9083
-      spark.sql.storeAssignmentPolicy: LEGACY
+  secret: star-key

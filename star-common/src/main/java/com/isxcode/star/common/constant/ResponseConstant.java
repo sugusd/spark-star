@@ -1,11 +1,5 @@
 package com.isxcode.star.common.constant;
 
-/**
- * success constants
- *
- * @author ispong
- * @since 0.0.2
- */
 public interface ResponseConstant {
 
 	/** success code */

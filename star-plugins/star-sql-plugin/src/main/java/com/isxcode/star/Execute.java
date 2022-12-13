@@ -3,6 +3,11 @@ package com.isxcode.star;
 import com.alibaba.fastjson.JSON;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
+import com.isxcode.star.api.utils.ArgsUtils;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
 import org.apache.spark.sql.Dataset;
@@ -66,7 +71,7 @@ public class Execute {
     public static void main(String[] args) {
 
         // 解析请求参数
-        StarRequest starRequest = JSON.parseObject(String.valueOf(args[0]) + "}}", StarRequest.class);
+        StarRequest starRequest = ArgsUtils.parse(args);
 
         // 校验请求参数
         checkRequest(starRequest);

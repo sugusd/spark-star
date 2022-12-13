@@ -5,6 +5,7 @@ public interface URLs {
     String HTTPS = "https://";
 
     String HTTP = "http://";
+
     String BASE_URL = "%s:%s/spark-star";
 
     String EXECUTE_URL = "/execute";

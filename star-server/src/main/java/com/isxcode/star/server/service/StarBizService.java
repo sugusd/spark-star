@@ -47,7 +47,7 @@ public class StarBizService {
             .setVerbose(true)
             .setMainClass(starRequest.getYarnJobConfig().getMainClass())
             .setAppResource(starHomePath + File.separator + "plugins" + File.separator + starRequest.getYarnJobConfig().getAppResourceName() + ".jar")
-            .addAppArgs(JSON.toJSONString(starRequest));
+            .addAppArgs("--star "+JSON.toJSONString(starRequest));
 
         // 添加依赖包
         File[] jars = new File(starHomePath + File.separator + "lib" + File.separator).listFiles();
@@ -68,15 +68,12 @@ public class StarBizService {
 
                 @Override
                 public void stateChanged(SparkAppHandle sparkAppHandle) {
-                    log.info("stateChanged: {}", sparkAppHandle.getState());
-                    if ("RUNNING".equals(sparkAppHandle.getState().toString())) {
-                        log.info("applicationId :{}", sparkAppHandle.getAppId());
-                    }
+                    // do nothing
                 }
 
                 @Override
                 public void infoChanged(SparkAppHandle sparkAppHandle) {
-                    log.info("infoChanged: {}", sparkAppHandle.getState());
+                    // do nothing
                 }
             });
         } catch (IOException e) {
@@ -97,7 +94,7 @@ public class StarBizService {
                 break;
             }
 
-            if(SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
+            if (SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
                 Optional<Throwable> error = sparkAppHandle.getError();
                 starDataBuilder.appState("FAILED");
                 starDataBuilder.log(error.get().getMessage());
@@ -116,30 +113,12 @@ public class StarBizService {
 
     public StarData getStatus(StarRequest starRequest) {
 
-        // 获取hadoop的配置文件目录
-        String yarnConfDir = System.getenv("YARN_CONF_DIR");
-
-        // 读取配置yarn-site.yml文件
-        Configuration yarnConf = new Configuration(false);
-        Path path = Paths.get(yarnConfDir + File.separator + "yarn-site.xml");
-        try {
-            yarnConf.addResource(Files.newInputStream(path));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        YarnConfiguration yarnConfig = new YarnConfiguration(yarnConf);
-
-        // 获取yarn客户端
-        YarnClient yarnClient = YarnClient.createYarnClient();
-        yarnClient.init(yarnConfig);
-        yarnClient.start();
+        YarnClient yarnClient = initYarnClient();
 
         ApplicationReport applicationReport;
         try {
             applicationReport = yarnClient.getApplicationReport(ApplicationId.fromString(starRequest.getApplicationId()));
-        } catch (YarnException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (YarnException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -151,7 +130,6 @@ public class StarBizService {
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
 
-        log.info("stdErrLog {}", stdErrLog);
         return StarData.builder().log(stdErrLog).build();
     }
 
@@ -160,11 +138,22 @@ public class StarBizService {
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdoutLog = map.get("stdout");
 
-        log.info("stdoutLog {}", stdoutLog);
         return JSON.parseObject(stdoutLog, StarData.class);
     }
 
     public StarData stopJob(StarRequest starRequest) {
+
+        YarnClient yarnClient = initYarnClient();
+        try {
+            yarnClient.killApplication(ApplicationId.fromString(starRequest.getApplicationId()));
+        } catch (YarnException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return StarData.builder().build();
+    }
+
+    public YarnClient initYarnClient() {
 
         // 获取hadoop的配置文件目录
         String yarnConfDir = System.getenv("YARN_CONF_DIR");
@@ -184,13 +173,7 @@ public class StarBizService {
         yarnClient.init(yarnConfig);
         yarnClient.start();
 
-        try {
-            yarnClient.killApplication(ApplicationId.fromString(starRequest.getApplicationId()));
-        } catch (YarnException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return StarData.builder().build();
+        return yarnClient;
     }
 
 }

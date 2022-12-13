@@ -8,7 +8,6 @@ import com.isxcode.star.server.service.StarBizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
