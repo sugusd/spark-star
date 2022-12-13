@@ -100,7 +100,7 @@ public class StarBizService {
             if(SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
                 Optional<Throwable> error = sparkAppHandle.getError();
                 starDataBuilder.appState("FAILED");
-                starDataBuilder.log(error.toString());
+                starDataBuilder.log(error.get().getMessage());
                 break;
             }
 
