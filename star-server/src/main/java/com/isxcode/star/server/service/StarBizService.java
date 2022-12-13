@@ -13,6 +13,7 @@ import org.apache.hadoop.yarn.api.records.ApplicationReport;
 import org.apache.hadoop.yarn.client.api.YarnClient;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.exceptions.YarnException;
+import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.launcher.SparkAppHandle;
 import org.apache.spark.launcher.SparkLauncher;
 import org.springframework.stereotype.Service;
@@ -141,6 +142,10 @@ public class StarBizService {
 
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdoutLog = map.get("stdout");
+
+        if (Strings.isEmpty(stdoutLog)) {
+            return StarData.builder().build();
+        }
 
         return JSON.parseObject(stdoutLog, StarData.class);
     }
