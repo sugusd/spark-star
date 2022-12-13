@@ -143,4 +143,8 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>star-sql-plugin</finalName>
+    </build>
+
 </project>
