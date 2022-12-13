@@ -63,6 +63,12 @@ public class StarTemplate {
             return this;
         }
 
+        public Builder applicationId(String applicationId) {
+
+            starRequest.setApplicationId(applicationId);
+            return this;
+        }
+
         public Builder limit(Integer limit) {
 
             starRequest.setLimit(limit);
