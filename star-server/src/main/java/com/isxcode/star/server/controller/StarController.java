@@ -54,6 +54,6 @@ public class StarController {
     @GetMapping(URLs.HEART_CHECK_URL)
     public StarData heartCheck() {
 
-        return StarData.builder().log("正常").build();
+        return StarData.builder().build();
     }
 }

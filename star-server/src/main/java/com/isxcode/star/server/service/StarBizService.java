@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
@@ -100,7 +101,7 @@ public class StarBizService {
             if (SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
                 Optional<Throwable> error = sparkAppHandle.getError();
                 starDataBuilder.appState("FAILED");
-                starDataBuilder.log(error.get().getMessage());
+                starDataBuilder.error(error.get().getMessage());
                 break;
             }
 
@@ -133,7 +134,7 @@ public class StarBizService {
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
 
-        return StarData.builder().log(stdErrLog).build();
+        return StarData.builder().logList(Arrays.asList(stdErrLog.split("\n"))).build();
     }
 
     public StarData getData(StarRequest starRequest) {

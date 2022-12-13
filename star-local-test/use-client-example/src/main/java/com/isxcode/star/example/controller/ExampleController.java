@@ -17,7 +17,7 @@ public class ExampleController {
     @GetMapping("/execute")
     public StarResponse execute() {
 
-        return starTemplate.build().sql("select * from ispong_db.users").execute();
+        return starTemplate.build().sql("show databases").execute();
     }
 
     @GetMapping("/getStatus")
