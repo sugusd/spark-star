@@ -17,8 +17,6 @@
 ### 📒 文档
 
 - [快速使用](https://spark-star.isxcode.com/#/zh-cn/start/快速使用)
-- [维护手册](https://spark-star.isxcode.com/#/zh-cn/start/contributing)
-- [版本历史](https://spark-star.isxcode.com/#/zh-cn/start/changelog)
 
 ### 📦 使用说明
 
@@ -34,12 +32,10 @@
 
 ```yaml
 star:
-  client:
-    workers:
-      default:
-        host: 39.99.140.167
-        port: 30156
-        key: star-key
+  default:
+    host: 39.99.140.167
+    port: 30156
+    key: star-key
 ```
 
 ```java
@@ -50,9 +46,7 @@ public class Demo{
     public void demo(){
 
         StarResponse starResponse = starTemplate.build()
-            .db("default")
-            .sql("select * from userinfo")
-            .limit(10)
+            .sql("select * from ispong.userinfo")
             .query();
         
         log.debug("starResponse {}", starResponse.toString());
