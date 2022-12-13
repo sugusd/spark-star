@@ -94,8 +94,7 @@ public class LogUtils {
             }
             Element firstElement = thirdElement.previousElementSibling().previousElementSibling();
 
-            log.info("logKey {}", firstElement.text().replace("Log Type:", ""));
-            resultLog.put(firstElement.text().replace("Log Type:", ""), logStr);
+            resultLog.put(firstElement.text().replace("Log Type:", "").trim(), logStr);
         }
 
         return resultLog;

@@ -151,6 +151,7 @@ public class StarBizService {
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
 
+        log.info("stdErrLog {}", stdErrLog);
         return StarData.builder().log(stdErrLog).build();
     }
 
@@ -159,6 +160,7 @@ public class StarBizService {
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdoutLog = map.get("stdout");
 
+        log.info("stdoutLog {}", stdoutLog);
         return JSON.parseObject(stdoutLog, StarData.class);
     }
 
