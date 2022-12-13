@@ -18,6 +18,7 @@ public class ArgsUtils {
         }
 
         log.info("args {}", args[0]);
+        log.info("request {}", args[1]);
 
         Options options = new Options();
         options.addOption("star", true, "desc for star");
