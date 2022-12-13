@@ -18,6 +18,8 @@ public class ArgsUtils {
         Options options = new Options();
         options.addOption("star", true, "desc for star");
 
+        log.info("args: {}", args[1]);
+
         DefaultParser parser = new DefaultParser();
         CommandLine cl;
         try {
@@ -25,6 +27,8 @@ public class ArgsUtils {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+
+        log.info("star: {}", cl.getOptionValue("star"));
 
         return JSON.parseObject(Base64.getDecoder().decode(cl.getOptionValue("star")), StarRequest.class);
     }

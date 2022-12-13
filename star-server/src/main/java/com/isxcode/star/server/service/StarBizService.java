@@ -40,6 +40,8 @@ public class StarBizService {
             throw new StarException("50010", "请配置STAR_HOME环境变量");
         }
 
+        log.info("request: {}", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
+
         // 封装launcher
         SparkLauncher sparkLauncher = new SparkLauncher()
             .setMaster("yarn")
