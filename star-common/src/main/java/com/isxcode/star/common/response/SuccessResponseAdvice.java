@@ -20,7 +20,7 @@ public class SuccessResponseAdvice {
 
 	private final MessageSource messageSource;
 
-	@Pointcut("@annotation(com.isxcode.oxygen.common.response.SuccessResponse)")
+	@Pointcut("@annotation(com.isxcode.star.common.response.SuccessResponse)")
 	public void operateLog() {}
 
 	@AfterReturning(returning = "data", value = "operateLog()&&@annotation(successResponse)")
