@@ -1,6 +1,7 @@
 package com.isxcode.star.server.utils;
 
 import com.isxcode.star.api.constant.URLs;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.client.api.YarnClient;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class LogUtils {
 
     /*
@@ -92,9 +94,11 @@ public class LogUtils {
             }
             Element firstElement = thirdElement.previousElementSibling().previousElementSibling();
 
+            log.info("logStr {}", logStr);
             resultLog.put(firstElement.text().replace("Log Type:", ""), logStr);
         }
 
+        log.info("resultLog {}", resultLog.toString());
         return resultLog;
     }
 }
