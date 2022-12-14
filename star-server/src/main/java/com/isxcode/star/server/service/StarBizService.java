@@ -1,6 +1,7 @@
 package com.isxcode.star.server.service;
 
 import com.alibaba.fastjson.JSON;
+import com.isxcode.star.api.exception.StarException;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.server.utils.LogUtils;
@@ -130,6 +131,10 @@ public class StarBizService {
 
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
+
+        if (Strings.isEmpty(stdErrLog)) {
+            throw new StarException("50013", "作业日志暂未生成");
+        }
 
         return StarData.builder().logList(Arrays.asList(stdErrLog.split("\n"))).build();
     }

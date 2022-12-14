@@ -366,20 +366,22 @@ public StarResponse getData(@RequestParam String applicationId) {
 
 ```json
 {
-  "code": "200",
-  "msg": "获取数据成功",
-  "data": {
-    "columnNames": [
-      "[username, age, birth]"
-    ],
-    "dataList": [
-      [
-        "ispong",
-        "18",
-        "2020-12-12"
-      ]
-    ]
-  }
+    "code": "200",
+    "msg": "获取数据成功",
+    "data": {
+        "columnNames": [
+            "username",
+            "age",
+            "birth"
+        ],
+        "dataList": [
+            [
+                "ispong",
+                "18",
+                "2020-12-12"
+            ]
+        ]
+    }
 }
 ```
 
@@ -404,7 +406,8 @@ public StarResponse custom(@RequestParam String sql) {
     return starTemplate.build()
         .sql(sql)
         .yarnJobConfig(yarnJobConfig)
-        .sparkConfig(sparkConfig).execute();
+        .sparkConfig(sparkConfig)
+        .execute();
 }
 ```
 
