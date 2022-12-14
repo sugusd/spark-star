@@ -46,7 +46,7 @@ public class Execute {
 
         // 获取列信息
         String[] columns = rowDataset.columns();
-        starDataBuilder.columnNames(Collections.singletonList(Arrays.toString(columns)));
+        starDataBuilder.columnNames(Arrays.asList(columns));
 
         // 获取数据
         List<List<String>> dataList = new ArrayList<>();
