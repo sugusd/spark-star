@@ -15,35 +15,35 @@ public class StarController {
 
     private final StarBizService starBizService;
 
-    @SuccessResponse
+    @SuccessResponse("提交成功")
     @PostMapping(URLs.EXECUTE_URL)
     public StarData execute(@RequestBody StarRequest starRequest) {
 
         return starBizService.execute(starRequest);
     }
 
-    @SuccessResponse
+    @SuccessResponse("获取任务状态成功")
     @PostMapping(URLs.GET_STATUS_URL)
     public StarData getStatus(@RequestBody StarRequest starRequest) {
 
         return starBizService.getStatus(starRequest);
     }
 
-    @SuccessResponse
+    @SuccessResponse("获取作业日志成功")
     @PostMapping(URLs.GET_LOG_URL)
     public StarData getLog(@RequestBody StarRequest starRequest) {
 
         return starBizService.getLog(starRequest);
     }
 
-    @SuccessResponse
+    @SuccessResponse("获取数据成功")
     @PostMapping(URLs.GET_DATA_URL)
     public StarData getData(@RequestBody StarRequest starRequest) {
 
         return starBizService.getData(starRequest);
     }
 
-    @SuccessResponse
+    @SuccessResponse("停止作业成功")
     @PostMapping(URLs.STOP_JOB_URL)
     public StarData stopJob(@RequestBody StarRequest starRequest) {
 

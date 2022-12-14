@@ -38,11 +38,9 @@ public class ExampleController {
         return starTemplate.build().applicationId(applicationId).stopJob();
     }
 
-
     @GetMapping("/getData")
     public StarResponse getData(@RequestParam String applicationId) {
 
         return starTemplate.build().applicationId(applicationId).getData();
     }
-
 }

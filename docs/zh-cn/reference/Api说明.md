@@ -1,16 +1,16 @@
-#### - 执行sql
+### - 执行SparkSql
 
-> 
+> `http://localhost:8080/execute?sql=select * from ispong_db.users` 
 
 ```java
-class Demo{
-    public void executeQuery() {
+public StarResponse execute(@RequestParam String sql) {
 
-        String sql = "select * from default.demo_table";
-
-        StarResponse starResponse = starTemplate.build().exeucute();
-    }
+    return starTemplate.build().sql(sql).execute();
 }
+```
+
+```json
+
 ```
 
 #### - 查询表中数据
