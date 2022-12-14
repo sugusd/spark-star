@@ -1,7 +1,6 @@
 package com.isxcode.star.server.service;
 
 import com.alibaba.fastjson.JSON;
-import com.isxcode.star.api.exception.StarException;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.server.utils.LogUtils;
@@ -38,9 +37,6 @@ public class StarBizService {
 
         // 获取star目录位置
         String starHomePath = System.getenv("STAR_HOME");
-        if (starHomePath == null) {
-            throw new StarException("50010", "请配置STAR_HOME环境变量");
-        }
 
         log.info("request: {}", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
 

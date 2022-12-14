@@ -1,10 +1,12 @@
 package com.isxcode.star.server.utils;
 
 import com.isxcode.star.api.constant.URLs;
+import com.isxcode.star.api.exception.StarException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.client.api.YarnClient;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
+import org.apache.logging.log4j.util.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,9 +33,9 @@ public class LogUtils {
 
         // 读取yarn的配置文件
         Configuration yarnConf = new Configuration(false);
-        Path path = Paths.get(System.getenv("YARN_CONF_DIR") + File.separator + "yarn-site.xml");
         try {
-            yarnConf.addResource(Files.newInputStream(path));
+            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("YARN_CONF_DIR") + File.separator + "yarn-site.xml")));
+            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("YARN_CONF_DIR") + File.separator + "mapred-site.xml")));
         } catch (IOException e) {
             throw new RuntimeException("未找到yarn配置文件");
         }
@@ -43,6 +45,10 @@ public class LogUtils {
         YarnConfiguration yarnConfig = new YarnConfiguration(yarnConf);
         yarnClient.init(yarnConfig);
         yarnClient.start();
+
+        if (Strings.isEmpty(yarnConf.get("yarn.resourcemanager.webapp.address"))) {
+            throw new StarException("50012", "请在yarn-site.xml中配置yarn.resourcemanager.webapp.address属性:${yarn.resourcemanager.hostname}:8088");
+        }
 
         // 访问yarn作业日志页面
         Map appInfoMap = new RestTemplate().getForObject(URLs.HTTP + yarnConf.get("yarn.resourcemanager.webapp.address") + "/ws/v1/cluster/apps/" + applicationId, Map.class);
@@ -69,6 +75,9 @@ public class LogUtils {
 
         // 获取jobHistoryAddress前缀
         String jobHistoryAddress = yarnConfig.get("mapreduce.jobhistory.webapp.address");
+        if (Strings.isEmpty(jobHistoryAddress)) {
+            throw new StarException("50012", "请在mapred-site.xml中配置mapreduce.jobhistory.webapp.address属性:0.0.0.0:19888");
+        }
 
         // 遍历
         for (Element element : preElements) {
