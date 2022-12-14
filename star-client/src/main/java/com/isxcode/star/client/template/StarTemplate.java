@@ -3,6 +3,7 @@ package com.isxcode.star.client.template;
 import com.isxcode.star.api.constant.URLs;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.StarResponse;
+import com.isxcode.star.api.pojo.dto.YarnJobConfig;
 import com.isxcode.star.api.properties.ServerInfoProperties;
 import com.isxcode.star.api.properties.StarProperties;
 import com.isxcode.star.api.utils.HttpUtils;
@@ -60,6 +61,18 @@ public class StarTemplate {
         public Builder sql(String sql) {
 
             starRequest.setSql(sql);
+            return this;
+        }
+
+        public Builder yarnJobConfig(YarnJobConfig yarnJobConfig) {
+
+            starRequest.setYarnJobConfig(yarnJobConfig);
+            return this;
+        }
+
+        public Builder sparkConfig(Map<String,String> sparkConfig) {
+
+            starRequest.setSparkConfig(sparkConfig);
             return this;
         }
 

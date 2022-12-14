@@ -42,5 +42,5 @@ public class StarRequest {
         put("hive.metastore.uris", "thrift://localhost:9083");
     }};
 
-    private YarnJobConfig yarnJobConfig = new YarnJobConfig("spark-star job", "com.isxcode.star.Execute", "star-sql-plugin");
+    private YarnJobConfig yarnJobConfig = new YarnJobConfig("spark-star", "com.isxcode.star.Execute", "star-sql-plugin");
 }
