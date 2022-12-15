@@ -2,12 +2,6 @@ star:
   check-servers: true
   servers:
     default:
-      host: isxcode
+      host: definesys
       port: 30156
       key: star-key
-
-logging:
-  level:
-    star: debug
-  group:
-    star: com.isxcode.star

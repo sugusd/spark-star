@@ -84,13 +84,16 @@ public class ExampleController {
 
         return starTemplate.build()
             .sql(sql)
-            .sparkConfig(sparkConfig).execute();
+            .sparkConfig(sparkConfig)
+            .execute();
     }
 
     @GetMapping("/getData")
     public StarResponse getData(@RequestParam String applicationId) {
 
-        return starTemplate.build().applicationId(applicationId).getData();
+        return starTemplate.build()
+            .applicationId(applicationId)
+            .getData();
     }
 
 }
@@ -134,4 +137,3 @@ public class ExampleController {
 <a href="https://www.jetbrains.com/?from=spring-demo" target="_blank" style="border-bottom: none !important;">
     <img src="https://img.isxcode.com/index_img/jetbrains/jetbrains-3.png" height="100" alt="jetbrains"/>
 </a>
-

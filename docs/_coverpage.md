@@ -1,11 +1,10 @@
 ![logo](assets/images/logo.png)
 
-<h1 align="center" style="font-weight: bold">
-    Spark Star
-</h1>
+<br/>
+<br/>
 
 <p style="">
-    ☄️ Support custom development plugin for spark restful server
+    ⭐ 基于Spring对远程Spark服务二次封装，实现SparkSql执行、动态资源分配以及获取运行日志等。
 </p>
 
 <br/>

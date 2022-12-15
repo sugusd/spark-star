@@ -2,16 +2,16 @@
 GET http://localhost:8080/execute?sql=select * from ispong_db.users
 
 ### 获取状态
-GET http://localhost:8080/getStatus?applicationId=application_1671005804173_0004
+GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0034
 
 ### 获取日志
-GET http://localhost:8080/getLog?applicationId=application_1671005804173_0006
+GET http://localhost:8080/getLog?applicationId=application_1670911887748_0034
 
 ### 查询返回值
-GET http://localhost:8080/getData?applicationId=application_1671005804173_0005
+GET http://localhost:8080/getData?applicationId=application_1670911887748_0034
 
 ### 停止作业
-GET http://localhost:8080/stopJob?applicationId=application_1671005804173_0001
+GET http://localhost:8080/stopJob?applicationId=application_1670911887748_0034
 
 ### 执行远程jar
 GET http://localhost:8080/custom?sql=select * from ispong_db.users

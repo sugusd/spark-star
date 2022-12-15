@@ -1,8 +1,8 @@
-#### 如何加入我们
+### 如何加入我们
 
 ?> 创建[Pull Request](https://github.com/ispong/spark-star/pulls)并修改文件 `Developer.md`，添加自己的邮箱以及github账号。
 
-#### 本地开发文档
+### 本地开发文档
 
 ```bash
 npm i docsify-cli -g
