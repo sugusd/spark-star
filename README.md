@@ -1,70 +1,137 @@
+<p align="center">
+  <a href="https://github.com/ispong/flink-acorn" style="border-bottom: none !important;">
+    <img alt="flink-acorn" width="400" src="https://img.isxcode.com/isxcode_img/spark-star/logo.png">
+  </a>
+</p>
+
 <h1 align="center">
     Spark Star
 </h1>
 
 <h4 align="center">
-    通过Spring插件的形式，实现对不同服务器与不同版本的Spark做统一管理。
+    ⭐ 基于Spring对远程Spark服务二次封装，实现SparkSql执行、动态资源分配以及获取运行日志等。
 </h4>
 
 <h4 align="center">
-    ✨✨✨ <a href="https://spark-star.isxcode.com">https://spark-star.isxcode.com</a> ✨✨✨
+    ✨ <a href="https://spark-star.isxcode.com">https://spark-star.isxcode.com</a> ✨
 </h4>
 
-### 📢 公告
+<div align="center" class="badge">
 
-> 目前支持`3.1.1(apache)`版本，其他版本尚未支持，项目仅供参考。
+[![Maven Version](https://img.shields.io/maven-central/v/com.isxcode.star/star-client)](https://search.maven.org/artifact/com.isxcode.star/star-client)
+
+</div>
+
+### 📢 注意
+
+> 目前仅支持`Yarn-Per-Job`模式，即一个sql执行一个yarn容器。
  
 ### 📒 文档
 
-- [快速使用](https://spark-star.isxcode.com/#/zh-cn/start/快速使用)
-- [维护手册](https://spark-star.isxcode.com/#/zh-cn/start/contributing)
-- [版本历史](https://spark-star.isxcode.com/#/zh-cn/start/changelog)
+- [快速使用](https://spark-star.isxcode.com/#/zh-cn/start/%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8)
+- [快速安装](https://spark-star.isxcode.com/#/zh-cn/install/%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85)
+- [Api说明](https://spark-star.isxcode.com/#/zh-cn/reference/Api%E8%AF%B4%E6%98%8E)
 
 ### 📦 使用说明
-
-[![Maven Version](https://img.shields.io/maven-central/v/com.isxcode.star/star-common)](https://search.maven.org/artifact/com.isxcode.star/star-common)
 
 ```xml
 <dependency>
     <groupId>com.isxcode.star</groupId>
-    <artifactId>star-common</artifactId>
-    <version>1.0.0</version>
+    <artifactId>star-client</artifactId>
+    <version>1.2.0</version>
 </dependency>
 ```
 
 ```yaml
 star:
-  client:
-    workers:
-      default:
-        host: 39.99.140.167
-        port: 30156
-        key: star-key
+  check-servers: true
+  servers:
+    default:
+      host: isxcode
+      port: 30155
+      key: acorn-key
 ```
 
 ```java
-public class Demo{
+package com.isxcode.star.example.controller;
+
+import com.isxcode.star.api.pojo.StarResponse;
+import com.isxcode.star.api.pojo.dto.YarnJobConfig;
+import com.isxcode.star.client.template.StarTemplate;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+@RequestMapping
+@RequiredArgsConstructor
+@Slf4j
+public class ExampleController {
 
     private final StarTemplate starTemplate;
     
-    public void demo(){
+    @GetMapping("/execute")
+    public StarResponse execute(@RequestParam String sql) {
 
-        StarResponse starResponse = starTemplate.build()
-            .db("default")
-            .sql("select * from userinfo")
-            .limit(10)
-            .query();
-        
-        log.debug("starResponse {}", starResponse.toString());
+        // 配置spark运行的环境和资源
+        Map<String, String> sparkConfig = new HashMap<>();
+        sparkConfig.put("spark.executor.memory", "2g");
+        sparkConfig.put("spark.driver.memory", "1g");
+        sparkConfig.put("hive.metastore.uris", "thrift://localhost:9083");
+
+        return starTemplate.build()
+            .sql(sql)
+            .sparkConfig(sparkConfig).execute();
+    }
+
+    @GetMapping("/getData")
+    public StarResponse getData(@RequestParam String applicationId) {
+
+        return starTemplate.build().applicationId(applicationId).getData();
+    }
+
+}
+```
+
+```json
+{
+  "code": "200",
+  "msg": "提交成功",
+  "data": {
+    "applicationId": "application_1671005804173_0001"
+  }
+}
+```
+
+```json
+{
+    "code": "200",
+    "msg": "获取数据成功",
+    "data": {
+        "columnNames": [
+            "username",
+            "age",
+            "birth"
+        ],
+        "dataList": [
+            [
+                "ispong",
+                "18",
+                "2020-12-12"
+            ]
+        ]
     }
 }
 ```
 
-```log
-2022-08-03 12:11:27.926 DEBUG 21256 --- [nio-8080-exec-3] c.i.s.t.controller.TemplateController    : starResponse StarResponse(code=200, message=操作成功, starData=StarData(columnNames=[id, username, sex, birth, address, school, job, length, color, app], dataList=[[999bdcf0-8b01-11ec-adf2-9078414180e2, 澹申毋, 中, 2012-01-30, 山西省, 硕士, 品质管制工程师, 218, 靛, 喜马拉雅], [999c520c-8b01-11ec-902d-9078414180e2, 连丘, 中, 2003-04-26, 北京市, 初中, 职业运动员, 152, 橙, 微博], [999c520d-8b01-11ec-a5a7-9078414180e2, 满丰, 男, 1982-03-24, 海南省, 硕士, 时装模特儿, 163, 红, 喜马拉雅], [999c520e-8b01-11ec-8a7f-9078414180e2, 充邢, 中, 1980-12-08, 云南省, 高中, 水电工, 152, 黄, 高德]], appId=null, appState=null, log=null, eventType=null, databases=null))
-```
+***
 
-### 👏 社区开发
+**Thanks for free JetBrains Open Source license**
 
-- 欢迎一同维护开发，具体请参照[开发文档](https://spark-star.isxcode.com/#/zh-cn/contributing) 。
-- 如需加入我们，请联系邮箱 `ispong@outlook.com` 。
+<a href="https://www.jetbrains.com/?from=spring-demo" target="_blank" style="border-bottom: none !important;">
+    <img src="https://img.isxcode.com/index_img/jetbrains/jetbrains-3.png" height="100" alt="jetbrains"/>
+</a>
+
