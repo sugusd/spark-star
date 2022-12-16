@@ -8,3 +8,4 @@
 - [**维护手册**](/zh-cn/contributing.md)
 - [**版本历史**](/zh-cn/changelog.md)
 - [**相关博客**](/zh-cn/blogs.md)
+    - [Spark单节点安装手册](/zh-cn/blogs/Spark单节点安装手册.md)
