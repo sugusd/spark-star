@@ -34,8 +34,8 @@ public class LogUtils {
         // 读取yarn的配置文件
         Configuration yarnConf = new Configuration(false);
         try {
-            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("YARN_CONF_DIR") + File.separator + "yarn-site.xml")));
-            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("YARN_CONF_DIR") + File.separator + "mapred-site.xml")));
+            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("HADOOP_HOME") + File.separator + "etc" + File.separator + "hadoop" + File.separator + "yarn-site.xml")));
+            yarnConf.addResource(Files.newInputStream(Paths.get(System.getenv("HADOOP_HOME") + File.separator + "etc" + File.separator + "hadoop" + File.separator + "mapred-site.xml")));
         } catch (IOException e) {
             throw new RuntimeException("未找到yarn配置文件");
         }
@@ -46,12 +46,12 @@ public class LogUtils {
         yarnClient.init(yarnConfig);
         yarnClient.start();
 
-        if (Strings.isEmpty(yarnConf.get("yarn.resourcemanager.webapp.address"))) {
+        if (Strings.isEmpty(yarnConfig.get("yarn.resourcemanager.webapp.address"))) {
             throw new StarException("50012", "请在yarn-site.xml中配置yarn.resourcemanager.webapp.address属性:${yarn.resourcemanager.hostname}:8088");
         }
 
         // 访问yarn作业日志页面
-        Map appInfoMap = new RestTemplate().getForObject(URLs.HTTP + yarnConf.get("yarn.resourcemanager.webapp.address") + "/ws/v1/cluster/apps/" + applicationId, Map.class);
+        Map appInfoMap = new RestTemplate().getForObject(URLs.HTTP + yarnConfig.get("yarn.resourcemanager.webapp.address") + "/ws/v1/cluster/apps/" + applicationId, Map.class);
         Map<String, Map<String, Object>> appMap = (Map<String, Map<String, Object>>) appInfoMap.get("app");
         String amContainerLogsUrl = String.valueOf(appMap.get("amContainerLogs"));
 

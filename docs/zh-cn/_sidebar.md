@@ -3,6 +3,7 @@
     - [快速使用](/zh-cn/start/快速使用.md)
 - **安装手册**
     - [快速安装](/zh-cn/install/快速安装.md)
+    - [Hive支持](/zh-cn/install/Hive支持.md)
 - **使用说明**
     - [Api说明](/zh-cn/reference/Api说明.md)
 - [**维护手册**](/zh-cn/contributing.md)

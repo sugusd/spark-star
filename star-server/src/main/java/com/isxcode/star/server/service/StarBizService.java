@@ -166,11 +166,11 @@ public class StarBizService {
     public YarnClient initYarnClient() {
 
         // 获取hadoop的配置文件目录
-        String yarnConfDir = System.getenv("YARN_CONF_DIR");
+        String hadoopConfDir = System.getenv("HADOOP_HOME");
 
         // 读取配置yarn-site.yml文件
         Configuration yarnConf = new Configuration(false);
-        Path path = Paths.get(yarnConfDir + File.separator + "yarn-site.xml");
+        Path path = Paths.get(hadoopConfDir + File.separator + "etc" + File.separator + "hadoop" + File.separator + "yarn-site.xml");
         try {
             yarnConf.addResource(Files.newInputStream(path));
         } catch (IOException e) {

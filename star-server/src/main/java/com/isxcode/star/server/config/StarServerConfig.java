@@ -26,9 +26,15 @@ public class StarServerConfig {
             context.close();
         }
 
-        String yarnConfDir = System.getenv("YARN_CONF_DIR");
-        if (Strings.isEmpty(yarnConfDir)) {
-            System.out.println("ERROR:请配置YARN_CONF_DIR环境变量");
+        String sparkConfDir = System.getenv("SPARK_HOME");
+        if (Strings.isEmpty(sparkConfDir)) {
+            System.out.println("ERROR:请配置SPARK_HOME环境变量");
+            context.close();
+        }
+
+        String hadoopConfDir = System.getenv("HADOOP_HOME");
+        if (Strings.isEmpty(hadoopConfDir)) {
+            System.out.println("ERROR:请配置HADOOP_HOME环境变量");
             context.close();
         }
 

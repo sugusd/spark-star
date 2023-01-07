@@ -37,6 +37,7 @@
 
         <spark.version>3.1.1</spark.version>
         <scala.version>2.12</scala.version>
+        <hive.version>3.1.2</hive.version>
         <hadoop.version>3.2.4</hadoop.version>
         <jsoup.vesion>1.15.3</jsoup.vesion>
         <fastjson.version>2.0.20</fastjson.version>

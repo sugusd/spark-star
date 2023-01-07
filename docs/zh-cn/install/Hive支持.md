@@ -15,8 +15,6 @@ git clone https://github.com/ispong/spark-star.git
 
 ###### 编译项目
 
-!> [注意多版本支持,根据自己的环境调整依赖版本](/zh-cn/install/多版本支持.md)
-
 !> [建议安装](https://ispong.isxcode.com/spring/maven/maven%20%E5%AE%89%E8%A3%85/)`3.8.6+`版本的Maven
 
 > 打包位置 `spark-star/star-dist/target/spark-star-${version}-bin/spark-star-${version}`
