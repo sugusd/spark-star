@@ -97,9 +97,10 @@ public class StarBizService {
             }
 
             if (SparkAppHandle.State.FAILED.equals(sparkAppHandle.getState())) {
-                Optional<Throwable> error = sparkAppHandle.getError();
+//                Optional<Throwable> error = sparkAppHandle.getError();
                 starDataBuilder.appState("FAILED");
-                starDataBuilder.error(error.get().getMessage());
+                starDataBuilder.error("部署失败,请查看yarn的日志");
+//                starDataBuilder.error(error.get().getMessage());
                 break;
             }
 
@@ -119,7 +120,7 @@ public class StarBizService {
 
         ApplicationReport applicationReport;
         try {
-            applicationReport = yarnClient.getApplicationReport(ApplicationId.fromString(starRequest.getApplicationId()));
+            applicationReport = yarnClient.getApplicationReport(formatApplicationId(starRequest.getApplicationId()));
         } catch (YarnException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -155,7 +156,7 @@ public class StarBizService {
 
         YarnClient yarnClient = initYarnClient();
         try {
-            yarnClient.killApplication(ApplicationId.fromString(starRequest.getApplicationId()));
+            yarnClient.killApplication(formatApplicationId(starRequest.getApplicationId()));
         } catch (YarnException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -186,4 +187,23 @@ public class StarBizService {
         return yarnClient;
     }
 
+    public static ApplicationId formatApplicationId(String appIdStr) {
+
+        String applicationPrefix = "application_";
+        try {
+            int pos1 = applicationPrefix.length() - 1;
+            int pos2 = appIdStr.indexOf('_', pos1 + 1);
+            if (pos2 < 0) {
+                throw new IllegalArgumentException("Invalid ApplicationId: "
+                    + appIdStr);
+            }
+            long rmId = Long.parseLong(appIdStr.substring(pos1 + 1, pos2));
+            int appId = Integer.parseInt(appIdStr.substring(pos2 + 1));
+            ApplicationId applicationId = ApplicationId.newInstance(rmId, appId);
+            return applicationId;
+        } catch (NumberFormatException n) {
+            throw new IllegalArgumentException("Invalid ApplicationId: "
+                + appIdStr, n);
+        }
+    }
 }
