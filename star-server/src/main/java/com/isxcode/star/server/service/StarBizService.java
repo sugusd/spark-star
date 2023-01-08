@@ -193,17 +193,11 @@ public class StarBizService {
         try {
             int pos1 = applicationPrefix.length() - 1;
             int pos2 = appIdStr.indexOf('_', pos1 + 1);
-            if (pos2 < 0) {
-                throw new IllegalArgumentException("Invalid ApplicationId: "
-                    + appIdStr);
-            }
             long rmId = Long.parseLong(appIdStr.substring(pos1 + 1, pos2));
             int appId = Integer.parseInt(appIdStr.substring(pos2 + 1));
-            ApplicationId applicationId = ApplicationId.newInstance(rmId, appId);
-            return applicationId;
+            return ApplicationId.newInstance(rmId, appId);
         } catch (NumberFormatException n) {
-            throw new IllegalArgumentException("Invalid ApplicationId: "
-                + appIdStr, n);
+            throw new StarException("50010", "ApplicationId异常");
         }
     }
 }
