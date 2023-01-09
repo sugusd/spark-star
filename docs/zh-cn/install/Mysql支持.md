@@ -1,4 +1,4 @@
-#### Hive支持
+#### Mysql支持
 
 !> 默认spark是不支持mysql数据访问的。
 

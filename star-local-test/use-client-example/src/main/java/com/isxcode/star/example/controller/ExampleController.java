@@ -35,6 +35,25 @@ public class ExampleController {
             .execute();
     }
 
+    @GetMapping("/executeSync")
+    public StarResponse executeSync() {
+
+        String sql = "" +
+            "CREATE TEMPORARY VIEW users_view\n" +
+            "USING org.apache.spark.sql.jdbc\n" +
+            "OPTIONS (\n" +
+            "    driver 'com.mysql.cj.jdbc.Driver',\n" +
+            "    url 'jdbc:mysql://dcloud-dev:30102/ispong_db',\n" +
+            "    user 'ispong',\n" +
+            "    password 'ispong123'\n" +
+            "    dbtable 'users',\n" +
+            ");\n" +
+            "" +
+            "insert into ispong_db.users select * from users_view where age > 15";
+
+        return starTemplate.build().sql(sql).execute();
+    }
+
     @GetMapping("/getStatus")
     public StarResponse getStatus(@RequestParam String applicationId) {
 

@@ -90,13 +90,14 @@ public class Execute {
         }
 
         log.info("sparkSession执行sql: {}", starRequest.getSql());
-        rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+        if (starRequest.getSql().contains(";")) {
+            Arrays.asList(starRequest.getSql().split(";")).forEach(sparkSession::sql);
+        } else {
+            rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+            exportResult(rowDataset);
+            sparkSession.stop();
+        }
 
-        // 导出输出
-        exportResult(rowDataset);
-
-        // 停止sparkSession
-        sparkSession.stop();
     }
 
     public static String generateCreateTableSql(String tableName, StarRequest starRequest) {
