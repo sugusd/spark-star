@@ -82,12 +82,7 @@ public class Execute {
             // 解析sql，加载所有相关的数据库中的table
             SqlParseUtils sqlParseUtils = new SqlParseUtils();
             List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
-            System.out.println("tableNames" + tableNames);
-            StringBuilder createTemplateTableBuilder = new StringBuilder();
-            tableNames.forEach(e -> createTemplateTableBuilder.append(generateCreateTableSql(e, starRequest)));
-
-            System.out.println("createTemplateTableBuilder" + createTemplateTableBuilder);
-            starRequest.setSql(createTemplateTableBuilder + starRequest.getSql());
+            tableNames.forEach(e -> sparkSession.sql(generateCreateTableSql(e, starRequest)));
         }
 
         System.out.println("执行sparksql" + starRequest.getSql());
@@ -105,6 +100,7 @@ public class Execute {
         String sqlTemplate = "CREATE TEMPORARY VIEW " + tableName + "\n" +
             "USING org.apache.spark.sql.jdbc\n" +
             "OPTIONS (\n" +
+            "  driver '" + starRequest.getDriverClassName() + "',\n" +
             "  url '" + starRequest.getJdbcUrl() + "',\n" +
             "  dbtable \"" + tableName + "\",\n" +
             "  user '" + starRequest.getUsername() + "',\n" +
