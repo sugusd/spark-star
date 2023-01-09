@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.utils.ArgsUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
 import org.apache.spark.sql.Dataset;
@@ -12,6 +13,7 @@ import org.apache.spark.sql.SparkSession;
 
 import java.util.*;
 
+@Slf4j
 public class Execute {
 
     public static SparkSession initSparkSession(StarRequest starRequest) {
@@ -45,8 +47,7 @@ public class Execute {
         StarData.StarDataBuilder starDataBuilder = StarData.builder();
 
         // 获取列信息
-        String[] columns = rowDataset.columns();
-        starDataBuilder.columnNames(Arrays.asList(columns));
+        starDataBuilder.columnNames(Arrays.asList(rowDataset.columns()));
 
         // 获取数据
         List<List<String>> dataList = new ArrayList<>();
@@ -69,8 +70,6 @@ public class Execute {
         // 解析请求参数
         StarRequest starRequest = ArgsUtils.parse(args);
 
-        System.out.println(starRequest.toString());
-
         // 校验请求参数
         checkRequest(starRequest);
 
@@ -82,10 +81,12 @@ public class Execute {
             // 解析sql，加载所有相关的数据库中的table
             SqlParseUtils sqlParseUtils = new SqlParseUtils();
             List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
-            tableNames.forEach(e -> sparkSession.sql(generateCreateTableSql(e, starRequest)));
+            tableNames.forEach(e -> {
+                log.info("spark执行sql" + e);
+                sparkSession.sql(generateCreateTableSql(e, starRequest));
+            });
         }
 
-        System.out.println("执行sparksql" + starRequest.getSql());
         rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
 
         // 导出输出
