@@ -69,6 +69,8 @@ public class Execute {
         // 解析请求参数
         StarRequest starRequest = ArgsUtils.parse(args);
 
+        System.out.println(starRequest.toString());
+
         // 校验请求参数
         checkRequest(starRequest);
 
@@ -80,11 +82,11 @@ public class Execute {
             // 解析sql，加载所有相关的数据库中的table
             SqlParseUtils sqlParseUtils = new SqlParseUtils();
             List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
+            System.out.println("tableNames" + tableNames);
             StringBuilder createTemplateTableBuilder = new StringBuilder();
-            tableNames.forEach(e -> {
-                createTemplateTableBuilder.append(generateCreateTableSql(e, starRequest) + "\n");
-            });
+            tableNames.forEach(e -> createTemplateTableBuilder.append(generateCreateTableSql(e, starRequest)));
 
+            System.out.println("createTemplateTableBuilder" + createTemplateTableBuilder);
             starRequest.setSql(createTemplateTableBuilder + starRequest.getSql());
         }
 
@@ -107,7 +109,7 @@ public class Execute {
             "  dbtable \"" + tableName + "\",\n" +
             "  user '" + starRequest.getUsername() + "',\n" +
             "  password '" + starRequest.getPassword() + "'\n" +
-            ")";
+            "); \n";
 
         return sqlTemplate;
     }
