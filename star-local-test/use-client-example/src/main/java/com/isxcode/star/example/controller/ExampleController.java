@@ -24,6 +24,17 @@ public class ExampleController {
         return starTemplate.build().sql(sql).execute();
     }
 
+    @GetMapping("/executeMysql")
+    public StarResponse executeMysql(@RequestParam String sql) {
+
+        return starTemplate.build()
+            .jdbcUrl("jdbc:mysql://dcloud-dev:30102/ispong_db")
+            .username("ispong")
+            .password("ispong123")
+            .sql(sql)
+            .execute();
+    }
+
     @GetMapping("/getStatus")
     public StarResponse getStatus(@RequestParam String applicationId) {
 

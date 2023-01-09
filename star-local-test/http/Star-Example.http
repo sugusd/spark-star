@@ -1,5 +1,5 @@
 ### 执行远程jar
-GET http://localhost:8080/execute?sql=select * from ispong_db.users
+GET http://localhost:8080/execute?sql=select u1.age,u2.age from users u1 left join users_sink u2 on u1.username = u2.username
 
 ### 获取状态
 GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0049

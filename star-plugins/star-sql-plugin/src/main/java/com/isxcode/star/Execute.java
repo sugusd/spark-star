@@ -75,8 +75,21 @@ public class Execute {
         // 初始化sparkSession
         SparkSession sparkSession = initSparkSession(starRequest);
 
-        // 执行sql
-        Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+        Dataset<Row> rowDataset;
+        if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
+            // 解析sql，加载所有相关的数据库中的table
+            SqlParseUtils sqlParseUtils = new SqlParseUtils();
+            List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
+            StringBuilder createTemplateTableBuilder = new StringBuilder();
+            tableNames.forEach(e -> {
+                createTemplateTableBuilder.append(generateCreateTableSql(e, starRequest) + "\n");
+            });
+
+            starRequest.setSql(createTemplateTableBuilder + starRequest.getSql());
+        }
+
+        System.out.println("执行sparksql" + starRequest.getSql());
+        rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
 
         // 导出输出
         exportResult(rowDataset);
@@ -84,4 +97,19 @@ public class Execute {
         // 停止sparkSession
         sparkSession.stop();
     }
+
+    public static String generateCreateTableSql(String tableName, StarRequest starRequest) {
+
+        String sqlTemplate = "CREATE TEMPORARY VIEW " + tableName + "\n" +
+            "USING org.apache.spark.sql.jdbc\n" +
+            "OPTIONS (\n" +
+            "  url '" + starRequest.getJdbcUrl() + "',\n" +
+            "  dbtable \"" + tableName + "\",\n" +
+            "  user '" + starRequest.getUsername() + "',\n" +
+            "  password '" + starRequest.getPassword() + "'\n" +
+            ")";
+
+        return sqlTemplate;
+    }
+
 }

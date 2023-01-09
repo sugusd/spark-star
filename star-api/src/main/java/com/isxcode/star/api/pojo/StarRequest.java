@@ -36,6 +36,16 @@ public class StarRequest {
 
     private String db;
 
+    private String jdbcUrl;
+
+    private String username;
+
+    private String password;
+
+    private String driverClassName;
+
+    private String dbType;
+
     private Map<String, String> sparkConfig= new HashMap<String, String>() {{
         put("spark.executor.memory", "2g");
         put("spark.driver.memory", "1g");

@@ -94,6 +94,29 @@ public class StarTemplate {
             return this;
         }
 
+        public Builder username(String username) {
+
+            starRequest.setUsername(username);
+            return this;
+        }
+
+        public Builder password(String password) {
+
+            starRequest.setPassword(password);
+            return this;
+        }
+
+        public Builder jdbcUrl(String jdbcUrl) {
+
+            if (jdbcUrl.contains("jdbc:mysql://")) {
+                starRequest.setDriverClassName("com.mysql.cj.jdbc.Driver");
+                starRequest.setDbType("mysql");
+            }
+
+            starRequest.setJdbcUrl(jdbcUrl);
+            return this;
+        }
+
         public StarResponse execute() {
 
             String executeUrl = parseExecuteUrl(URLs.EXECUTE_URL);
