@@ -72,7 +72,7 @@ public class StarTemplate {
 
         public Builder sparkConfig(Map<String,String> sparkConfig) {
 
-            starRequest.setSparkConfig(sparkConfig);
+            starRequest.getSparkConfig().putAll(sparkConfig);
             return this;
         }
 

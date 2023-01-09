@@ -39,7 +39,6 @@ public class StarRequest {
     private Map<String, String> sparkConfig= new HashMap<String, String>() {{
         put("spark.executor.memory", "2g");
         put("spark.driver.memory", "1g");
-        put("hive.metastore.uris", "thrift://localhost:9083");
     }};
 
     private YarnJobConfig yarnJobConfig = new YarnJobConfig("spark-star", "com.isxcode.star.Execute", "star-sql-plugin");
