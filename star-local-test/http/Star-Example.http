@@ -1,17 +1,17 @@
 ### 执行远程jar
-GET http://localhost:8080/executeMysql?sql=select u1.age,u2.age from users u1 left join users_sink u2 on u1.username = u2.username
+GET http://localhost:8080/executeMysql?sql=select u1.age,u2.age as age2 from users u1 left join users_sink u2 on u1.username = u2.username
 
 ### 执行远程jar
 GET http://localhost:8080/executeMysql?sql=select u1.age from users u1
 
 ### 获取状态
-GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0059
+GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0060
 
 ### 获取日志
-GET http://localhost:8080/getLog?applicationId=application_1670911887748_0059
+GET http://localhost:8080/getLog?applicationId=application_1670911887748_0060
 
 ### 查询返回值
-GET http://localhost:8080/getData?applicationId=application_1670911887748_0059
+GET http://localhost:8080/getData?applicationId=application_1670911887748_0060
 
 ### 停止作业
 GET http://localhost:8080/stopJob?applicationId=application_1670911887748_0049

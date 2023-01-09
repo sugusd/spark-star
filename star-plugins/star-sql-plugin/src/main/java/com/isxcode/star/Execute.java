@@ -69,6 +69,7 @@ public class Execute {
 
         // 解析请求参数
         StarRequest starRequest = ArgsUtils.parse(args);
+        log.info("starRequest: {}", starRequest);
 
         // 校验请求参数
         checkRequest(starRequest);
@@ -82,11 +83,13 @@ public class Execute {
             SqlParseUtils sqlParseUtils = new SqlParseUtils();
             List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
             tableNames.forEach(e -> {
-                log.info("spark执行sql" + e);
-                sparkSession.sql(generateCreateTableSql(e, starRequest));
+                String createTableSql = generateCreateTableSql(e, starRequest);
+                log.info("spark执行sql: {}", createTableSql);
+                sparkSession.sql(createTableSql);
             });
         }
 
+        log.info("sparkSession执行sql: {}", starRequest.getSql());
         rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
 
         // 导出输出
