@@ -45,11 +45,11 @@ public class ExampleController {
             "    driver 'com.mysql.cj.jdbc.Driver',\n" +
             "    url 'jdbc:mysql://dcloud-dev:30102/ispong_db',\n" +
             "    user 'ispong',\n" +
-            "    password 'ispong123'\n" +
-            "    dbtable 'users',\n" +
+            "    password 'ispong123',\n" +
+            "    dbtable 'users'\n" +
             ");\n" +
             "" +
-            "insert into ispong_db.users select * from users_view where age > 15";
+            "insert into ispong_db.users select * from users_view where age > 18";
 
         return starTemplate.build().sql(sql).execute();
     }
