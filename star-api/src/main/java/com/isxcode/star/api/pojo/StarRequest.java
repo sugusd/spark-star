@@ -46,6 +46,8 @@ public class StarRequest {
 
     private String dbType;
 
+    private Map<String, Object> kafkaConfig;
+
     private Map<String, String> sparkConfig= new HashMap<String, String>() {{
         put("spark.executor.memory", "2g");
         put("spark.driver.memory", "1g");

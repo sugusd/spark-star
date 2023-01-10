@@ -5,11 +5,19 @@ import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.utils.ArgsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.streaming.Duration;
+import org.apache.spark.streaming.api.java.JavaInputDStream;
+import org.apache.spark.streaming.api.java.JavaStreamingContext;
+import org.apache.spark.streaming.kafka010.ConsumerStrategies;
+import org.apache.spark.streaming.kafka010.KafkaUtils;
+import org.apache.spark.streaming.kafka010.LocationStrategies;
 
 import java.util.*;
 
@@ -77,6 +85,40 @@ public class Execute {
         // 初始化sparkSession
         SparkSession sparkSession = initSparkSession(starRequest);
 
+        // 支持kafka
+        if (starRequest.getKafkaConfig() != null) {
+
+            SparkConf conf = new SparkConf();
+            for (Map.Entry<String, String> entry : starRequest.getSparkConfig().entrySet()) {
+                conf.set(entry.getKey(), entry.getValue());
+            }
+
+            try (JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000))) {
+
+                HashSet<String> topics = new HashSet<>();
+                topics.add(String.valueOf(starRequest.getKafkaConfig().get("topic")));
+
+                JavaInputDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
+                    javaStreamingContext,
+                    LocationStrategies.PreferConsistent(),
+                    ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
+
+                directStream.foreachRDD((rdd, time) -> {
+
+                    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+
+                    JavaRDD<String> map = rdd.map(ConsumerRecord::value);
+                    Dataset<Row> dataFrame = spark.createDataFrame(map, String.class);
+                    dataFrame.createOrReplaceTempView("words");
+
+                    Dataset<Row> sql = spark.sql("select * from words");
+                    sql.show();
+                });
+            }
+
+            return;
+        }
+
         Dataset<Row> rowDataset;
         if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
             // 解析sql，加载所有相关的数据库中的table
@@ -114,5 +156,6 @@ public class Execute {
 
         return sqlTemplate;
     }
+
 
 }
