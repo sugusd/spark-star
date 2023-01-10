@@ -104,8 +104,9 @@ public class Execute {
                 ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), kafkaConfig));
 
             directStream.foreachRDD(rdd -> {
+                System.out.println("================> rdd" + rdd);
                 rdd.map(e -> {
-                    System.out.println("==> 数据" + e.value());
+                    System.out.println("================> 数据" + e.value());
                     return e;
                 });
             });
