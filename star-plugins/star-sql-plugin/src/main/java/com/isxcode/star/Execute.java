@@ -10,9 +10,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -103,16 +106,15 @@ public class Execute {
                 LocationStrategies.PreferConsistent(),
                 ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), kafkaConfig));
 
-            SparkSession sparkSession = initSparkSession(starRequest);
-            Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql());
-            rowDataset.collectAsList().forEach(d -> {
-                System.out.println(d.get(0));
-            });
+            HiveContext hiveContext = new HiveContext(javaStreamingContext.sparkContext());
 
-//            directStream.map(rdd -> {
-//
-//                return null;
-//            });
+            directStream.map(rdd -> {
+                Dataset<Row> rowDataset = hiveContext.sql(starRequest.getSql());
+                rowDataset.collectAsList().forEach(d -> {
+                    System.out.println(d.get(0));
+                });
+                return null;
+            });
 
 //            directStream.map(rdd -> {
 //                KafkaRow record = new KafkaRow();
