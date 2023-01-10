@@ -103,13 +103,29 @@ public class Execute {
                 LocationStrategies.PreferConsistent(),
                 ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), kafkaConfig));
 
-            directStream.foreachRDD(rdd -> {
-                System.out.println("================> rdd" + rdd);
-                rdd.map(e -> {
-                    System.out.println("================> 数据" + e.value());
-                    return e;
-                });
+            SparkSession sparkSession = initSparkSession(starRequest);
+            Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql());
+            rowDataset.collectAsList().forEach(d -> {
+                System.out.println(d.get(0));
             });
+
+//            directStream.map(rdd -> {
+//
+//                return null;
+//            });
+
+//            directStream.map(rdd -> {
+//                KafkaRow record = new KafkaRow();
+//                record.setRecord(rdd.value());
+//                return record;
+//            }).foreachRDD(e -> {
+//                Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
+//                dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
+//                Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql());
+//                rowDataset.collectAsList().forEach(d -> {
+//                    System.out.println(d.get(0));
+//                });
+//            });
 
             javaStreamingContext.start();
             javaStreamingContext.awaitTermination();
@@ -185,6 +201,5 @@ public class Execute {
 
         return sqlTemplate;
     }
-
-
 }
+

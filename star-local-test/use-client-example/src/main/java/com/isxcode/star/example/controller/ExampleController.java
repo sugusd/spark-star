@@ -46,7 +46,7 @@ public class ExampleController {
 
         Map<String, Object> kafkaConfig = new HashMap<>();
         kafkaConfig.put("topic", "ispong-topic");
-        kafkaConfig.put("name", "users");
+        kafkaConfig.put("name", "users_tmp");
         kafkaConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "dcloud-dev:30120");
         kafkaConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
 //        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -55,10 +55,12 @@ public class ExampleController {
         kafkaConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return starTemplate.build()
-            .sql("insert into ispong_db.users select * from users")
+            .sql("select * from ispong_db.users limit 1")
             .kafkaConfig(kafkaConfig)
             .execute();
     }
+
+    //   .sql("select u2.username from users_tmp u1 left join ispong_db.users u2 on u1.record = u2.age ")
 
     @GetMapping("/executeSync")
     public StarResponse executeSync() {
