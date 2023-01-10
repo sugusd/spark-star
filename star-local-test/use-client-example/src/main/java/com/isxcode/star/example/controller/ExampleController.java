@@ -1,5 +1,6 @@
 package com.isxcode.star.example.controller;
 
+import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
 import com.isxcode.star.api.pojo.StarResponse;
 import com.isxcode.star.api.pojo.dto.YarnJobConfig;
 import com.isxcode.star.client.template.StarTemplate;
@@ -44,6 +45,8 @@ public class ExampleController {
         kafkaConfig.put("bootstrap.servers", "dcloud-dev:30120");
         kafkaConfig.put("group.id", "test-consumer-group");
         kafkaConfig.put("name", "users");
+        kafkaConfig.put("auto.offset.reset", "latest");
+        kafkaConfig.put("enable.auto.commit", false);
 
         return starTemplate.build()
             .sql("insert into ispong_db.users select * from users")

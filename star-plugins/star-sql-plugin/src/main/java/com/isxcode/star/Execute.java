@@ -5,6 +5,7 @@ import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.utils.ArgsUtils;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
@@ -13,7 +14,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.streaming.Duration;
-import org.apache.spark.streaming.api.java.JavaInputDStream;
+import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.apache.spark.streaming.kafka010.ConsumerStrategies;
 import org.apache.spark.streaming.kafka010.KafkaUtils;
@@ -73,7 +74,7 @@ public class Execute {
         System.out.println(JSON.toJSONString(starData));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // 解析请求参数
         StarRequest starRequest = ArgsUtils.parse(args);
@@ -91,64 +92,81 @@ public class Execute {
                 conf.set(entry.getKey(), entry.getValue());
             }
 
-            try (JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000))) {
+            JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000));
 
-                HashSet<String> topics = new HashSet<>();
-                topics.add(String.valueOf(starRequest.getKafkaConfig().get("topic")));
+            JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
+                javaStreamingContext,
+                LocationStrategies.PreferConsistent(),
+                ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), starRequest.getKafkaConfig()));
 
-                JavaInputDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
-                    javaStreamingContext,
-                    LocationStrategies.PreferConsistent(),
-                    ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
+            log.info("print ==>");
+            directStream.print();
 
-                log.info("准备接受数据");
-                directStream.foreachRDD((rdd, time) -> {
+            directStream.foreachRDD(rdd -> {
+                rdd.map(e -> {
+                    log.info(e.value());
+                    return e;
+                });
+            });
 
-                    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+            javaStreamingContext.start();
+            javaStreamingContext.awaitTermination();
 
-                    JavaRDD<String> map = rdd.map(e->{
-                        log.info("接收到数据 {}", e);
-                        return e.value();
-                    });
+//            try (JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000))) {
+//
+//                HashSet<String> topics = new HashSet<>();
+//                topics.add(String.valueOf(starRequest.getKafkaConfig().get("topic")));
+//
+//                JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
+//                    javaStreamingContext,
+//                    LocationStrategies.PreferConsistent(),
+//                    ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
+//
+//                log.info("准备接受数据");
+//                directStream.foreachRDD((rdd, time) -> {
+//
+//                    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
+//
+//                    JavaRDD<String> map = rdd.map(e -> {
+//                        log.info("接收到数据 {}", e);
+//                        return e.value();
+//                    });
+//
+//                    Dataset<Row> dataFrame = spark.createDataFrame(map, String.class);
+//                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
+//
+//                    Dataset<Row> sql = spark.sql("select * from words");
+//                    sql.show();
+//
+//                    javaStreamingContext.start();
+//                    javaStreamingContext.awaitTermination();
+//                });
+//            }
+        } else {
+            // 初始化sparkSession
+            SparkSession sparkSession = initSparkSession(starRequest);
 
-                    Dataset<Row> dataFrame = spark.createDataFrame(map, String.class);
-                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
-
-                    Dataset<Row> sql = spark.sql("select * from words");
-                    sql.show();
-
-                    javaStreamingContext.start();
-                    javaStreamingContext.awaitTermination();
+            Dataset<Row> rowDataset;
+            if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
+                // 解析sql，加载所有相关的数据库中的table
+                SqlParseUtils sqlParseUtils = new SqlParseUtils();
+                List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
+                tableNames.forEach(e -> {
+                    String createTableSql = generateCreateTableSql(e, starRequest);
+                    log.info("spark执行sql: {}", createTableSql);
+                    sparkSession.sql(createTableSql);
                 });
             }
 
-            return;
+            log.info("sparkSession执行sql: {}", starRequest.getSql());
+            if (starRequest.getSql().contains(";")) {
+                Arrays.asList(starRequest.getSql().split(";")).forEach(sparkSession::sql);
+            } else {
+                rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
+                exportResult(rowDataset);
+                sparkSession.stop();
+            }
         }
-
-        // 初始化sparkSession
-        SparkSession sparkSession = initSparkSession(starRequest);
-
-        Dataset<Row> rowDataset;
-        if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
-            // 解析sql，加载所有相关的数据库中的table
-            SqlParseUtils sqlParseUtils = new SqlParseUtils();
-            List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
-            tableNames.forEach(e -> {
-                String createTableSql = generateCreateTableSql(e, starRequest);
-                log.info("spark执行sql: {}", createTableSql);
-                sparkSession.sql(createTableSql);
-            });
-        }
-
-        log.info("sparkSession执行sql: {}", starRequest.getSql());
-        if (starRequest.getSql().contains(";")) {
-            Arrays.asList(starRequest.getSql().split(";")).forEach(sparkSession::sql);
-        } else {
-            rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
-            exportResult(rowDataset);
-            sparkSession.stop();
-        }
-
     }
 
     public static String generateCreateTableSql(String tableName, StarRequest starRequest) {
