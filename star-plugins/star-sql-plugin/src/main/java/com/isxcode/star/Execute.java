@@ -92,7 +92,7 @@ public class Execute {
                 conf.set(entry.getKey(), entry.getValue());
             }
 
-            JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000));
+            JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(2000));
 
             Map<String, Object> kafkaConfig = starRequest.getKafkaConfig();
             kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -105,7 +105,7 @@ public class Execute {
 
             directStream.foreachRDD(rdd -> {
                 rdd.map(e -> {
-                    log.info(e.value());
+                    System.out.println("==> 数据" + e.value());
                     return e;
                 });
             });
