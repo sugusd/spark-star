@@ -85,6 +85,7 @@ public class Execute {
         // 支持kafka
         if (starRequest.getKafkaConfig() != null) {
 
+            log.info("开始执行kafka类型作业");
             SparkConf conf = new SparkConf();
             for (Map.Entry<String, String> entry : starRequest.getSparkConfig().entrySet()) {
                 conf.set(entry.getKey(), entry.getValue());
@@ -100,16 +101,24 @@ public class Execute {
                     LocationStrategies.PreferConsistent(),
                     ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
 
+                log.info("准备接受数据");
                 directStream.foreachRDD((rdd, time) -> {
 
                     SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
 
-                    JavaRDD<String> map = rdd.map(ConsumerRecord::value);
+                    JavaRDD<String> map = rdd.map(e->{
+                        log.info("接收到数据 {}", e);
+                        return e.value();
+                    });
+
                     Dataset<Row> dataFrame = spark.createDataFrame(map, String.class);
-                    dataFrame.createOrReplaceTempView("words");
+                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
 
                     Dataset<Row> sql = spark.sql("select * from words");
                     sql.show();
+
+                    javaStreamingContext.start();
+                    javaStreamingContext.awaitTermination();
                 });
             }
 

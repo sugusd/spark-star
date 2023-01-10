@@ -24,7 +24,7 @@
                 <include>com.alibaba:fastjson</include>
                 <include>org.apache.logging.log4j:log4j-api</include>
                 <include>com.alibaba:fastjson</include>
-                <include>org.apache.spark:spark-streaming-kafka-0-10_${kafka.scala.version}</include>
+                <include>org.apache.spark:spark-streaming-kafka-0-10_${scala.version}</include>
             </includes>
         </dependencySet>
     </dependencySets>
