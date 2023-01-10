@@ -82,9 +82,6 @@ public class Execute {
         // 校验请求参数
         checkRequest(starRequest);
 
-        // 初始化sparkSession
-        SparkSession sparkSession = initSparkSession(starRequest);
-
         // 支持kafka
         if (starRequest.getKafkaConfig() != null) {
 
@@ -118,6 +115,9 @@ public class Execute {
 
             return;
         }
+
+        // 初始化sparkSession
+        SparkSession sparkSession = initSparkSession(starRequest);
 
         Dataset<Row> rowDataset;
         if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
