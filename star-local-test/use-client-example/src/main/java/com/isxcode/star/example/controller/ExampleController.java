@@ -35,6 +35,22 @@ public class ExampleController {
             .execute();
     }
 
+
+    @GetMapping("/executeKafka")
+    public StarResponse executeKafka() {
+
+        Map<String, Object> kafkaConfig = new HashMap<>();
+        kafkaConfig.put("topic", "ispong-topic");
+        kafkaConfig.put("bootstrap.servers", "dcloud-dev:30120");
+        kafkaConfig.put("group.id", "test-consumer-group");
+        kafkaConfig.put("name", "users");
+
+        return starTemplate.build()
+            .sql("insert into ispong_db.users select * from users")
+            .kafkaConfig(kafkaConfig)
+            .execute();
+    }
+
     @GetMapping("/executeSync")
     public StarResponse executeSync() {
 

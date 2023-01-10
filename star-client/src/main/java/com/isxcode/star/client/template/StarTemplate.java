@@ -76,6 +76,12 @@ public class StarTemplate {
             return this;
         }
 
+        public Builder kafkaConfig(Map<String,Object> kafkaConfig) {
+
+            starRequest.setKafkaConfig(kafkaConfig);
+            return this;
+        }
+
         public Builder applicationId(String applicationId) {
 
             starRequest.setApplicationId(applicationId);
