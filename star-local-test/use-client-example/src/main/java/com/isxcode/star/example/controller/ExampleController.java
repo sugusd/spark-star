@@ -1,15 +1,19 @@
 package com.isxcode.star.example.controller;
 
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
 import com.isxcode.star.api.pojo.StarResponse;
 import com.isxcode.star.api.pojo.dto.YarnJobConfig;
 import com.isxcode.star.client.template.StarTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 
 @RestController
 @RequestMapping
@@ -42,11 +46,13 @@ public class ExampleController {
 
         Map<String, Object> kafkaConfig = new HashMap<>();
         kafkaConfig.put("topic", "ispong-topic");
-        kafkaConfig.put("bootstrap.servers", "dcloud-dev:30120");
-        kafkaConfig.put("group.id", "test-consumer-group");
         kafkaConfig.put("name", "users");
-        kafkaConfig.put("auto.offset.reset", "latest");
-        kafkaConfig.put("enable.auto.commit", false);
+        kafkaConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "dcloud-dev:30120");
+        kafkaConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
+//        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+//        kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        kafkaConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        kafkaConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return starTemplate.build()
             .sql("insert into ispong_db.users select * from users")

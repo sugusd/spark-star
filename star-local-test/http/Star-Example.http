@@ -14,7 +14,7 @@ GET http://localhost:8080/executeKafka
 GET http://localhost:8080/getStatus?applicationId=application_1670911887748_0060
 
 ### 获取日志
-GET http://localhost:8080/getLog?applicationId=application_1670911887748_0060
+GET http://localhost:8080/getLog?applicationId=application_1670911887748_0072
 
 ### 查询返回值
 GET http://localhost:8080/getData?applicationId=application_1670911887748_0060

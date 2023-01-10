@@ -5,11 +5,11 @@ import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.utils.ArgsUtils;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -94,13 +94,14 @@ public class Execute {
 
             JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000));
 
+            Map<String, Object> kafkaConfig = starRequest.getKafkaConfig();
+            kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+            kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+
             JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
                 javaStreamingContext,
                 LocationStrategies.PreferConsistent(),
-                ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), starRequest.getKafkaConfig()));
-
-            log.info("print ==>");
-            directStream.print();
+                ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), kafkaConfig));
 
             directStream.foreachRDD(rdd -> {
                 rdd.map(e -> {
