@@ -11,6 +11,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -95,73 +96,39 @@ public class Execute {
                 conf.set(entry.getKey(), entry.getValue());
             }
 
-            JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(2000));
-
             Map<String, Object> kafkaConfig = starRequest.getKafkaConfig();
             kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
             kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
-            JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
-                javaStreamingContext,
-                LocationStrategies.PreferConsistent(),
-                ConsumerStrategies.Subscribe(Collections.singleton(String.valueOf(starRequest.getKafkaConfig().get("topic"))), kafkaConfig));
+            try (JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000))) {
 
-            HiveContext hiveContext = new HiveContext(javaStreamingContext.sparkContext());
+                SparkSession sparkSession = initSparkSession(starRequest);
+                HiveContext hiveContext = new HiveContext(javaStreamingContext.sparkContext());
 
-            directStream.map(rdd -> {
-                Dataset<Row> rowDataset = hiveContext.sql(starRequest.getSql());
-                rowDataset.collectAsList().forEach(d -> {
-                    System.out.println(d.get(0));
+                HashSet<String> topics = new HashSet<>();
+                topics.add(String.valueOf(starRequest.getKafkaConfig().get("topic")));
+
+                JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
+                    javaStreamingContext,
+                    LocationStrategies.PreferConsistent(),
+                    ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
+
+                directStream.map(rdd -> {
+                    KafkaRow record = new KafkaRow();
+                    record.setRecord(rdd.value());
+                    return record;
+                }).foreachRDD(e -> {
+                    Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
+                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
+                    Dataset<Row> rowDataset = hiveContext.sql(starRequest.getSql());
+                    rowDataset.collectAsList().forEach(d -> {
+                        System.out.println(d.get(0));
+                    });
                 });
-                return null;
-            });
 
-//            directStream.map(rdd -> {
-//                KafkaRow record = new KafkaRow();
-//                record.setRecord(rdd.value());
-//                return record;
-//            }).foreachRDD(e -> {
-//                Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
-//                dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
-//                Dataset<Row> rowDataset = sparkSession.sql(starRequest.getSql());
-//                rowDataset.collectAsList().forEach(d -> {
-//                    System.out.println(d.get(0));
-//                });
-//            });
-
-            javaStreamingContext.start();
-            javaStreamingContext.awaitTermination();
-
-//            try (JavaStreamingContext javaStreamingContext = new JavaStreamingContext(conf, new Duration(1000))) {
-//
-//                HashSet<String> topics = new HashSet<>();
-//                topics.add(String.valueOf(starRequest.getKafkaConfig().get("topic")));
-//
-//                JavaDStream<ConsumerRecord<String, String>> directStream = KafkaUtils.createDirectStream(
-//                    javaStreamingContext,
-//                    LocationStrategies.PreferConsistent(),
-//                    ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
-//
-//                log.info("准备接受数据");
-//                directStream.foreachRDD((rdd, time) -> {
-//
-//                    SparkSession spark = SparkSession.builder().config(conf).getOrCreate();
-//
-//                    JavaRDD<String> map = rdd.map(e -> {
-//                        log.info("接收到数据 {}", e);
-//                        return e.value();
-//                    });
-//
-//                    Dataset<Row> dataFrame = spark.createDataFrame(map, String.class);
-//                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
-//
-//                    Dataset<Row> sql = spark.sql("select * from words");
-//                    sql.show();
-//
-//                    javaStreamingContext.start();
-//                    javaStreamingContext.awaitTermination();
-//                });
-//            }
+                javaStreamingContext.start();
+                javaStreamingContext.awaitTermination();
+            }
         } else {
             // 初始化sparkSession
             SparkSession sparkSession = initSparkSession(starRequest);
