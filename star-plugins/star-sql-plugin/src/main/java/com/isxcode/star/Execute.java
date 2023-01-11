@@ -5,6 +5,7 @@ import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.utils.ArgsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -16,7 +17,12 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.api.java.UDF0;
+import org.apache.spark.sql.api.java.UDF1;
+import org.apache.spark.sql.api.java.UDF2;
+import org.apache.spark.sql.functions;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.streaming.Duration;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -25,6 +31,7 @@ import org.apache.spark.streaming.kafka010.KafkaUtils;
 import org.apache.spark.streaming.kafka010.LocationStrategies;
 
 import java.util.*;
+import java.util.regex.Matcher;
 
 @Slf4j
 public class Execute {
@@ -113,17 +120,37 @@ public class Execute {
                     LocationStrategies.PreferConsistent(),
                     ConsumerStrategies.Subscribe(topics, starRequest.getKafkaConfig()));
 
+                List<String> columns = Arrays.asList(String.valueOf(starRequest.getKafkaConfig().get("columns")).split(","));
+
                 directStream.map(rdd -> {
                     KafkaRow record = new KafkaRow();
                     record.setRecord(rdd.value());
                     return record;
                 }).foreachRDD(e -> {
-                    Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
-                    dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
-                    Dataset<Row> rowDataset = hiveContext.sql(starRequest.getSql());
-                    rowDataset.collectAsList().forEach(d -> {
-                        System.out.println(d.get(0));
-                    });
+                    if (e.count() > 0) {
+                        Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
+
+                        // 注册新列
+                        for (String column : columns) {
+
+                            // 每次重新注册
+                            UDF1<String, String> SplitRecord = (record) -> record.split(",")[columns.indexOf(column)];
+                            sparkSession.udf().register("SplitRecord", SplitRecord, DataTypes.StringType);
+
+                            // 创建新的列
+                            dataFrame = dataFrame.withColumn(column, functions.callUDF("SplitRecord", dataFrame.col("record")));
+                        }
+
+                        // 删除初始化的record列
+                        dataFrame.drop(dataFrame.col("record"));
+
+                        // 创建临时表
+                        dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
+
+                        // 执行用户sql，连接hive和kafka中的数据
+                        Dataset<Row> rowDataset = hiveContext.sql(starRequest.getSql());
+                        exportResult(rowDataset);
+                    }
                 });
 
                 javaStreamingContext.start();

@@ -51,16 +51,15 @@ public class ExampleController {
         kafkaConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
 //        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 //        kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        kafkaConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        kafkaConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "none");
         kafkaConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return starTemplate.build()
-            .sql("select * from ispong_db.users limit 1")
+            .sql("select u2.age from users_tmp u1 left join ispong_db.users u2 on u1.record = u2.username ")
             .kafkaConfig(kafkaConfig)
             .execute();
     }
 
-    //   .sql("select u2.username from users_tmp u1 left join ispong_db.users u2 on u1.record = u2.age ")
 
     @GetMapping("/executeSync")
     public StarResponse executeSync() {
