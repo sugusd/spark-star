@@ -125,6 +125,8 @@ public class Execute {
                         for (String column : columns) {
                             UDF1<String, String> SplitRecord = (record) -> {
                                 try {
+                                    String[] split = record.split(",");
+                                    String checkData = split[columns.size() - 1];
                                     return record.split(",")[columns.indexOf(column)];
                                 } catch (Exception exception) {
                                     return null;
