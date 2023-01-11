@@ -114,7 +114,15 @@ public class Execute {
 
                 List<String> columns = Arrays.asList(String.valueOf(starRequest.getKafkaConfig().get("columns")).split(","));
 
-                directStream.map(rdd -> {
+                directStream.filter(d -> {
+                        try {
+                            String[] split = d.value().split(",");
+                            return split.length >= columns.size();
+                        } catch (Exception e) {
+                            return false;
+                        }
+                    }
+                ).map(rdd -> {
                     KafkaRow record = new KafkaRow();
                     record.setRecord(rdd.value());
                     return record;
@@ -125,8 +133,6 @@ public class Execute {
                         for (String column : columns) {
                             UDF1<String, String> SplitRecord = (record) -> {
                                 try {
-                                    String[] split = record.split(",");
-                                    String checkData = split[columns.size() - 1];
                                     return record.split(",")[columns.indexOf(column)];
                                 } catch (Exception exception) {
                                     return null;
