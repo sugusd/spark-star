@@ -59,13 +59,10 @@ public class Execute {
 
         StarData.StarDataBuilder starDataBuilder = StarData.builder();
 
-        // 获取列信息
         starDataBuilder.columnNames(Arrays.asList(rowDataset.columns()));
 
-        // 获取数据
         List<List<String>> dataList = new ArrayList<>();
-        List<Row> rows = rowDataset.collectAsList();
-        rows.forEach(e -> {
+        rowDataset.collectAsList().forEach(e -> {
             List<String> metaData = new ArrayList<>();
             for (int i = 0; i < e.size(); i++) {
                 metaData.add(String.valueOf(e.get(i)));
@@ -79,17 +76,13 @@ public class Execute {
 
     public static void main(String[] args) throws InterruptedException {
 
-        // 解析请求参数
         StarRequest starRequest = ArgsUtils.parse(args);
         log.info("starRequest: {}", starRequest);
 
-        // 校验请求参数
         checkRequest(starRequest);
 
-        // 支持kafka
         if (starRequest.getKafkaConfig() != null) {
 
-            log.info("开始执行kafka类型作业");
             SparkConf conf = new SparkConf();
             for (Map.Entry<String, String> entry : starRequest.getSparkConfig().entrySet()) {
                 conf.set(entry.getKey(), entry.getValue());
@@ -114,61 +107,44 @@ public class Execute {
 
                 List<String> columns = Arrays.asList(String.valueOf(starRequest.getKafkaConfig().get("columns")).split(","));
 
-                directStream.filter(d -> {
-                        try {
-                            String[] split = d.value().split(",");
-                            return split.length >= columns.size();
-                        } catch (Exception e) {
-                            return false;
+                directStream
+                    .filter(d -> {
+                        String[] split = d.value().split(",");
+                        return split.length >= columns.size();
+                    }).map(rdd -> {
+                        KafkaRow record = new KafkaRow();
+                        record.setRecord(rdd.value());
+                        return record;
+                    }).foreachRDD(e -> {
+                        if (e.count() > 0) {
+                            Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
+                            for (String column : columns) {
+                                UDF1<String, String> SplitRecord = (record) -> record.split(",")[columns.indexOf(column)];
+                                sparkSession.udf().register("SplitRecord", SplitRecord, DataTypes.StringType);
+                                dataFrame = dataFrame.withColumn(column, functions.callUDF("SplitRecord", dataFrame.col("record")));
+                            }
+
+                            dataFrame = dataFrame.drop(dataFrame.col("record"));
+                            dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
+                            hiveContext.sql(starRequest.getSql());
                         }
-                    }
-                ).map(rdd -> {
-                    KafkaRow record = new KafkaRow();
-                    record.setRecord(rdd.value());
-                    return record;
-                }).foreachRDD(e -> {
-                    if (e.count() > 0) {
-                        Dataset<Row> dataFrame = sparkSession.createDataFrame(e, KafkaRow.class);
-
-                        for (String column : columns) {
-                            UDF1<String, String> SplitRecord = (record) -> {
-                                try {
-                                    return record.split(",")[columns.indexOf(column)];
-                                } catch (Exception exception) {
-                                    return null;
-                                }
-                            };
-                            sparkSession.udf().register("SplitRecord", SplitRecord, DataTypes.StringType);
-                            dataFrame = dataFrame.withColumn(column, functions.callUDF("SplitRecord", dataFrame.col("record")));
-                        }
-
-                        dataFrame = dataFrame.drop(dataFrame.col("record"));
-                        dataFrame.createOrReplaceTempView(String.valueOf(starRequest.getKafkaConfig().get("name")));
-
-                        hiveContext.sql(starRequest.getSql());
-                    }
-                });
+                    });
 
                 javaStreamingContext.start();
                 javaStreamingContext.awaitTermination();
             }
         } else {
-            // 初始化sparkSession
             SparkSession sparkSession = initSparkSession(starRequest);
 
             Dataset<Row> rowDataset;
             if (!Strings.isEmpty(starRequest.getJdbcUrl())) {
-                // 解析sql，加载所有相关的数据库中的table
                 SqlParseUtils sqlParseUtils = new SqlParseUtils();
                 List<String> tableNames = sqlParseUtils.parseHiveSql(starRequest.getSql());
                 tableNames.forEach(e -> {
                     String createTableSql = generateCreateTableSql(e, starRequest);
-                    log.info("spark执行sql: {}", createTableSql);
                     sparkSession.sql(createTableSql);
                 });
             }
-
-            log.info("sparkSession执行sql: {}", starRequest.getSql());
             if (starRequest.getSql().contains(";")) {
                 Arrays.asList(starRequest.getSql().split(";")).forEach(sparkSession::sql);
             } else {
@@ -181,7 +157,7 @@ public class Execute {
 
     public static String generateCreateTableSql(String tableName, StarRequest starRequest) {
 
-        String sqlTemplate = "CREATE TEMPORARY VIEW " + tableName + "\n" +
+        return  "CREATE TEMPORARY VIEW " + tableName + "\n" +
             "USING org.apache.spark.sql.jdbc\n" +
             "OPTIONS (\n" +
             "  driver '" + starRequest.getDriverClassName() + "',\n" +
@@ -190,8 +166,6 @@ public class Execute {
             "  user '" + starRequest.getUsername() + "',\n" +
             "  password '" + starRequest.getPassword() + "'\n" +
             "); \n";
-
-        return sqlTemplate;
     }
 }
 

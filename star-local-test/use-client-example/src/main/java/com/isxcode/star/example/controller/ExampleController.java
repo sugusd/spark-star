@@ -10,6 +10,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,17 +48,15 @@ public class ExampleController {
         Map<String, Object> kafkaConfig = new HashMap<>();
         kafkaConfig.put("topic", "ispong-topic");
         kafkaConfig.put("name", "users_tmp");
-        kafkaConfig.put("columns", "username,age");
+        kafkaConfig.put("columns", "username,age,index");
         kafkaConfig.put("data-type", "csv");
         kafkaConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "dcloud-dev:30120");
         kafkaConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
-        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         kafkaConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "none");
         kafkaConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return starTemplate.build()
-            .sql("select * from users_tmp")
+            .sql("insert into ispong_db.users select username, 1 from users_tmp")
             .kafkaConfig(kafkaConfig)
             .execute();
     }
@@ -76,7 +75,7 @@ public class ExampleController {
             "    dbtable 'users'\n" +
             ");\n" +
             "" +
-            "insert into ispong_db.users select * from users_view where age > 18";
+            "insert into ispong_db.users select * from users_view";
 
         return starTemplate.build().sql(sql).execute();
     }
