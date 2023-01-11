@@ -6,7 +6,8 @@
     - [Hive支持](/zh-cn/install/Hive支持.md)
     - [Mysql支持](/zh-cn/install/Mysql支持.md) 
 - **使用说明**
-    - [数据同步](/zh-cn/reference/数据同步.md)
+    - [离线同步](/zh-cn/reference/离线同步.md)
+    - [实时同步](/zh-cn/reference/实时同步.md)
     - [Api说明](/zh-cn/reference/Api说明.md)
 - [**维护手册**](/zh-cn/contributing.md)
 - [**版本历史**](/zh-cn/changelog.md)

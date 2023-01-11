@@ -47,19 +47,20 @@ public class ExampleController {
         Map<String, Object> kafkaConfig = new HashMap<>();
         kafkaConfig.put("topic", "ispong-topic");
         kafkaConfig.put("name", "users_tmp");
+        kafkaConfig.put("columns", "username,age");
+        kafkaConfig.put("data-type", "csv");
         kafkaConfig.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "dcloud-dev:30120");
         kafkaConfig.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
-//        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-//        kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        kafkaConfig.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        kafkaConfig.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         kafkaConfig.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "none");
         kafkaConfig.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return starTemplate.build()
-            .sql("select u2.age from users_tmp u1 left join ispong_db.users u2 on u1.record = u2.username ")
+            .sql("select * from users_tmp")
             .kafkaConfig(kafkaConfig)
             .execute();
     }
-
 
     @GetMapping("/executeSync")
     public StarResponse executeSync() {
