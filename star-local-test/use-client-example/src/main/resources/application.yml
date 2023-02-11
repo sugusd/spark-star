@@ -2,6 +2,6 @@ star:
   check-servers: true
   servers:
     default:
-      host: definesys
+      host: 47.92.172.190
       port: 30156
       key: star-key
