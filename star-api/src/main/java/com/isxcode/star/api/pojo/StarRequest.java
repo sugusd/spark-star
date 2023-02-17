@@ -49,7 +49,7 @@ public class StarRequest {
     private Map<String, Object> kafkaConfig;
 
     private Map<String, String> sparkConfig= new HashMap<String, String>() {{
-        put("spark.executor.memory", "2g");
+        put("spark.executor.memory", "1g");
         put("spark.driver.memory", "1g");
     }};
 

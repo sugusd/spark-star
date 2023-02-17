@@ -2,6 +2,6 @@ star:
   check-servers: true
   servers:
     default:
-      host: 47.92.172.190
+      host: ispong-mac.local
       port: 30156
       key: star-key

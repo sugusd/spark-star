@@ -8,5 +8,9 @@ spring:
     location: classpath:banner.txt
 
 server:
+  port: 30156
   servlet:
     context-path: /spark-star
+
+star:
+  secret: star-key

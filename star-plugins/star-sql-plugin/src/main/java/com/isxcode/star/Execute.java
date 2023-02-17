@@ -71,6 +71,7 @@ public class Execute {
         });
         StarData starData = starDataBuilder.dataList(dataList).build();
 
+        log.info("return data: {}", JSON.toJSONString(starData));
         System.out.println(JSON.toJSONString(starData));
     }
 
@@ -145,19 +146,31 @@ public class Execute {
                     sparkSession.sql(createTableSql);
                 });
             }
-            if (starRequest.getSql().contains(";")) {
-                Arrays.asList(starRequest.getSql().split(";")).forEach(sparkSession::sql);
-            } else {
-                rowDataset = sparkSession.sql(starRequest.getSql()).limit(starRequest.getLimit());
-                exportResult(rowDataset);
-                sparkSession.stop();
+
+            List<String> sqlList = Arrays.asList(starRequest.getSql().split(";"));
+
+            for (int i = 0; i < sqlList.size() - 1; i++) {
+                sparkSession.sql(sqlList.get(i));
             }
+
+            String lastSql = sqlList.get(sqlList.size() - 1);
+            log.info("lastSql {}", lastSql);
+            if (lastSql.split(" ")[0].contains("select")) {
+                log.info("开始执行查询 =============> {}", lastSql);
+                rowDataset = sparkSession.sql(lastSql).limit(starRequest.getLimit());
+                log.info("执行查询结束 =============>");
+                exportResult(rowDataset);
+            } else {
+                sparkSession.sql(lastSql);
+            }
+
+            sparkSession.stop();
         }
     }
 
     public static String generateCreateTableSql(String tableName, StarRequest starRequest) {
 
-        return  "CREATE TEMPORARY VIEW " + tableName + "\n" +
+        return "CREATE TEMPORARY VIEW " + tableName + "\n" +
             "USING org.apache.spark.sql.jdbc\n" +
             "OPTIONS (\n" +
             "  driver '" + starRequest.getDriverClassName() + "',\n" +

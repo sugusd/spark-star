@@ -53,7 +53,7 @@ star:
 ```
 
 ```java
-package com.isxcode.star.example.controller;
+package com.isxcode.star.demo.controller;
 
 import com.isxcode.star.api.pojo.StarResponse;
 import com.isxcode.star.api.pojo.dto.YarnJobConfig;
@@ -72,7 +72,7 @@ import java.util.Map;
 public class ExampleController {
 
     private final StarTemplate starTemplate;
-    
+
     @GetMapping("/execute")
     public StarResponse execute(@RequestParam String sql) {
 
@@ -83,17 +83,17 @@ public class ExampleController {
         sparkConfig.put("hive.metastore.uris", "thrift://localhost:9083");
 
         return starTemplate.build()
-            .sql(sql)
-            .sparkConfig(sparkConfig)
-            .execute();
+                .sql(sql)
+                .sparkConfig(sparkConfig)
+                .execute();
     }
 
     @GetMapping("/getData")
     public StarResponse getData(@RequestParam String applicationId) {
 
         return starTemplate.build()
-            .applicationId(applicationId)
-            .getData();
+                .applicationId(applicationId)
+                .getData();
     }
 
 }

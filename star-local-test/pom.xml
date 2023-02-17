@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>use-client-example</module>
+        <module>client-demo</module>
     </modules>
 
 </project>
