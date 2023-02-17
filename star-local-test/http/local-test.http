@@ -4,15 +4,7 @@ POST http://localhost:8080/executeSql
 Content-Type: application/json
 
 {
-    "sparkSql": "CREATE TEMPORARY VIEW view_table \n USING org.apache.spark.sql.jdbc \n OPTIONS ( driver 'com.mysql.cj.jdbc.Driver',url 'jdbc:mysql://localhost:3306/ispong_db',user 'root',password 'ispong123',dbtable 'users'); select * from view_table;"
-}
-
-### 执行mysql查询
-POST http://localhost:8080/executeMysql
-Content-Type: application/json
-
-{
-    "sparkSql": "select * from users"
+    "sparkSql": "CREATE TEMPORARY VIEW view_table \n USING org.apache.spark.sql.jdbc \n OPTIONS ( driver 'com.mysql.cj.jdbc.Driver',url 'jdbc:mysql://localhost:3306/ispong_db',user 'root',password 'ispong123',dbtable 'users'); insert into view_table (username ,age) values('ispong',100);"
 }
 
 ### 执行mysql->mysql
@@ -28,7 +20,7 @@ POST http://localhost:8080/getStatus
 Content-Type: application/json
 
 {
-  "applicationId": "application_1676601640542_0010"
+  "applicationId": "application_1676601640542_0026"
 }
 
 ### 获取作业日志
@@ -36,7 +28,7 @@ POST http://localhost:8080/getLog
 Content-Type: application/json
 
 {
-    "applicationId": "application_1676601640542_0010"
+    "applicationId": "application_1676601640542_0026"
 }
 
 ### 查询返回值
@@ -44,12 +36,13 @@ POST http://localhost:8080/getData
 Content-Type: application/json
 
 {
-    "applicationId": "application_1676601640542_0010"
+    "applicationId": "application_1676601640542_0025"
 }
 
 ### 停止作业
-GET http://localhost:8080/stopJob?applicationId=application_1670911887748_0132
+POST http://localhost:8080/stopJob
+Content-Type: application/json
 
-### 执行远程jar
-GET http://localhost:8080/custom?sql=select * from ispong_db.users
-
+{
+    "applicationId": "application_1676601640542_0023"
+}

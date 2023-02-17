@@ -155,7 +155,7 @@ public class Execute {
 
             String lastSql = sqlList.get(sqlList.size() - 1);
             log.info("lastSql {}", lastSql);
-            if (lastSql.split(" ")[0].contains("select")) {
+            if (lastSql.trim().startsWith("select")) {
                 log.info("开始执行查询 =============> {}", lastSql);
                 rowDataset = sparkSession.sql(lastSql).limit(starRequest.getLimit());
                 log.info("执行查询结束 =============>");

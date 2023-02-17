@@ -7,3 +7,8 @@ git clone https://github.com/ispong/spark-star.git
 npm install docsify-cli --location=global
 docsify serve docs
 ```
+
+```bash
+cd ..
+docsify serve docs
+```
