@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.isxcode.star.api.exception.StarException;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
+import com.isxcode.star.api.pojo.dto.YarnJobConfig;
 import com.isxcode.star.server.utils.LogUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +25,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,6 +33,18 @@ import java.util.Optional;
 public class StarBizService {
 
     public StarData execute(StarRequest starRequest) {
+
+        if (starRequest.getSparkConfig() == null) {
+            Map<String, String> sparkConfig = new HashMap<>();
+            sparkConfig.put("spark.executor.memory", "1g");
+            sparkConfig. put("spark.driver.memory", "1g");
+            starRequest.setSparkConfig(sparkConfig);
+        }
+
+        if (starRequest.getYarnJobConfig() == null) {
+            YarnJobConfig yarnJobConfig = new YarnJobConfig("spark-star", "com.isxcode.star.Execute", "star-sql-plugin");
+            starRequest.setYarnJobConfig(yarnJobConfig);
+        }
 
         // 获取star目录位置
         String starHomePath = System.getenv("STAR_HOME");
@@ -128,7 +138,7 @@ public class StarBizService {
         return StarData.builder().appState(String.valueOf(applicationReport.getYarnApplicationState())).appFinalStatus(String.valueOf(applicationReport.getFinalApplicationStatus())).build();
     }
 
-    public StarData getLog(StarRequest starRequest)  {
+    public StarData getLog(StarRequest starRequest) {
 
         Map<String, String> map = LogUtils.parseYarnLog(starRequest.getApplicationId());
         String stdErrLog = map.get("stderr");
