@@ -6,6 +6,7 @@ import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.common.response.SuccessResponse;
 import com.isxcode.star.server.service.StarBizService;
 import lombok.RequiredArgsConstructor;
+import org.apache.spark.sql.AnalysisException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -55,5 +56,12 @@ public class StarController {
     public StarData heartCheck() {
 
         return StarData.builder().build();
+    }
+
+    @SuccessResponse
+    @PostMapping("/executeSessionSql")
+    public void executeSessionSql(@RequestBody StarRequest starRequest) throws AnalysisException {
+
+        starBizService.executeSessionSql(starRequest);
     }
 }

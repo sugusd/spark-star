@@ -17,7 +17,15 @@ import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.spark.launcher.SparkAppHandle;
 import org.apache.spark.launcher.SparkLauncher;
+import org.apache.spark.sql.AnalysisException;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.api.java.UDF1;
+import org.apache.spark.sql.expressions.UserDefinedFunction;
+import org.apache.spark.sql.types.DataTypes;
 import org.springframework.stereotype.Service;
+import scala.collection.Seq;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,17 +35,62 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static org.apache.spark.sql.functions.sha1;
+import static org.apache.spark.sql.functions.udf;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StarBizService {
 
+    private final SparkSession sparkSession;
+
+    public void executeSessionSql(StarRequest starRequest) throws AnalysisException {
+
+        Dataset<Row> lookupDF = sparkSession.read()
+            .format("jdbc")
+            .option(" driver", " com.mysql.cj.jdbc.Driver")
+            .option("url", "jdbc:mysql://ispong-mac.local:3306")
+            .option("dbtable", "ispong_db.lookup")
+            .option("user", "root")
+            .option("password", "ispong123")
+            .load();
+
+        lookupDF.createOrReplaceGlobalTempView("lookup");
+
+        Dataset<Row> jdbcDF = sparkSession.read()
+            .format("jdbc")
+            .option(" driver", " com.mysql.cj.jdbc.Driver")
+            .option("url", "jdbc:mysql://ispong-mac.local:3306")
+            .option("dbtable", "ispong_db.users")
+            .option("user", "root")
+            .option("password", "ispong123")
+            .load();
+
+        jdbcDF.createOrReplaceTempView("users");
+
+        sparkSession.sql("select username, age, look_value from users left join global_temp.lookup where look_key = sex").show();
+    }
+
     public StarData execute(StarRequest starRequest) {
+
+
+        String hadoopConfDir = System.getenv("HADOOP_HOME");
+        Configuration yarnConf1 = new Configuration(false);
+        Path path = Paths.get(hadoopConfDir + File.separator + "etc" + File.separator + "hadoop" + File.separator + "yarn-site.xml");
+        try {
+            yarnConf1.addResource(Files.newInputStream(path));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        YarnConfiguration yarnConf = new YarnConfiguration(yarnConf1);
+
+
 
         if (starRequest.getSparkConfig() == null) {
             Map<String, String> sparkConfig = new HashMap<>();
             sparkConfig.put("spark.executor.memory", "1g");
-            sparkConfig. put("spark.driver.memory", "1g");
+            sparkConfig.put("spark.driver.memory", "1g");
             starRequest.setSparkConfig(sparkConfig);
         }
 
@@ -51,8 +104,12 @@ public class StarBizService {
 
         log.info("request: {}", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
 
+        Map<String, String> env = new HashMap<>();
+        env.put("HADOOP_CONF_DIR", "/opt/homebrew/Cellar/hadoop/3.3.4/libexec/etc/hadoop");
+        env.put("YARN_CONF_DIR", "/opt/homebrew/Cellar/hadoop/3.3.4/libexec/etc/hadoop");
+
         // 封装launcher
-        SparkLauncher sparkLauncher = new SparkLauncher()
+        SparkLauncher sparkLauncher = new SparkLauncher(env)
             .setMaster("yarn")
             .setDeployMode("cluster")
             .setAppName(starRequest.getYarnJobConfig().getAppName())
