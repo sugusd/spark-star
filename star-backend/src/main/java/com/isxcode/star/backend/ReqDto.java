@@ -14,4 +14,6 @@ public class ReqDto {
     private String sparkSql;
 
     private String serverId;
+
+    private String location;
 }

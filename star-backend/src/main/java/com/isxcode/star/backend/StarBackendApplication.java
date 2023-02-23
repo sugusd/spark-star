@@ -76,12 +76,6 @@ public class StarBackendApplication {
         }
     }
 
-    @GetMapping("/checkInstallStar")
-    public void checkInstallStar(@RequestParam String serverId){
-
-
-    }
-
     @GetMapping("/checkStar")
     public void checkStar(){
 

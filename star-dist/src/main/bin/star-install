@@ -2,11 +2,11 @@
 
 rm -rf /Users/ispong/spark-star-1.2.0
 tar -vzxf /Users/ispong/spark-star.tar.gz -C /Users/ispong/
+rm spark-star.tar.gz
 
-#STAR_LOG=/Users/ispong/spark-star-1.2.0/log/star-server.log
-#if [ ! -f "${STAR_LOG}" ]; then
-#    touch "${STAR_LOG}"
-#fi
-#
-## 启动项目
-#nohup java -jar -Xmx2048m /Users/ispong/spark-star-1.2.0/lib/star-server.jar >> /Users/ispong/spark-star-1.2.0/log/star-server.log 2>&1 &
+touch /Users/ispong/spark-star-1.2.0/log/star-server.log
+
+# 启动项目
+source /etc/profile
+nohup java -jar -Xmx2048m /Users/ispong/spark-star-1.2.0/lib/star-server.jar >> /Users/ispong/spark-star-1.2.0/log/star-server.log &
+
