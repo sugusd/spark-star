@@ -5,7 +5,7 @@
 	<id>build</id>
 
 	<formats>
-		<format>dir</format>
+        <format>tar.gz</format>
 	</formats>
 
 	<includeBaseDirectory>true</includeBaseDirectory>

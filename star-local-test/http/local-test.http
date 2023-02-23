@@ -46,3 +46,18 @@ Content-Type: application/json
 {
     "applicationId": "application_1676601640542_0023"
 }
+
+### 测试star session
+POST http://localhost:30156/spark-star/executeSessionSql
+Content-Type: application/json
+star-key: star-key
+
+{
+    "sql": "select * from users"
+}
+
+### 测试环境
+GET http://localhost:8080/checkServerEnv?serverId=123
+
+### 安装spark-star
+GET http://localhost:8080/installStar?serverId=123

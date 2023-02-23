@@ -26,4 +26,3 @@ fi
 # 启动项目
 STAR_APP="${BASE_PATH}"/../lib/star-server.jar
 nohup java -jar -Xmx2048m "${STAR_APP}" --spring.config.additional-location="${BASE_PATH}"/../conf/application-star.yml >> "${STAR_LOG}" 2>&1 &
-tail -f ${STAR_LOG}

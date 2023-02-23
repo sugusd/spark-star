@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+
+spring:
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:/Users/ispong/h2/data
+    username: root
+    password: ispong123
+    schema: classpath:init.sql
+    initialization-mode: always
+
+  jpa:
+    database: h2
+    hibernate:
+      ddl-auto: none
+
+  h2:
+    console:
+      enabled: true # 控制台是否开启
+      path: /h2-console # web访问路径 http://localhost:8080/h2-console
+      settings:
+        trace: false # 控制台日志打印，建议关闭
+        web-allow-others: true # 是否允许访问
+
