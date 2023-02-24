@@ -18,7 +18,7 @@ function App() {
     const addServer = (data) => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/addServer',
+            url: '/addServer',
             data: {
                 name: data.name,
                 username: data.username,
@@ -39,7 +39,7 @@ function App() {
     const checkServer = (data) => {
         axios({
             method: 'get',
-            url: 'http://localhost:8080/checkStar',
+            url: '/checkStar',
             params: {
                 serverId: data.id
             }
@@ -54,7 +54,7 @@ function App() {
     const deleteServer = (data) => {
         axios({
             method: 'get',
-            url: 'http://localhost:8080/deleteServer',
+            url: '/deleteServer',
             params: {
                 serverId: data.id
             }
@@ -68,7 +68,7 @@ function App() {
     const installStar = (data) => {
         axios({
             method: 'get',
-            url: 'http://localhost:8080/installStar',
+            url: '/installStar',
             params: {
                 serverId: data.id
             }
@@ -84,7 +84,7 @@ function App() {
 
         axios({
             method: 'get',
-            url: 'http://localhost:8080/queryServers',
+            url: '/queryServers',
         }).then(function (response) {
             response.data.map((server) => {
                 server.value = server.id;
@@ -158,7 +158,7 @@ function App() {
 
         axios({
             method: 'post',
-            url: 'http://localhost:8080/executeSparkSql',
+            url: '/executeSparkSql',
             data: {
                 sparkSql: data.sparkSql,
                 serverId: value
@@ -175,7 +175,7 @@ function App() {
     const getJobStatus = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/getJobStatus',
+            url: '/getJobStatus',
             data: {
                 serverId: value,
                 applicationId: applicationId
@@ -191,7 +191,7 @@ function App() {
     const getJobLog = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/getJobLog',
+            url: '/getJobLog',
             data: {
                 serverId: value,
                 applicationId: applicationId
@@ -207,7 +207,7 @@ function App() {
     const getData = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/getData',
+            url: '/getData',
             data: {
                 serverId: value,
                 applicationId: applicationId
@@ -223,7 +223,7 @@ function App() {
     const stopJob = () => {
         axios({
             method: 'post',
-            url: 'http://localhost:8080/stopJob',
+            url: '/stopJob',
             data: {
                 serverId: value,
                 applicationId: applicationId

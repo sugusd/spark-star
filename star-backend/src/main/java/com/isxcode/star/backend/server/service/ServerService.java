@@ -48,7 +48,7 @@ public class ServerService {
         serverEntity.setPassword(server.getPassword());
 
         // 将服务器检测脚本推到目标服务器
-        scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/src/main/bin/check-env", "/Users/ispong/check-env");
+        scpFile(serverEntity, "/star-package/check-env", server.getPath() + "/check-env");
 
         // 执行远程服务器是否符合要求
         return Boolean.parseBoolean(getCommandLog(serverEntity, "bash /Users/ispong/check-env", true));
@@ -125,10 +125,10 @@ public class ServerService {
         serverEntity.setPassword(server.getPassword());
 
         // 安装脚本
-        scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/src/main/bin/star-install", server.getPath());
+        scpFile(serverEntity, "/star-package/star-install", server.getPath());
 
         // 将安装包推到服务器
-        scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/target/spark-star-1.2.0-bin.tar.gz", server.getPath());
+        scpFile(serverEntity, "/star-package/spark-star-1.2.0-bin.tar.gz", server.getPath());
 
         // 执行远程服务器是否符合要求
         executeCommand(serverEntity, "bash " + server.getPath() + "/star-install " + server.getPath(), false);
