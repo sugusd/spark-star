@@ -1,3 +1,27 @@
 .App {
-  text-align: center;
+    text-align: center;
+    border-bottom: black 2px solid;
 }
+
+.Title {
+    text-align: center;
+    border-bottom: black 2px solid;
+}
+
+.Input-Server {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    border-bottom: black 2px solid;
+}
+
+.Server-Table {
+    border-bottom: black 2px solid;
+}
+
+.Work {
+    border-bottom: black 2px solid;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+

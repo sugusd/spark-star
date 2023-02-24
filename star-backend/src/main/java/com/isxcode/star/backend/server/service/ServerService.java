@@ -1,5 +1,6 @@
 package com.isxcode.star.backend.server.service;
 
+import com.isxcode.star.backend.ReqDto;
 import com.isxcode.star.backend.server.entity.ServerEntity;
 import com.isxcode.star.backend.server.repository.ServerRepository;
 import com.jcraft.jsch.*;
@@ -45,10 +46,10 @@ public class ServerService {
         scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/src/main/bin/check-env", "/Users/ispong/check-env");
 
         // 执行远程服务器是否符合要求
-        return Boolean.parseBoolean(getCommandLog(serverEntity, "bash /Users/ispong/check-env",true));
+        return Boolean.parseBoolean(getCommandLog(serverEntity, "bash /Users/ispong/check-env", true));
     }
 
-    public String getCommandLog(ServerEntity server, String command,boolean pty) throws JSchException, IOException {
+    public String getCommandLog(ServerEntity server, String command, boolean pty) throws JSchException, IOException {
 
         JSch jsch = new JSch();
         Session session = jsch.getSession(server.getUsername(), server.getHost(), 22);
@@ -56,7 +57,7 @@ public class ServerService {
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
 
-        ChannelExec channel = (ChannelExec)session.openChannel("exec");
+        ChannelExec channel = (ChannelExec) session.openChannel("exec");
         channel.setPty(pty);
         channel.setCommand(command);
         channel.setInputStream(null);
@@ -76,7 +77,7 @@ public class ServerService {
         return log.toString();
     }
 
-    public void executeCommand(ServerEntity server, String command,boolean pty) throws JSchException, IOException {
+    public void executeCommand(ServerEntity server, String command, boolean pty) throws JSchException, IOException {
 
         JSch jsch = new JSch();
         Session session = jsch.getSession(server.getUsername(), server.getHost(), 22);
@@ -84,7 +85,7 @@ public class ServerService {
         session.setConfig("StrictHostKeyChecking", "no");
         session.connect();
 
-        ChannelExec channel = (ChannelExec)session.openChannel("exec");
+        ChannelExec channel = (ChannelExec) session.openChannel("exec");
         channel.setPty(pty);
         channel.setCommand(command);
         channel.connect();
@@ -119,15 +120,35 @@ public class ServerService {
         serverEntity.setPassword(server.getPassword());
 
         // 安装脚本
-         scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/src/main/bin/star-install", "/Users/ispong/star-install");
+        scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/src/main/bin/star-install", server.getPath());
 
         // 将安装包推到服务器
-         scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/target/spark-star-1.2.0-bin.tar.gz", "/Users/ispong/spark-star.tar.gz");
+        scpFile(serverEntity, "/Users/ispong/Isxcode/spark-star/star-dist/target/spark-star-1.2.0-bin.tar.gz", server.getPath());
 
         // 执行远程服务器是否符合要求
-        executeCommand(serverEntity, "bash /Users/ispong/star-install", false);
+        executeCommand(serverEntity, "bash " + server.getPath() + "/star-install " + server.getPath(), false);
+
+        server.setStatus("运行中");
+        serverRepository.save(server);
 
         return true;
+    }
+
+    public void deleteServer(String serverId) {
+
+        serverRepository.deleteById(serverId);
+    }
+
+    public void checkStar(String serverId) {
+
+        ServerEntity server = serverRepository.getOne(serverId);
+        server.setStatus("运行中");
+        serverRepository.save(server);
+    }
+
+    public void executeSparkSql(ReqDto reqDto) {
+
+
     }
 }
 

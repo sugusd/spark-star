@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class ReqDto {
 
+    private String name;
+
     public String username;
 
     private String host;
@@ -16,4 +18,6 @@ public class ReqDto {
     private String serverId;
 
     private String location;
+
+    private String port;
 }

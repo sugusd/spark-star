@@ -14,9 +14,17 @@ public class ServerEntity {
     @Id
     private String id;
 
+    private String name;
+
     private String host;
 
     private String username;
 
     private String password;
+
+    private String port;
+
+    private String path;
+
+    private String status;
 }

@@ -1,12 +1,16 @@
 #!/bin/bash
 
-rm -rf /Users/ispong/spark-star-1.2.0
-tar -vzxf /Users/ispong/spark-star.tar.gz -C /Users/ispong/
-rm spark-star.tar.gz
+for key in "$@"
+do
+    STAR_HOME=${key#*=}
+done
 
-touch /Users/ispong/spark-star-1.2.0/log/star-server.log
+rm -rf $STAR_HOME/spark-star-1.2.0
 
-# 启动项目
+tar -vzxf $STAR_HOME/spark-star-1.2.0.tar.gz -C $STAR_HOME/
+rm $STAR_HOME/spark-star.tar.gz
+
+touch $STAR_HOME/spark-star-1.2.0/log/star-server.log
+
 source /etc/profile
-nohup java -jar -Xmx2048m /Users/ispong/spark-star-1.2.0/lib/star-server.jar >> /Users/ispong/spark-star-1.2.0/log/star-server.log &
-
+nohup java -jar -Xmx2048m $STAR_HOME/spark-star-1.2.0/lib/star-server.jar >> $STAR_HOME/spark-star-1.2.0/log/star-server.log &

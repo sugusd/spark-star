@@ -5,6 +5,7 @@ import com.isxcode.star.backend.server.service.ServerService;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +32,16 @@ public class StarBackendApplication {
 
         List<ServerEntity> serverEntities = serverService.queryServers();
         for (ServerEntity e : serverEntities) {
-            e.setPassword(null);
+            e.setPassword("*****");
         }
 
         return serverEntities;
+    }
+
+    @GetMapping("/deleteServer")
+    public void deleteServer(@RequestParam String serverId) {
+
+        serverService.deleteServer(serverId);
     }
 
     @GetMapping("/cleanServers")
@@ -43,15 +50,22 @@ public class StarBackendApplication {
         serverService.cleanServers();
     }
 
-    @PostMapping("/saveServer")
-    public void saveServer(@RequestBody ReqDto reqDto) {
+    @PostMapping("/addServer")
+    public void addServer(@RequestBody ReqDto reqDto) {
 
+        if (Strings.isEmpty(reqDto.getHost())) {
+            throw new RuntimeException("参数未空");
+        }
 
         ServerEntity serverEntity = new ServerEntity();
         serverEntity.setId(String.valueOf(UUID.randomUUID()));
+        serverEntity.setName(reqDto.getName());
         serverEntity.setHost(reqDto.getHost());
         serverEntity.setUsername(reqDto.getUsername());
         serverEntity.setPassword(reqDto.getPassword());
+        serverEntity.setPort(reqDto.getPort());
+        serverEntity.setPath(reqDto.getLocation());
+        serverEntity.setStatus("未安装");
 
         serverService.saveServer(serverEntity);
     }
@@ -77,14 +91,14 @@ public class StarBackendApplication {
     }
 
     @GetMapping("/checkStar")
-    public void checkStar(){
+    public void checkStar(@RequestParam String serverId) {
 
-
+        serverService.checkStar(serverId);
     }
 
+    @PostMapping("/executeSparkSql")
+    public void executeSparkSql(@RequestBody ReqDto reqDto) {
 
-    public void executeSparkSql(){
-
-
+        serverService.executeSparkSql(reqDto);
     }
 }
