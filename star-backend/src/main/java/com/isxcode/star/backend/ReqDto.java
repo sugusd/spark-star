@@ -20,4 +20,6 @@ public class ReqDto {
     private String location;
 
     private String port;
+
+    private String applicationId;
 }

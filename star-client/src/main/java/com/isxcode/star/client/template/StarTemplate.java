@@ -64,6 +64,12 @@ public class StarTemplate {
             return this;
         }
 
+        public Builder starHome(String starHome) {
+
+            starRequest.setStarHome(starHome);
+            return this;
+        }
+
         public Builder yarnJobConfig(YarnJobConfig yarnJobConfig) {
 
             starRequest.setYarnJobConfig(yarnJobConfig);

@@ -2,15 +2,15 @@
 
 for key in "$@"
 do
-    STAR_HOME=${key#*=}
+    CUSTOM_STAR_HOME=${key#*=}
 done
 
-rm -rf $STAR_HOME/spark-star-1.2.0
+rm -rf $CUSTOM_STAR_HOME/spark-star-1.2.0
 
-tar -vzxf $STAR_HOME/spark-star-1.2.0.tar.gz -C $STAR_HOME/
-rm $STAR_HOME/spark-star.tar.gz
+tar -vzxf $CUSTOM_STAR_HOME/spark-star-1.2.0-bin.tar.gz -C $CUSTOM_STAR_HOME/
+rm $CUSTOM_STAR_HOME/spark-star-1.2.0-bin.tar.gz
 
-touch $STAR_HOME/spark-star-1.2.0/log/star-server.log
+touch $CUSTOM_STAR_HOME/spark-star-1.2.0/log/star-server.log
 
 source /etc/profile
-nohup java -jar -Xmx2048m $STAR_HOME/spark-star-1.2.0/lib/star-server.jar >> $STAR_HOME/spark-star-1.2.0/log/star-server.log &
+nohup java -jar -Xmx2048m $CUSTOM_STAR_HOME/spark-star-1.2.0/lib/star-server.jar >> $CUSTOM_STAR_HOME/spark-star-1.2.0/log/star-server.log &

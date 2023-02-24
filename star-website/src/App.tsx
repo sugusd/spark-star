@@ -4,21 +4,14 @@ import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {Button, Dropdown, Input, MenuProps, message, Space, Table, TreeSelect, Typography} from "antd";
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";
-import {queries} from "@testing-library/react";
-
-interface DataType {
-    name: string;
-    host: string;
-    username: string;
-    password: string;
-    port: string;
-    path: string;
-    status: string
-}
 
 function App() {
 
     const [serverData, setServerData] = useState([{}]);
+
+    const [starData, setStarData] = useState('');
+
+    const [applicationId, setApplicationId] = useState('');
 
     useEffect(() => getServers(), []);
 
@@ -66,7 +59,6 @@ function App() {
                 serverId: data.id
             }
         }).then(function (response) {
-            console.log(response.data)
             getServers()
         }).catch(function (error) {
             message.error(error.response.data.message);
@@ -94,8 +86,6 @@ function App() {
             method: 'get',
             url: 'http://localhost:8080/queryServers',
         }).then(function (response) {
-            console.log(response.data)
-
             response.data.map((server) => {
                 server.value = server.id;
                 server.title = server.name;
@@ -164,19 +154,86 @@ function App() {
 
     const {control, handleSubmit, reset} = useForm({});
 
-    const onSubmit = data => {
+    const onSubmit = (data) => {
+
         axios({
             method: 'post',
-            url: 'http://localhost:30156/spark-star/execute',
-            headers: {
-                'star-key': 'star-key'
-            },
+            url: 'http://localhost:8080/executeSparkSql',
             data: {
-                sql: data.sql
+                sparkSql: data.sparkSql,
+                serverId: value
             }
         }).then(function (response) {
-            console.log(response.data)
+            setApplicationId(response.data.applicationId);
+            setStarData(JSON.stringify(response.data));
+            message.success("提交成功");
+        }).catch(function (error) {
+            message.error(error.response.data.message);
         });
+    };
+
+    const getJobStatus = () => {
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/getJobStatus',
+            data: {
+                serverId: value,
+                applicationId: applicationId
+            }
+        }).then(function (response) {
+            setStarData(JSON.stringify(response.data));
+            message.success("获取状态成功");
+        }).catch(function (error) {
+            message.error(error.response.data.message);
+        })
+    };
+
+    const getJobLog = () => {
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/getJobLog',
+            data: {
+                serverId: value,
+                applicationId: applicationId
+            }
+        }).then(function (response) {
+            setStarData(JSON.stringify(response.data));
+            message.success("获取日志成功");
+        }).catch(function (error) {
+            message.error(error.response.data.message);
+        })
+    };
+
+    const getData = () => {
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/getData',
+            data: {
+                serverId: value,
+                applicationId: applicationId
+            }
+        }).then(function (response) {
+            setStarData(JSON.stringify(response.data));
+            message.success("获取数据成功");
+        }).catch(function (error) {
+            message.error(error.response.data.message);
+        })
+    };
+
+    const stopJob = () => {
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/stopJob',
+            data: {
+                serverId: value,
+                applicationId: applicationId
+            }
+        }).then(function (response) {
+            setStarData(JSON.stringify(response.data));
+            message.success("中止作业成功");
+        }).catch(function (error) {
+            message.error(error.response.data.message);
+        })
     };
 
     return (
@@ -239,7 +296,7 @@ function App() {
                 <form onSubmit={handleSubmit(onSubmit)}>
 
                     <TreeSelect
-                        style={{width: '40%'}}
+                        style={{width: '30%'}}
                         showSearch
                         value={value}
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
@@ -249,10 +306,30 @@ function App() {
                         onChange={onChange}
                         treeData={serverData}
                     />
-                    <Button style={{marginLeft: '15px'}} htmlType="submit">执行</Button>
 
-                    <TextArea style={{width: '70%', marginTop: '15px', height: '500px'}}></TextArea>
+                    <Button style={{marginLeft: '15px'}} htmlType="submit">运行</Button>
+
+                    <Button style={{marginLeft: '15px'}} onClick={() => getJobStatus()}>任务进程</Button>
+
+                    <Button style={{marginLeft: '15px'}} onClick={() => getJobLog()}>作业日志</Button>
+
+                    <Button style={{marginLeft: '15px'}} onClick={() => getData()}>数据查看</Button>
+
+                    <Button style={{marginLeft: '15px'}} onClick={() => stopJob()}>中止作业</Button>
+
+                    <Controller
+                        name="sparkSql"
+                        control={control}
+                        render={({field}) =>
+                            <TextArea {...field} style={{width: '70%', marginTop: '15px', height: '400px'}}></TextArea>}
+                    />
+
                 </form>
+            </div>
+
+            <div className={"Result"}>
+                运行结果: <br/>
+                {starData}
             </div>
 
         </div>

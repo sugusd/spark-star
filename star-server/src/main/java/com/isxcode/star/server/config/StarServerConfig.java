@@ -20,11 +20,11 @@ public class StarServerConfig {
     @ConditionalOnClass(StarServerConfig.class)
     public void checkEnvironment() {
 
-        String starHomePath = System.getenv("STAR_HOME");
-        if (Strings.isEmpty(starHomePath)) {
-            System.out.println("ERROR:请配置STAR_HOME环境变量");
-            context.close();
-        }
+//        String starHomePath = System.getenv("STAR_HOME");
+//        if (Strings.isEmpty(starHomePath)) {
+//            System.out.println("ERROR:请配置STAR_HOME环境变量");
+//            context.close();
+//        }
 
         String sparkConfDir = System.getenv("SPARK_HOME");
         if (Strings.isEmpty(sparkConfDir)) {

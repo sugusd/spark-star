@@ -86,7 +86,6 @@ public class StarBizService {
         YarnConfiguration yarnConf = new YarnConfiguration(yarnConf1);
 
 
-
         if (starRequest.getSparkConfig() == null) {
             Map<String, String> sparkConfig = new HashMap<>();
             sparkConfig.put("spark.executor.memory", "1g");
@@ -100,7 +99,7 @@ public class StarBizService {
         }
 
         // 获取star目录位置
-        String starHomePath = System.getenv("STAR_HOME");
+        String starHomePath = Strings.isEmpty(starRequest.getStarHome()) ? System.getenv("STAR_HOME") : starRequest.getStarHome();
 
         log.info("request: {}", Base64.getEncoder().encodeToString(JSON.toJSONString(starRequest).getBytes()));
 

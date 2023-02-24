@@ -46,6 +46,8 @@ public class StarRequest {
 
     private String dbType;
 
+    private String starHome;
+
     private Map<String, Object> kafkaConfig;
 
     private Map<String, String> sparkConfig= new HashMap<String, String>() {{

@@ -1,8 +1,11 @@
 package com.isxcode.star.backend.server.service;
 
+import com.isxcode.star.api.pojo.StarResponse;
+import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.backend.ReqDto;
 import com.isxcode.star.backend.server.entity.ServerEntity;
 import com.isxcode.star.backend.server.repository.ServerRepository;
+import com.isxcode.star.client.template.StarTemplate;
 import com.jcraft.jsch.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class ServerService {
+
+    private final StarTemplate starTemplate;
 
     private final ServerRepository serverRepository;
 
@@ -146,9 +151,50 @@ public class ServerService {
         serverRepository.save(server);
     }
 
-    public void executeSparkSql(ReqDto reqDto) {
+    public StarData executeSparkSql(ReqDto reqDto) {
 
+        ServerEntity server = serverRepository.getOne(reqDto.getServerId());
 
+        StarResponse starResponse = starTemplate.build(server.getHost(), Integer.parseInt(server.getPort()), "star-key").starHome(server.getPath() + "/spark-star-1.2.0").sql(reqDto.getSparkSql()).execute();
+
+        return starResponse.getData();
     }
+
+    public StarData getJobStatus(ReqDto reqDto) {
+
+        ServerEntity server = serverRepository.getOne(reqDto.getServerId());
+
+        StarResponse starResponse = starTemplate.build(server.getHost(), Integer.parseInt(server.getPort()), "star-key").starHome(server.getPath() + "/spark-star-1.2.0").applicationId(reqDto.getApplicationId()).getStatus();
+
+        return starResponse.getData();
+    }
+
+    public StarData stopJob(ReqDto reqDto) {
+
+        ServerEntity server = serverRepository.getOne(reqDto.getServerId());
+
+        StarResponse starResponse = starTemplate.build(server.getHost(), Integer.parseInt(server.getPort()), "star-key").starHome(server.getPath() + "/spark-star-1.2.0").applicationId(reqDto.getApplicationId()).stopJob();
+
+        return starResponse.getData();
+    }
+
+    public StarData getJobLog(ReqDto reqDto) {
+
+        ServerEntity server = serverRepository.getOne(reqDto.getServerId());
+
+        StarResponse starResponse = starTemplate.build(server.getHost(), Integer.parseInt(server.getPort()), "star-key").starHome(server.getPath() + "/spark-star-1.2.0").applicationId(reqDto.getApplicationId()).getLog();
+
+        return starResponse.getData();
+    }
+
+    public StarData getData(ReqDto reqDto) {
+
+        ServerEntity server = serverRepository.getOne(reqDto.getServerId());
+
+        StarResponse starResponse = starTemplate.build(server.getHost(), Integer.parseInt(server.getPort()), "star-key").starHome(server.getPath() + "/spark-star-1.2.0").applicationId(reqDto.getApplicationId()).getData();
+
+        return starResponse.getData();
+    }
+
 }
 

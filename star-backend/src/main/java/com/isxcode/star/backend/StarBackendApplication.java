@@ -1,5 +1,6 @@
 package com.isxcode.star.backend;
 
+import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.backend.server.entity.ServerEntity;
 import com.isxcode.star.backend.server.service.ServerService;
 import com.jcraft.jsch.JSchException;
@@ -97,8 +98,33 @@ public class StarBackendApplication {
     }
 
     @PostMapping("/executeSparkSql")
-    public void executeSparkSql(@RequestBody ReqDto reqDto) {
+    public StarData executeSparkSql(@RequestBody ReqDto reqDto) {
 
-        serverService.executeSparkSql(reqDto);
+        return serverService.executeSparkSql(reqDto);
     }
+
+    @PostMapping("/getJobStatus")
+    public StarData getJobStatus(@RequestBody ReqDto reqDto) {
+
+        return serverService.getJobStatus(reqDto);
+    }
+
+    @PostMapping("/getData")
+    public StarData getData(@RequestBody ReqDto reqDto) {
+
+        return serverService.getData(reqDto);
+    }
+
+    @PostMapping("/getJobLog")
+    public StarData getJobLog(@RequestBody ReqDto reqDto) {
+
+        return serverService.getJobLog(reqDto);
+    }
+
+    @PostMapping("/stopJob")
+    public StarData stopJob(@RequestBody ReqDto reqDto) {
+
+        return serverService.stopJob(reqDto);
+    }
+
 }
