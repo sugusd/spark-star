@@ -59,9 +59,9 @@ public class StarController {
     }
 
     @SuccessResponse
-    @PostMapping("/executeSessionSql")
-    public void executeSessionSql(@RequestBody StarRequest starRequest) throws AnalysisException {
+    @GetMapping("/testUdf")
+    public void testUdf() {
 
-        starBizService.executeSessionSql(starRequest);
+        starBizService.executeSessionSql();
     }
 }

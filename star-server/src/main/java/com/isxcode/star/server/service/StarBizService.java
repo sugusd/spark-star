@@ -5,6 +5,7 @@ import com.isxcode.star.api.exception.StarException;
 import com.isxcode.star.api.pojo.StarRequest;
 import com.isxcode.star.api.pojo.dto.StarData;
 import com.isxcode.star.api.pojo.dto.YarnJobConfig;
+import com.isxcode.star.server.function.LookupFunc;
 import com.isxcode.star.server.utils.LogUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,18 +46,9 @@ public class StarBizService {
 
     private final SparkSession sparkSession;
 
-    public void executeSessionSql(StarRequest starRequest) throws AnalysisException {
+    public void executeSessionSql() {
 
-        Dataset<Row> lookupDF = sparkSession.read()
-            .format("jdbc")
-            .option(" driver", " com.mysql.cj.jdbc.Driver")
-            .option("url", "jdbc:mysql://ispong-mac.local:3306")
-            .option("dbtable", "ispong_db.lookup")
-            .option("user", "root")
-            .option("password", "ispong123")
-            .load();
-
-        lookupDF.createOrReplaceGlobalTempView("lookup");
+        sparkSession.udf().register("demo_func", new LookupFunc(), DataTypes.StringType);
 
         Dataset<Row> jdbcDF = sparkSession.read()
             .format("jdbc")
@@ -69,7 +61,7 @@ public class StarBizService {
 
         jdbcDF.createOrReplaceTempView("users");
 
-        sparkSession.sql("select username, age, look_value from users left join global_temp.lookup where look_key = sex").show();
+        sparkSession.sql("select demo_func('vlookup','F') from users").show();
     }
 
     public StarData execute(StarRequest starRequest) {

@@ -48,13 +48,8 @@ Content-Type: application/json
 }
 
 ### 测试star session
-POST http://localhost:30156/spark-star/executeSessionSql
-Content-Type: application/json
+GET http://localhost:30156/spark-star/testUdf
 star-key: star-key
-
-{
-    "sql": "select * from users"
-}
 
 ### 测试环境
 GET http://localhost:8080/checkServerEnv?serverId=123
