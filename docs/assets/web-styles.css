@@ -36,6 +36,7 @@
     #web-function-ul li {
         margin-right: 10px !important;
         margin-left: 10px !important;
+        line-height: 25px;
     }
 
     #tec-img {
@@ -44,12 +45,14 @@
         width: 350px !important;
         height: 330px !important;
     }
+
     #web-vip-table {
         background: white;
         margin: 5vh auto auto;
         border-collapse: collapse;
         width: 90%;
     }
+
     #web-vip-table th {
         font-size: 18px;
         padding: 8px;
@@ -230,8 +233,7 @@
 
 #web-success {
     margin-top: 10vh;
-    height: 600px;
-    border-bottom: lightgray solid 2px;
+    height: 1330px;
 }
 
 #web-success-font {
@@ -246,4 +248,38 @@
 
 .vip-svg-false {
     width: 20px !important;
+}
+
+#web-link {
+    height: 50px;
+    line-height: 50px;
+}
+
+.web-success-example {
+    margin: 5vh auto auto;
+    padding-bottom: 3vh;
+    width: 90%;
+    border-bottom: black solid 2px;
+}
+
+.web-success-example img {
+    float: left;
+    width: 80px !important;
+    margin-top: 10px;
+    margin-left: 40px;
+}
+
+.web-success-example span {
+    font-size: 25px !important;
+    line-height: 100px;
+}
+
+.web-success-example div {
+    text-indent: 2rem;
+}
+
+.web-success-title {
+    width: 90%;
+    height: 100px;
+    display: inline-block;
 }
