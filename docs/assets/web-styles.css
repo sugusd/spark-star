@@ -44,6 +44,26 @@
         width: 350px !important;
         height: 330px !important;
     }
+    #web-vip-table {
+        background: white;
+        margin: 5vh auto auto;
+        border-collapse: collapse;
+        width: 90%;
+    }
+    #web-vip-table td {
+        font-size: 15px;
+        padding: 8px;
+        text-align: center;
+    }
+    #web-vip-table th {
+        font-size: 18px;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .deep-tr {
+        background: #f1f1f2;
+    }
 }
 
 #web-ul {
@@ -196,6 +216,18 @@
 }
 
 #web-vip-font {
+    width: 200px;
+    font-size: 30px;
+    margin: auto;
+}
+
+#web-success {
+    margin-top: 10vh;
+    height: 600px;
+    border-bottom: lightgray solid 2px;
+}
+
+#web-success-font {
     width: 200px;
     font-size: 30px;
     margin: auto;
