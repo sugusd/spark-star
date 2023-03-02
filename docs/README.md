@@ -11,4 +11,5 @@ docsify serve docs
 ```bash
 cd ..
 docsify serve docs
+docker run -d isxcode/spark-star:latest
 ```

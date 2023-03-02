@@ -1,65 +1,62 @@
 <div id="web-main">
     <div id="web-nav">
-        <img id="logo-img"  src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
+        <img id="logo-img" src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
         <ul id="web-ul">
-            <li>
-                产品功能
-            </li>
-            <li>
-                技术架构
-            </li>
-            <li>
-                版本差异
-            </li>
-            <li>
-                成功案例
-            </li>
-            <li>
-                文档
-            </li>
-            <li>
-                联系我们
-            </li>
+            <li>产品功能</li>
+            <li>技术架构</li>
+            <li>版本差异</li>
+            <li>成功案例</li>
+            <li>文档</li>
+            <li>联系我们</li>
         </ul>
     </div>
     <div id="web-content">
         <div id="web-content-first">
-            <div id="web-content-font" >至轻云</div>
-            <div id="web-content-first-font" >打造超轻量级大数据平台</div>
-            <div id="web-content-first-shell">docker run -v /users/data/h2:/star-data -d isxcode/spark-star</div>
-            <button id="web-content-first-button" ><a href="#/README"><span>演示环境</span></a></button>
+            <div id="web-content-font">至轻云</div>
+            <div id="web-content-first-font">打造超轻量级大数据平台</div>
+            <div id="web-content-first-shell"><span id="span1">docker</span> <span id="span2">run -d </span><span id="span3">isxcode/spark-star:latest</span></div>
+            <button id="web-content-first-button"><a href="#/README"><span>演示环境</span></a></button>
         </div>
-        <hr/>
-        <div>
-            产品功能
-            <div>
-                轻量级部署  多集群部署
+        <div id="web-function">
+            <div id="web-function-font">产品功能</div>
+            <ul id="web-function-ul">
+                <li id="func-1-link" onclick="show_func(1)">快速部署</li>
+                <li id="func-2-link" onclick="show_func(2)">多数据源</li>
+                <li id="func-3-link" onclick="show_func(3)">作业类型</li>
+                <li id="func-4-link" onclick="show_func(4)">数据建模</li>
+                <li id="func-5-link"onclick="show_func(5)">自定义Api</li>
+                <li id="func-6-link" onclick="show_func(6)">周期调度</li>
+            </ul>
+
+            <div id="func-1">
+                轻量级部署 多集群部署
             </div>
-            <div>
+            <div id="func-2">
                 数据源丰富支持50多种数据源
             </div>
-            <div>
-                作业类型丰富 数据同步 etl  sql查询 实时同步
+            <div id="func-3">
+                作业类型丰富 数据同步 etl sql查询 实时同步
             </div>
-            <div>
+            <div id="func-4">
                 数据智能建模，快速构建模型
             </div>
-            <div>
+            <div id="func-5">
                 对外开发api服务
             </div>
-            <div>
+            <div id="func-6">
                 定时调度，自动运行作业流
             </div>
         </div>
 
-        <div>
-            <div>围绕spark打造数据平台</div>
+        <div id="web-tec">
+            <div id="web-tec-font">技术架构</div>
+            <div id="web-tec-desc">基于Spark计算引擎，打造Hadoop生态超轻量级数据平台。</div>
             <img id="tec-img" src="https://img.isxcode.com/picgo/20230301210730.png" alt="tec"/>
         </div>
 
-        <div>
+        <div id="web-vip">
+            <div id="web-vip-font">版本差异</div>
             <table>
-                <caption>版本差异</caption>
                 <tr>
                     <th>功能</th>
                     <th>社区版</th>
@@ -113,7 +110,7 @@
             </table>
         </div>
 
-        <div>
+        <div id="web-subccess">
             成功案例
             <div>
                 汽车行业

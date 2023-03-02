@@ -10,23 +10,57 @@
     position: absolute;
     z-index: 999;
     height: 60px;
+    line-height: 60px;
     width: 100%;
     background: white;
     border-bottom: black solid 2px;
-    display: flex;
+}
+
+#logo-img {
+    float: left;
+    margin-left: 5%;
+    display: block;
+    height: 55px;
+    width: 100px;
+}
+
+@media screen and (max-width: 786px) {
+    #web-ul {
+        display: none !important;
+    }
+
+    #web-content-first-shell {
+        width: 350px !important;
+    }
+
+    #web-function-ul li {
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    #tec-img {
+        margin-top: 3vh;
+        margin-bottom: 2vh;
+        width: 350px !important;
+        height: 330px !important;
+    }
 }
 
 #web-ul {
-    display: flex;
+    float: right;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 5%;
+    display: inline-flex;
     list-style: none;
-    margin-left: 700px;
-    height: 30px;
-    line-height: 20px;
     font-size: 16px;
 }
 
 #web-ul li {
+    text-align: center;
     margin-left: 20px;
+    height: 60px;
+    line-height: 60px;
 }
 
 #web-content {
@@ -36,52 +70,133 @@
     overflow-y: scroll;
 }
 
-#web-logo {
-
-}
-
 #tec-img {
     width: 700px;
     height: 600px;
 }
 
-#logo-img {
-    height: 55px;
-    width: 100px;
-    margin-left: 60px;
-}
-
 #web-content-first {
-    height: 600px;
+    height: 75vh;
+    border-bottom: lightgray solid 2px;
 }
 
 #web-content-font {
-    margin-top: 160px;
+    margin-top: 20vh;
     font-size: 70px;
 }
 
 #web-content-first-font {
-    margin-top: 100px;
+    margin-top: 10vh;
     font-size: 40px;
 }
 
 #web-content-first-shell {
     font-size: 18px;
-    width: 850px;
+    width: 640px;
     height: 40px;
     line-height: 40px;
-    margin: 40px auto auto;
-    border: black solid 1px;
-    border-radius: 15px;
+    margin: 10vh auto auto;
+    border: none;
+    white-space: nowrap;
+    background: #161b22;
+    border-radius: 10px;
+}
+
+#span1 {
+    color: #ff7b72;
+}
+
+#span2 {
+    color: white;
+}
+
+#span3 {
+    color: white;
 }
 
 #web-content-first-button {
-    margin-top: 50px;
+    margin-top: 10vh;
     font-size: 20px;
-    background: black;
-    color: white;
+    background: white;
+    color: black;
     border-radius: 5px;
-    border: none;
-    width: 140px;
+    border: black solid 2px;
+    width: 150px;
     height: 40px;
+}
+
+#web-function {
+    margin-top: 10vh;
+    height: 500px;
+    border-bottom: lightgray solid 2px;
+}
+
+#web-function-font {
+    width: 200px;
+    font-size: 30px;
+    margin: auto;
+}
+
+#web-function-ul {
+    display: inline-flex;
+    list-style: none;
+    font-size: 18px;
+}
+
+#web-function-ul li {
+    margin-right: 30px;
+    margin-left: 30px;
+    text-align: center;
+}
+
+#func-1-link {
+    border-bottom: black solid 3px;
+}
+
+#func-2 {
+    display: none;
+}
+
+#func-3 {
+    display: none;
+}
+
+#func-4 {
+    display: none;
+}
+
+#func-5 {
+    display: none;
+}
+
+#func-6 {
+    display: none;
+}
+
+#web-tec {
+    margin-top: 10vh;
+    border-bottom: lightgray solid 2px;
+}
+
+#web-tec-font {
+    width: 200px;
+    font-size: 30px;
+    margin: auto;
+}
+
+#web-tec-desc {
+    width: 80%;
+    margin: 2vh auto auto;
+}
+
+#web-vip {
+    margin-top: 10vh;
+    height: 600px;
+    border-bottom: lightgray solid 2px;
+}
+
+#web-vip-font {
+    width: 200px;
+    font-size: 30px;
+    margin: auto;
 }

@@ -1,6 +1,6 @@
 :root {
-    --theme-color: #c54460;
-    --theme-color-dark: #c54460;
+    --theme-color: #000;
+    --theme-color-dark: #000;
     --text-color-base: #2e2e46;
     --text-color-tertiary: #81818e;
 }
@@ -106,7 +106,7 @@ section.cover.show ~ .sidebar-toggle {
 }
 
 .cover-main .buttons {
-  width: 100%;
+    width: 100%;
 }
 
 .cover-main .buttons a {
@@ -165,25 +165,25 @@ section.cover.show ~ .sidebar-toggle {
 }
 
 @media (max-width: 850px) {
-  section.cover ul {
-      grid-template-columns: 100%;
-      padding: 0;
-  }
+    section.cover ul {
+        grid-template-columns: 100%;
+        padding: 0;
+    }
 
-  section.cover ul li {
-      text-align: center;
-  }
+    section.cover ul li {
+        text-align: center;
+    }
 }
 
 @media (max-width: 450px) {
-  section.cover ul li {
-      white-space: normal;
-  }
+    section.cover ul li {
+        white-space: normal;
+    }
 
-  .cover-main .buttons a {
-      width: 100%;
-      margin: 0.2rem 0;
-  }
+    .cover-main .buttons a {
+        width: 100%;
+        margin: 0.2rem 0;
+    }
 }
 
 
@@ -200,7 +200,7 @@ section.cover.show ~ .sidebar-toggle {
     font-size: 15px !important;
 }
 
-.sidebar li>p {
+.sidebar li > p {
     font-weight: 700 !important;
     margin: 0 !important;
     font-size: 25px !important;
@@ -263,9 +263,11 @@ body.close .sidebar-toggle span {
 body .sidebar-toggle span:nth-child(1) {
     top: 0;
 }
+
 body .sidebar-toggle span:nth-child(2) {
     top: 0.5rem;
 }
+
 body .sidebar-toggle span:nth-child(3) {
     top: 1rem;
 }
@@ -273,18 +275,19 @@ body .sidebar-toggle span:nth-child(3) {
 .sidebar-toggle:hover {
     opacity: 0.8;
 }
+
 .sidebar-toggle .sidebar-toggle-button:hover {
     opacity: 1;
 }
 
 @media screen and (max-width: 768px) {
-  body .sidebar-toggle {
-      left: 1rem;
-  }
+    body .sidebar-toggle {
+        left: 1rem;
+    }
 
-  body.close .sidebar-toggle {
-      left: calc(300px + 1.5rem);
-  }
+    body.close .sidebar-toggle {
+        left: calc(300px + 1.5rem);
+    }
 }
 
 /****** Markdown General ******/
