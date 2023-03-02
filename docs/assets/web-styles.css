@@ -50,13 +50,20 @@
         border-collapse: collapse;
         width: 90%;
     }
-    #web-vip-table td {
-        font-size: 15px;
+    #web-vip-table th {
+        font-size: 18px;
         padding: 8px;
         text-align: center;
     }
-    #web-vip-table th {
-        font-size: 18px;
+
+    #web-vip-table tr {
+        height: 50px;
+    }
+
+    #web-vip-table td {
+        height: 18px;
+        line-height: 18px;
+        font-size: 15px;
         padding: 8px;
         text-align: center;
     }
@@ -231,4 +238,12 @@
     width: 200px;
     font-size: 30px;
     margin: auto;
+}
+
+.vip-svg-true {
+    width: 20px !important;
+}
+
+.vip-svg-false {
+    width: 20px !important;
 }
