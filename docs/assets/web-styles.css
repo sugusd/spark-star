@@ -33,6 +33,10 @@
         width: 350px !important;
     }
 
+    #web-function-ul {
+        width: 90%;
+    }
+
     #web-function-ul li {
         margin-right: 10px !important;
         margin-left: 10px !important;
@@ -111,7 +115,7 @@
 }
 
 #web-content-font {
-    margin-top: 20vh;
+    margin-top: 18vh;
     font-size: 70px;
 }
 
@@ -157,7 +161,7 @@
 
 #web-function {
     margin-top: 10vh;
-    height: 500px;
+    height: 700px;
     border-bottom: lightgray solid 2px;
 }
 
@@ -183,27 +187,61 @@
     border-bottom: black solid 3px;
 }
 
+#func-1 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
+}
+
 #func-2 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
     display: none;
 }
 
 #func-3 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
     display: none;
 }
 
 #func-4 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
     display: none;
 }
 
 #func-5 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
     display: none;
 }
 
 #func-6 {
+    width: 90%;
+    margin: auto;
+    line-height: 30px;
+    text-align: left;
+    font-size: 16px;
     display: none;
 }
 
 #web-tec {
+    height: 65vh;
     margin-top: 10vh;
     border-bottom: lightgray solid 2px;
 }
@@ -221,7 +259,7 @@
 
 #web-vip {
     margin-top: 10vh;
-    height: 600px;
+    height: 80vh;
     border-bottom: lightgray solid 2px;
 }
 
@@ -233,7 +271,7 @@
 
 #web-success {
     margin-top: 10vh;
-    height: 1330px;
+    height: 160vh;
 }
 
 #web-success-font {
