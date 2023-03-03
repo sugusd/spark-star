@@ -224,8 +224,8 @@
 .web-content-business-example {
     width: 15rem;
     flex-shrink: 0;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin-left: 20px;
+    margin-right: 20px;
     border-top: black solid 3px;
 }
 
