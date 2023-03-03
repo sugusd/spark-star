@@ -52,4 +52,45 @@
     .deep-tr {
         background: #f1f1f2;
     }
+
+    #web-content-tech-describe {
+        width: 20rem;
+        margin: 1rem auto auto;
+    }
+
+    #web-content-tech {
+        height: 34rem;
+        margin-top: 4rem;
+        border-bottom: lightgray solid 2px;
+    }
+
+    #func-1 {
+        width: 90%;
+    }
+
+    #func-2 {
+        width: 90%;
+    }
+
+    #func-3 {
+        width: 90%;
+    }
+
+    #func-4 {
+        width: 90%;
+    }
+
+    #func-5 {
+        width: 90%;
+    }
+
+    #func-6 {
+        width: 90%;
+    }
+
+    #web-function-ul li {
+        margin-right: 30px;
+        margin-left: 30px;
+        text-align: center;
+    }
 }

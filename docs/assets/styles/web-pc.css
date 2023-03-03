@@ -111,8 +111,8 @@
 }
 
 #web-function-ul li {
-    margin-right: 30px;
-    margin-left: 30px;
+    margin-right: 10rem;
+    margin-left: 10rem;
     text-align: center;
 }
 
@@ -121,7 +121,7 @@
 }
 
 #func-1 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -129,7 +129,7 @@
 }
 
 #func-2 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -138,7 +138,7 @@
 }
 
 #func-3 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -147,7 +147,7 @@
 }
 
 #func-4 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -156,7 +156,7 @@
 }
 
 #func-5 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -165,7 +165,7 @@
 }
 
 #func-6 {
-    width: 90%;
+    width: 70rem;
     margin: auto;
     line-height: 30px;
     text-align: left;
@@ -174,7 +174,7 @@
 }
 
 #web-content-tech {
-    height: 34rem;
+    height: 50rem;
     margin-top: 4rem;
     border-bottom: lightgray solid 2px;
 }
@@ -186,8 +186,15 @@
 }
 
 #web-content-tech-describe {
-    width: 20rem;
+    font-size: 1.3rem;
+    width: 40rem;
     margin: 1rem auto auto;
+}
+
+#tech-img {
+    margin-top: 2rem;
+    width: 40rem;
+    height: 38rem;
 }
 
 #web-content-vip {
@@ -200,6 +207,35 @@
     width: 10rem;
     font-size: 2rem;
     margin: auto;
+}
+
+#web-content-vip-table {
+    background: white;
+    margin: 2rem auto 1rem;
+    border-collapse: collapse;
+    width: 32rem;
+}
+
+#web-content-vip-table tr {
+    height: 2.8rem;
+}
+
+#web-content-vip-table th {
+    font-size: 18px;
+    padding: 8px;
+    text-align: center;
+}
+
+#web-content-vip-table td {
+    height: 18px;
+    line-height: 18px;
+    font-size: 15px;
+    padding: 8px;
+    text-align: center;
+}
+
+.deep-tr {
+    background: #f1f1f2;
 }
 
 #web-content-business {
@@ -218,8 +254,9 @@
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
-    margin-top: 4rem;
     padding-bottom: 2rem;
+    margin: 4rem auto auto;
+    width: 70rem;
 }
 
 .web-content-business-example {
