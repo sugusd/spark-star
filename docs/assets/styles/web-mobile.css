@@ -1,0 +1,54 @@
+@media screen and (max-width: 786px) {
+    #web-nav-ul {
+        display: none !important;
+    }
+
+    /*#web-content-show-shell {*/
+    /*    width: 350px !important;*/
+    /*}*/
+
+    #web-content-function-ul {
+        width: 90%;
+    }
+
+    #web-content-function-ul li {
+        margin-right: 0.5rem !important;
+        margin-left: 0.5rem !important;
+        line-height: 1.5rem;
+    }
+
+    #tech-img {
+        margin-top: 2rem;
+        width: 22rem;
+        height: 22rem;
+    }
+
+    #web-content-vip-table {
+        background: white;
+        margin: 2rem auto 1rem;
+        border-collapse: collapse;
+        width: 20rem;
+    }
+
+    #web-content-vip-table tr {
+        height: 2.8rem;
+    }
+
+    #web-content-vip-table th {
+        font-size: 18px;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #web-content-vip-table td {
+        height: 18px;
+        line-height: 18px;
+        font-size: 15px;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .deep-tr {
+        background: #f1f1f2;
+    }
+}

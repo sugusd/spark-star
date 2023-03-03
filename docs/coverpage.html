@@ -1,7 +1,7 @@
 <div id="web-main">
     <div id="web-nav">
         <img id="logo-img" src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
-        <ul id="web-ul">
+        <ul id="web-nav-ul">
             <li>产品优势</li>
             <li>技术架构</li>
             <li>版本差异</li>
@@ -11,22 +11,26 @@
         </ul>
     </div>
     <div id="web-content">
-        <div id="web-content-first">
-            <div id="web-content-font">至轻云</div>
-            <div id="web-content-first-font">打造超轻量级大数据平台</div>
-            <div id="web-content-first-shell"><span id="span1">docker</span> <span id="span2">run -d </span><span
-                id="span3">isxcode/spark-star:latest</span></div>
-            <button id="web-content-first-button"><a href="#/README"><span>演示环境</span></a></button>
+        <div id="web-content-show">
+            <div id="web-content-show-name">至轻云</div>
+            <div id="web-content-show-describe">打造超轻量级大数据平台</div>
+            <div id="web-content-show-shell">
+                <span id="span-docker">docker</span>
+                <span id="span-run">run -d isxcode/spark-star:latest</span>
+            </div>
+            <button id="web-content-show-demo-button">
+                <a href="#/README"><span>演示环境</span></a>
+            </button>
         </div>
-        <div id="web-function">
-            <div id="web-function-font">产品优势</div>
-            <ul id="web-function-ul">
-                <li id="func-1-link" onclick="show_func(1)">快速部署</li>
-                <li id="func-2-link" onclick="show_func(2)">多数据源</li>
-                <li id="func-3-link" onclick="show_func(3)">作业类型</li>
-                <li id="func-4-link" onclick="show_func(4)">数据建模</li>
-                <li id="func-5-link" onclick="show_func(5)">自定义Api</li>
-                <li id="func-6-link" onclick="show_func(6)">周期调度</li>
+        <div id="web-content-function">
+            <div id="web-content-function-name">产品优势</div>
+            <ul id="web-content-function-ul">
+                <li id="show-func-link-1" onclick="show_func_link(1)">快速部署</li>
+                <li id="show-func-link-2" onclick="show_func_link(2)">多数据源</li>
+                <li id="show-func-link-3" onclick="show_func_link(3)">作业丰富</li>
+                <li id="show-func-link-4" onclick="show_func_link(4)">数据建模</li>
+                <li id="show-func-link-5" onclick="show_func_link(5)">自定义Api</li>
+                <li id="show-func-link-6" onclick="show_func_link(6)">周期调度</li>
             </ul>
 
             <div id="func-1">
@@ -69,15 +73,15 @@
             </div>
         </div>
 
-        <div id="web-tec">
-            <div id="web-tec-font">技术架构</div>
-            <div id="web-tec-desc">基于Spark计算引擎，打造Hadoop生态超轻量级数据平台。</div>
-            <img id="tec-img" src="https://img.isxcode.com/picgo/20230303123701.png" alt="tec"/>
+        <div id="web-content-tech">
+            <div id="web-content-tech-name">技术架构</div>
+            <div id="web-content-tech-describe">基于Spark计算引擎，打造Hadoop生态超轻量级数据平台。</div>
+            <img id="tech-img" src="https://img.isxcode.com/picgo/20230303140234.png" alt="tec"/>
         </div>
 
-        <div id="web-vip">
-            <div id="web-vip-font">版本差异</div>
-            <table id="web-vip-table">
+        <div id="web-content-vip">
+            <div id="web-content-vip-name">版本差异</div>
+            <table id="web-content-vip-table">
                 <tr>
                     <th>功能</th>
                     <th>社区版</th>
@@ -85,7 +89,7 @@
                 </tr>
                 <tr class="deep-tr">
                     <td>数据源</td>
-                    <td>5种</td>
+                    <td>基础类型</td>
                     <td>所有</td>
                 </tr>
                 <tr>
@@ -100,7 +104,7 @@
                 </tr>
                 <tr>
                     <td>作业类型</td>
-                    <td>3种</td>
+                    <td>基础类型</td>
                     <td>所有</td>
                 </tr>
                 <tr class="deep-tr">
@@ -131,56 +135,56 @@
             </table>
         </div>
 
-        <div id="web-success">
-            <div id="web-success-font">应用场景</div>
-            <div class="web-success-example">
-                <div class="web-success-title">
-                    <img src="assets/images/car.svg"/>
-                    <span>汽车行业</span>
+        <div id="web-content-business">
+            <div id="web-content-business-name">应用场景</div>
+            <div id="web-content-business-scroll">
+                <div class="web-content-business-example">
+                    <div class="web-content-business-title">
+                        <img src="assets/images/car.svg"/>
+                        <span>汽车行业</span>
+                    </div>
+                    <div class="web-content-business-describe">
+                        特斯拉作为一家以数据为驱动的公司，利用大量的数据来提高汽车的性能和用户体验。
+                        智能车辆拥有大量的传感器，可以收集各种数据，包括车速、加速度、方向盘转向角度、制动力、电池温度等等。
+                        这些数据被传送到大数据的云平台上，然后被用来进行数据分析和改进汽车的性能和用户体验。
+                    </div>
                 </div>
-                <div>
-                    特斯拉作为一家以数据为驱动的公司，利用大量的数据来提高汽车的性能和用户体验。
-                    智能车辆拥有大量的传感器，可以收集各种数据，包括车速、加速度、方向盘转向角度、制动力、电池温度等等。
-                    这些数据被传送到大数据的云平台上，然后被用来进行数据分析和改进汽车的性能和用户体验。
+                <div class="web-content-business-example">
+                    <div class="web-content-business-title">
+                        <img src="assets/images/half_eve.svg"/>
+                        <span>半导体行业</span>
+                    </div>
+                    <div class="web-content-business-describe">
+                        半导体制造公司，他们利用大数据来改进制造过程和供应链管理。
+                        工厂和供应链拥有大量的传感器和监控系统，可以收集各种数据，包括生产效率、质量控制、零部件供应等等。
+                        这些数据被用来进行制造过程和供应链优化，从而提高效率和减少成本。
+                    </div>
                 </div>
-            </div>
-            <div class="web-success-example">
-                <div class="web-success-title">
-                    <img src="assets/images/half_eve.svg"/>
-                    <span>半导体行业</span>
+                <div class="web-content-business-example">
+                    <div class="web-content-business-title">
+                        <img src="assets/images/people_draw.svg">
+                        <span>用户画像</span>
+                    </div>
+                    <div class="web-content-business-describe">
+                        利用大数据来构建用户画，帮助他们更好地了解客户需求和购物行为。
+                        收集并分析各种数据，包括浏览历史、购买记录、搜索关键词等等。
+                        通过对这些数据的分析，能够更好地了解客户的购物偏好、兴趣爱好、年龄段等等，从而为客户提供更加个性化的商品推荐和营销策略。
+                    </div>
                 </div>
-                <div>
-                    半导体制造公司，他们利用大数据来改进制造过程和供应链管理。
-                    工厂和供应链拥有大量的传感器和监控系统，可以收集各种数据，包括生产效率、质量控制、零部件供应等等。
-                    这些数据被用来进行制造过程和供应链优化，从而提高效率和减少成本。
-                </div>
-            </div>
-            <div class="web-success-example">
-                <div class="web-success-title">
-                    <img src="assets/images/people_draw.svg">
-                    <span>用户画像</span>
-                </div>
-                <div>
-                    利用大数据来构建用户画，帮助他们更好地了解客户需求和购物行为。
-                    收集并分析各种数据，包括浏览历史、购买记录、搜索关键词等等。
-                    通过对这些数据的分析，能够更好地了解客户的购物偏好、兴趣爱好、年龄段等等，从而为客户提供更加个性化的商品推荐和营销策略。
-                </div>
-            </div>
-            <div class="web-success-example">
-                <div class="web-success-title">
-                    <img src="assets/images/report.svg">
-                    <span>BI报表</span>
-                </div>
-                <div>
-                    利用大数据BI报表，分析车站客流、列车运行、货运等多种数据来源，以更加准确地了解客流情况、车辆运行情况等等。
-                    BI报表能够通过实时数据分析、数据可视化等方式，为管理者提供直观的数据展示和分析，从而为企业提供更加精准的管理支持。
+                <div class="web-content-business-example" id="">
+                    <div class="web-content-business-title">
+                        <img src="assets/images/report.svg">
+                        <span>BI报表</span>
+                    </div>
+                    <div class="web-content-business-describe">
+                        利用大数据BI报表，分析车站客流、列车运行、货运等多种数据来源，以更加准确地了解客流情况、车辆运行情况等等。
+                        BI报表能够通过实时数据分析、数据可视化等方式，为管理者提供直观的数据展示和分析，从而为企业提供更加精准的管理支持。
+                    </div>
                 </div>
             </div>
         </div>
-
         <div id="web-link">
             联系方式: isxcode@outlook.com
         </div>
-
     </div>
 </div>
