@@ -94,7 +94,7 @@
 
 #web-content-function {
     margin-top: 4rem;
-    height: 43rem;
+    height: 44rem;
     border-bottom: lightgray solid 2px;
 }
 
@@ -203,8 +203,9 @@
 }
 
 #web-content-business {
-    height: 36rem;
+    height: 39rem;
     margin-top: 4rem;
+    border-bottom: lightgray solid 2px;
 }
 
 #web-content-business-name {
@@ -262,8 +263,33 @@
 }
 
 #web-link {
-    height: 5rem;
-    border-top: black solid 1px;
-    line-height: 5rem;
-    font-size: 1rem;
+    height: 34rem;
+    margin-top: 4rem;
+}
+
+#web-link-name {
+    width: 10rem;
+    font-size: 2rem;
+    margin: auto;
+}
+
+#web-link-company {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#web-link-email {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+}
+
+#web-link-wechat {
+    margin-top: 1rem;
+    width: 14rem;
+}
+
+#web-link-wechat-describe {
+    color: grey;
+    font-size: 0.8rem;
 }
