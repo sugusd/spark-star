@@ -1,4 +1,4 @@
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 985px) {
     #web-nav-ul {
         display: none !important;
     }
@@ -8,7 +8,8 @@
     /*}*/
 
     #web-content-function-ul {
-        width: 90%;
+        width: 20rem;
+        margin: 3rem auto auto;
     }
 
     #web-content-function-ul li {
@@ -16,6 +17,8 @@
         margin-left: 0.5rem !important;
         line-height: 1.5rem;
         height: 7rem;
+        writing-mode: vertical-lr;
+        text-orientation: upright;
     }
 
     #tech-img {

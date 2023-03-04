@@ -1,3 +1,4 @@
+/*  main  */
 #web-main {
     position: fixed;
     top: 0;
@@ -6,6 +7,7 @@
     height: 100%;
 }
 
+/* nav */
 #web-nav {
     position: absolute;
     z-index: 999;
@@ -21,7 +23,8 @@
     float: left;
     margin-left: 5%;
     height: 3.6rem;
-    width: 8rem;
+    width: 7.2rem;
+    cursor: pointer;
 }
 
 #web-nav-ul {
@@ -37,22 +40,26 @@
     margin-left: 20px;
     height: 3.6rem;
     line-height: 3.6rem;
+    cursor: pointer;
 }
 
+/* content */
 #web-content {
-    padding-top: 3.8rem;
     width: 100%;
     height: 100vh;
     overflow-y: scroll;
 }
 
+/* show */
 #web-content-show {
-    height: 40rem;
+    padding-top: 9rem;
+    height: 100vh;
+    width: 95%;
+    margin: auto;
     border-bottom: lightgray solid 2px;
 }
 
 #web-content-show-name {
-    margin-top: 9rem;
     font-size: 6rem;
 }
 
@@ -63,7 +70,7 @@
 
 #web-content-show-shell {
     font-size: 1.1rem;
-    width: 20rem;
+    width: 23rem;
     height: 2.5rem;
     line-height: 2.5rem;
     margin: 4rem auto auto;
@@ -83,18 +90,27 @@
 
 #web-content-show-demo-button {
     margin-top: 3rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     background: white;
     color: black;
-    border-radius: 0.5rem;
+    border-radius: 0.1rem;
     border: black solid 2px;
     width: 150px;
     height: 40px;
+    cursor: pointer;
 }
 
+#web-content-show-demo-button:hover {
+    background: black;
+    color: white;
+}
+
+/* function */
 #web-content-function {
-    margin-top: 4rem;
-    height: 44rem;
+    padding-top: 6rem;
+    height: 100vh;
+    width: 95%;
+    margin: auto;
     border-bottom: lightgray solid 2px;
 }
 
@@ -107,75 +123,132 @@
 #web-content-function-ul {
     display: inline-flex;
     list-style: none;
-    font-size: 18px;
+    margin: 3rem auto auto;
 }
 
 #web-function-ul li {
-    margin-right: 10rem;
-    margin-left: 10rem;
     text-align: center;
+    font-size: 2rem;
 }
 
 #show-func-link-1 {
+    margin-left: 2rem;
+    margin-right: 2rem;
     border-bottom: black solid 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#show-func-link-2 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#show-func-link-3 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#show-func-link-4 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#show-func-link-5 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#show-func-link-6 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.func-img {
+    display: block;
+    height: 13rem;
+    width: 14rem;
+}
+
+.func-desc {
+    width: 40rem;
+    margin-left: 5rem;
+    height: 15rem;
 }
 
 #func-1 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 #func-2 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
     display: none;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 #func-3 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
     display: none;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 #func-4 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
     display: none;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 #func-5 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
     display: none;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
 #func-6 {
     width: 70rem;
-    margin: auto;
-    line-height: 30px;
-    text-align: left;
+    height: 18rem;
+    margin: 5rem auto auto;
     font-size: 16px;
     display: none;
+    align-items: center;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 
+/* tech */
 #web-content-tech {
-    height: 50rem;
-    margin-top: 4rem;
+    height: 100vh;
+    padding-top: 6rem;
+    width: 95%;
+    margin: auto;
     border-bottom: lightgray solid 2px;
 }
 
@@ -193,13 +266,14 @@
 
 #tech-img {
     margin-top: 2rem;
-    width: 40rem;
-    height: 38rem;
+    width: 34rem;
+    height: 32rem;
 }
 
+/* vip */
 #web-content-vip {
-    margin-top: 4rem;
-    height: 38rem;
+    padding-top: 6rem;
+    height: 100vh;
     border-bottom: lightgray solid 2px;
 }
 
@@ -211,7 +285,7 @@
 
 #web-content-vip-table {
     background: white;
-    margin: 2rem auto 1rem;
+    margin: 5rem auto 1rem;
     border-collapse: collapse;
     width: 32rem;
 }
@@ -238,9 +312,12 @@
     background: #f1f1f2;
 }
 
+/*  business */
 #web-content-business {
-    height: 39rem;
-    margin-top: 4rem;
+    height: 100vh;
+    padding-top: 6rem;
+    width: 95%;
+    margin: auto;
     border-bottom: lightgray solid 2px;
 }
 
@@ -299,9 +376,12 @@
     width: 20px !important;
 }
 
+/* link */
 #web-link {
-    height: 34rem;
-    margin-top: 4rem;
+    width: 95%;
+    margin: auto;
+    height: 100vh;
+    padding-top: 6rem;
 }
 
 #web-link-name {
@@ -312,13 +392,13 @@
 
 #web-link-company {
     margin-top: 2rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
 #web-link-email {
     margin-top: 1.5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 #web-link-wechat {
