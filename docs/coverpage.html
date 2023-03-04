@@ -28,7 +28,7 @@
         <div id="web-content-function">
             <div id="web-content-function-name">产品优势</div>
             <ul id="web-content-function-ul">
-                <li id="show-func-link-1" onclick="show_func_link(1)">快速部署</li>
+                <li id="show-func-link-1" onclick="show_func_link(1)">极速部署</li>
                 <li id="show-func-link-2" onclick="show_func_link(2)">超多数据源</li>
                 <li id="show-func-link-3" onclick="show_func_link(3)">丰富作业类型</li>
                 <li id="show-func-link-4" onclick="show_func_link(4)">数据建模</li>
@@ -37,62 +37,81 @@
             </ul>
 
             <div id="func-1">
-
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121336.png">
                 <div class="func-desc">
-                    <ul>
-                        <li>▪️&nbsp; &nbsp; 容器化：大数据快速部署需要使用自动化工具来完成，这些工具能够自动化地完成大量的配置和部署任务，从而加快部署速度，减少人为错误。</li>
-                        <li>▪️&nbsp; &nbsp; 快速性：大数据快速部署的目标是在尽可能短的时间内完成部署任务，因此它需要采用高效的部署流程和优化的工具来实现快速部署。</li>
-                        <li>▪️&nbsp; &nbsp; 灵活性：大数据快速部署需要具有一定的灵活性，能够根据不同的需求和环境进行配置和部署，从而满足不同场景下的需求。</li>
-                        <li>▪️&nbsp; &nbsp; 可靠性：大数据快速部署需要保证部署的可靠性，确保所有组件能够正常运行，数据能够准确地被处理和存储。</li>
-                    </ul>
+                    <span>▪️&nbsp; 容器化部署</span>
+                    <p>Docker部署，一条命令即可完成部署。</p>
+                    <span>▪️&nbsp; 集群部署</span>
+                    <p>K8S和Rancher集成，配置集群数据源和共享磁盘后，实现集群部署，提高可用性和稳定性。</p>
+                    <span>▪️&nbsp; 可选配中间件</span>
+                    <p>内置H2数据库，用户亦可配置MySQL、Oracle等，亦可配置Redis提高访问响应速度。</p>
+                    <span>▪️&nbsp; 代码开源</span>
+                    <p>社区版代码已开源，客户可自行二次开发实现快速部署。</p>
                 </div>
             </div>
             <div id="func-2">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121419.png">
                 <div class="func-desc">
-                    ▪️&nbsp; &nbsp; 多样性：大数据多数据源通常包含来自不同类型、不同来源、不同格式的数据，如结构化数据、半结构化数据和非结构化数据等。
-                    <br/> ▪️&nbsp; &nbsp; 大规模性：大数据多数据源通常包含大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。
-                    <br/> ▪️&nbsp; &nbsp; 实时性：大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。
-                    <br/> ▪️&nbsp; &nbsp; 难以统一：由于数据来源的多样性和格式的不同，大数据多数据源的数据难以进行统一，需要使用数据整合和转换技术进行处理和分析。
-                    <br/> ▪️&nbsp; &nbsp; 数据质量：由于数据来源的不同和数据采集的复杂性，大数据多数据源的数据质量往往不稳定，需要进行数据清洗和质量控制。
+                    <span>▪️&nbsp; 5种基础数据源</span>
+                    <p>包括：MySQL、SQL Server、Oracle、Hive、Kafka。</p>
+                    <span>▪️&nbsp; 结构化数据源</span>
+                    <p>包括：MySQL、Oracle、SQL Server、PostgreSQL、DB2、SQLite、Hana SAP、H2、Hive等。</p>
+                    <span> ▪️&nbsp; 非结构化数据源</span>
+                    <p>包括：Hdfs、MongoDB、Doris、Clickhouse、Hbase、OSS、FTP、S3、Redis等。</p>
+                    <span> ▪️&nbsp; 实时数据源</span>
+                    <p>包括：Redis、Kafka、RabbitMQ、RocketMQ、ActiveMQ等。</p>
                 </div>
             </div>
             <div id="func-3">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121508.png">
                 <div class="func-desc">
-                    ▪️&nbsp; &nbsp; 多样性：大数据多作业类型通常包含不同类型的作业，如批处理作业、流处理作业、机器学习作业等。
-                    <br/> ▪️&nbsp; &nbsp; 大规模性：大数据多作业类型通常需要处理大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。
-                    <br/> ▪️&nbsp; &nbsp; 复杂性：大数据多作业类型的作业通常具有复杂的处理逻辑和算法，需要使用复杂的编程模型和算法进行处理。
-                    <br/> ▪️&nbsp; &nbsp; 实时性：大数据多作业类型的作业需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。
-                    <br/> ▪️&nbsp; &nbsp; 资源管理：由于大数据多作业类型需要使用大量的计算资源和存储资源，需要进行资源管理和调度，以充分利用资源并满足作业的需求。
+                    <span>▪️&nbsp; 3种基础作业</span>
+                    <p>包括：离线同步作业、SparkSql作业、实时同步作业。</p>
+                    <span>▪️&nbsp; 数据采集</span>
+                    <p>支持大数据采集，包括CSV文件采集到Hive、Excel文件采集到Hdfs等。</p>
+                    <span> ▪️&nbsp; 数据查询</span>
+                    <p>支持大数据查询，基于Spark两种模式：Per-job模式和Session模式。</p>
+                    <span> ▪️&nbsp; 其他作业</span>
+                    <p>包括：Shell脚本作业、ETL作业、Python作业、自定义Spark函数作业、自定义插件作业等。</p>
                 </div>
             </div>
             <div id="func-4">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121529.png">
                 <div class="func-desc">
-                    ▪️&nbsp; &nbsp; 数据定义：大数据平台的数据建模功能可以定义不同类型的数据对象，如表、视图、索引等。可以为数据对象定义名称、列名、数据类型、长度、精度、约束等属性。
-                    <br/> ▪️&nbsp; &nbsp; 数据关系：大数据平台的数据建模功能可以定义不同数据对象之间的关系，如主键-外键关系、一对多关系、多对多关系等。可以通过这些关系来定义数据之间的联系和依赖。
-                    <br/> ▪️&nbsp; &nbsp; 数据逻辑：大数据平台的数据建模功能可以定义不同数据对象之间的逻辑关系，如数据计算、聚合、过滤、分组等。可以通过这些逻辑关系来实现数据的复杂计算和分析。
+                    <span>▪️&nbsp; 数据模型</span>
+                    <p>。</p>
+                    <span>▪️&nbsp; 数据字典</span>
+                    <p>。</p>
+                    <span> ▪️&nbsp; 数据指标</span>
+                    <p>。</p>
+                    <span> ▪️&nbsp; 数据标签</span>
+                    <p>。</p>
                 </div>
             </div>
             <div id="func-5">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304115447.png">
                 <div class="func-desc">
-                    ▪️&nbsp; &nbsp; API接口定义：大数据平台自定义API功能可以让开发者定义API接口，包括接口名称、参数、返回值等信息。可以使用不同的API协议，如RESTful、SOAP等。
-                    <br/> ▪️&nbsp; &nbsp;
-                    数据处理：大数据平台自定义API功能可以让开发者对数据进行处理，包括数据的读取、过滤、转换、聚合等操作。可以使用不同的数据处理技术，如MapReduce、Spark等。
-                    <br/> ▪️&nbsp; &nbsp; 监控和调优：大数据平台自定义API功能可以提供监控和调优功能，包括性能监控、资源管理、错误处理等。可以使用不同的监控和调优工具，如Ganglia、Nagios等。
+                    <span>▪️&nbsp; 可视化配置</span>
+                    <p>大数据多数据源通常包含来自不同类型、不同来源、不同格式的数据，如结构化数据、半结构化数据和非结构化数据等。</p>
+                    <span> ▪️&nbsp; 安全加密</span>
+                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <span> ▪️&nbsp; 数据脱敏</span>
+                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <span>▪️&nbsp; 低延迟响应</span>
+                    <p>大数据多数据源通常包含大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。</p>
                 </div>
             </div>
             <div id="func-6">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304115307.png">
                 <div class="func-desc">
-                    ▪️&nbsp; &nbsp; 定时任务配置：大数据平台的定时调度功能可以配置定时任务，包括任务名称、任务描述、执行频率、执行时间等信息。
-                    <br/> ▪️&nbsp; &nbsp; 任务执行：大数据平台的定时调度功能可以自动执行定时任务，执行过程中可以监控任务的运行情况，如执行状态、执行时间、执行结果等。
-                    <br/> ▪️&nbsp; &nbsp; 任务调度管理：大数据平台的定时调度功能可以管理定时任务的调度，包括任务调度计划、调度日志、调度报警等信息。
-                    <br/> ▪️&nbsp; &nbsp; 任务执行监控：大数据平台的定时调度功能可以监控任务的执行情况，包括任务的运行状态、运行日志、运行报警等信息。
-                    <br/> ▪️&nbsp; &nbsp; 任务调度优化：大数据平台的定时调度功能可以优化任务的调度，包括任务的资源分配、任务的优先级、任务的调度策略等信息。
+                    <span>▪️&nbsp; 逻辑作业流</span>
+                    <p>大数据多数据源通常包含来自不同类型、不同来源、不同格式的数据，如结构化数据、半结构化数据和非结构化数据等。</p>
+                    <span>▪️&nbsp; 实例查询</span>
+                    <p>大数据多数据源通常包含大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。</p>
+                    <span> ▪️&nbsp; 基线管理</span>
+                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <span> ▪️&nbsp; 版本回滚</span>
+                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
                 </div>
             </div>
         </div>

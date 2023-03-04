@@ -175,6 +175,20 @@
     width: 40rem;
     margin-left: 5rem;
     height: 15rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    text-align: left;
+}
+
+.func-desc span {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.func-desc p {
+    font-size: 0.9rem;
+    text-indent: 2rem;
+    line-height: 1.4rem;
 }
 
 #func-1 {
