@@ -2,15 +2,18 @@
     <div id="web-nav">
         <img onclick="scrollToDiv('web-content-show')" id="logo-img"
              src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
+        <ul id="web-nav-ul-mobile">
+            <li><a href="#/README">帮助文档</a></li>
+        </ul>
         <ul id="web-nav-ul">
             <li onclick="scrollToDiv('web-content-function')">产品优势</li>
             <li onclick="scrollToDiv('web-content-tech')">技术架构</li>
             <li onclick="scrollToDiv('web-content-vip')">版本差异</li>
             <li onclick="scrollToDiv('web-content-business')">应用场景</li>
             <li onclick="scrollToDiv('web-link')">关于我们</li>
-            <li><a href="#/README">文档</a></li>
-            <li><a href="https://gitee.com/ispong/spark-star">gitee开源</a></li>
-            <li><a href="https://github.com/ispong/spark-star">github开源</a></li>
+            <li><a href="#/README">帮助文档</a></li>
+            <li><a href="https://gitee.com/ispong/spark-star">Gitee开源</a></li>
+            <li><a href="https://github.com/ispong/spark-star">Github开源</a></li>
         </ul>
     </div>
     <div id="web-content">
@@ -22,31 +25,31 @@
                 <span id="span-run">run -d isxcode/spark-star:latest</span>
             </div>
             <button id="web-content-show-demo-button">
-                <a href=""><span>演示环境</span></a>
+                <a href="https://spark-star.isxcode.com"><span>演示环境</span></a>
             </button>
         </div>
         <div id="web-content-function">
             <div id="web-content-function-name">产品优势</div>
             <ul id="web-content-function-ul">
-                <li id="show-func-link-1" onclick="show_func_link(1)">极速部署</li>
-                <li id="show-func-link-2" onclick="show_func_link(2)">超多数据源</li>
-                <li id="show-func-link-3" onclick="show_func_link(3)">丰富作业类型</li>
-                <li id="show-func-link-4" onclick="show_func_link(4)">数据建模</li>
-                <li id="show-func-link-5" onclick="show_func_link(5)">自定义接口</li>
-                <li id="show-func-link-6" onclick="show_func_link(6)">周期调度</li>
+                <li id="show-func-link-1" onclick="show_func_link(1)">极&nbsp;速&nbsp;部&nbsp;署</li>
+                <li id="show-func-link-2" onclick="show_func_link(2)">多&nbsp;数&nbsp;据&nbsp;源</li>
+                <li id="show-func-link-3" onclick="show_func_link(3)">丰&nbsp;富&nbsp;作&nbsp;业</li>
+                <li id="show-func-link-4" onclick="show_func_link(4)">数&nbsp;据&nbsp;建&nbsp;模</li>
+                <li id="show-func-link-5" onclick="show_func_link(5)">定&nbsp;义&nbsp;接&nbsp;口</li>
+                <li id="show-func-link-6" onclick="show_func_link(6)">周&nbsp;期&nbsp;调&nbsp;度</li>
             </ul>
 
             <div id="func-1">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121336.png">
                 <div class="func-desc">
                     <span>▪️&nbsp; 容器化部署</span>
-                    <p>Docker部署，一条命令即可完成部署。</p>
+                    <p>一行Docker命令即可完成部署。</p>
                     <span>▪️&nbsp; 集群部署</span>
-                    <p>K8S和Rancher集成，配置集群数据源和共享磁盘后，实现集群部署，提高可用性和稳定性。</p>
+                    <p>配置集群数据源和共享磁盘后，实现集群部署，提升高可用性和稳定性。</p>
                     <span>▪️&nbsp; 可选配中间件</span>
-                    <p>内置H2数据库，用户亦可配置MySQL、Oracle等，亦可配置Redis提高访问响应速度。</p>
+                    <p>内置H2数据库，用户亦可配置MySQL、Oracle数据库等，或配置Redis提高响应速度。</p>
                     <span>▪️&nbsp; 代码开源</span>
-                    <p>社区版代码已开源，客户可自行二次开发实现快速部署。</p>
+                    <p>社区版代码已开源，用户可自行二次开发实现更新快速部署。</p>
                 </div>
             </div>
             <div id="func-2">
@@ -79,39 +82,39 @@
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121529.png">
                 <div class="func-desc">
                     <span>▪️&nbsp; 数据模型</span>
-                    <p>。</p>
+                    <p>支持数据分层、数据域、业务过程等功能。</p>
                     <span>▪️&nbsp; 数据字典</span>
-                    <p>。</p>
+                    <p>可自定义数据字典，对大数据中的字段进行字典翻译。</p>
                     <span> ▪️&nbsp; 数据指标</span>
-                    <p>。</p>
+                    <p>可快速对数据进行归总和分析，且支持可视化图形展示。</p>
                     <span> ▪️&nbsp; 数据标签</span>
-                    <p>。</p>
+                    <p>数据支持打标签功能。</p>
                 </div>
             </div>
             <div id="func-5">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304115447.png">
                 <div class="func-desc">
                     <span>▪️&nbsp; 可视化配置</span>
-                    <p>大数据多数据源通常包含来自不同类型、不同来源、不同格式的数据，如结构化数据、半结构化数据和非结构化数据等。</p>
+                    <p>提供可视化配置接口，零代码亦可配置开放Api接口，为其他服务提供数据。</p>
                     <span> ▪️&nbsp; 安全加密</span>
-                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <p>接口具备Token身份校验机制，或配置客户自定义身份认证逻辑。</p>
                     <span> ▪️&nbsp; 数据脱敏</span>
-                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <p>对特殊数据进行脱敏管理，根据不同用户权限访问不同加密数据。</p>
                     <span>▪️&nbsp; 低延迟响应</span>
-                    <p>大数据多数据源通常包含大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。</p>
+                    <p>基于Spark实现数据查询，全内存查询，提供超快查询能力。</p>
                 </div>
             </div>
             <div id="func-6">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304115307.png">
                 <div class="func-desc">
                     <span>▪️&nbsp; 逻辑作业流</span>
-                    <p>大数据多数据源通常包含来自不同类型、不同来源、不同格式的数据，如结构化数据、半结构化数据和非结构化数据等。</p>
+                    <p>作业流支持逻辑节点，包括循环节点、判断节点、分流节点、归并节点等。</p>
                     <span>▪️&nbsp; 实例查询</span>
-                    <p>大数据多数据源通常包含大量的数据，需要使用大数据技术进行存储、处理和分析，如Hadoop、Spark等。</p>
+                    <p>作业运行实例化，提供作业实例界面UI。</p>
                     <span> ▪️&nbsp; 基线管理</span>
-                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <p>配置作业基线，支持短信提醒，邮箱提醒，消息中心提醒等方式。</p>
                     <span> ▪️&nbsp; 版本回滚</span>
-                    <p>大数据多数据源需要能够及时地处理和分析数据，能够实现实时的数据处理和分析。</p>
+                    <p>作业支持版本发布管理，实现多版本记录，并支持作业回滚版本。</p>
                 </div>
             </div>
         </div>
@@ -209,7 +212,7 @@
                         <span>用户画像</span>
                     </div>
                     <div class="web-content-business-describe">
-                        利用大数据来构建用户画，更好地了解客户需求和购物行为。
+                        利用大数据来构建用户画像，更好地了解客户需求和购物行为。
                         收集并分析各种数据，包括浏览历史、购买记录、搜索关键词等等。
                         通过对这些数据的分析，能够更好地了解客户的购物偏好、兴趣爱好、年龄段等等，从而为客户提供更加个性化的商品推荐和营销策略。
                     </div>
