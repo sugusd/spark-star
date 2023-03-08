@@ -27,6 +27,7 @@
         <module>star-plugins</module>
         <module>star-dist</module>
         <module>star-local-test</module>
+        <module>star-website</module>
         <module>star-backend</module>
     </modules>
 

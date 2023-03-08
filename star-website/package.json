@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm -rf ../star-backend/src/main/resources/static && mv build/static ../star-backend/src/main/resources/ && rm -rf ../star-backend/src/main/resources/templates && mkdir -p ../star-backend/src/main/resources/templates && mv build/index.html ../star-backend/src/main/resources/templates/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
