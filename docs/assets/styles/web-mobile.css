@@ -1,14 +1,13 @@
 @media screen and (max-width: 985px) {
 
     #web-nav-ul-mobile {
-        float: right;
-        margin: 0 5% 0 0;
+        margin: 0 5% 0 auto;
         display: inline-flex;
         list-style: none;
     }
 
     #web-nav-ul-mobile li {
-        font-size: 1.2rem;
+        font-size: 20px;
         text-align: center;
         margin-left: 20px;
         height: 3.6rem;
@@ -18,6 +17,15 @@
 
     #web-nav-ul {
         display: none !important;
+    }
+
+    #web-content-show-describe {
+        width: 300px;
+        font-size: 1.7em;
+    }
+
+    #web-content-show-shell {
+        width: 90%;
     }
 
     #web-content-function-ul {
@@ -37,7 +45,7 @@
     #func-1 {
         margin-top: 1rem;
         width: 90%;
-        display: none;
+        display: block;
         padding: 1rem;
     }
 

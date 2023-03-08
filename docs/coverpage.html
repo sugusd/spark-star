@@ -1,10 +1,6 @@
 <div id="web-main">
     <div id="web-nav">
-        <img onclick="scrollToDiv('web-content-show')" id="logo-img"
-             src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
-        <ul id="web-nav-ul-mobile">
-            <li><a href="#/README">帮助文档</a></li>
-        </ul>
+        <img onclick="scrollToDiv('web-content-show')" id="logo-img" src="https://img.isxcode.com/picgo/20230301212621.png" alt="logo"/>
         <ul id="web-nav-ul">
             <li onclick="scrollToDiv('web-content-function')">产品优势</li>
             <li onclick="scrollToDiv('web-content-tech')">技术架构</li>
@@ -14,6 +10,9 @@
             <li><a href="#/README">帮助文档</a></li>
             <li><a href="https://gitee.com/ispong/spark-star">Gitee开源</a></li>
             <li><a href="https://github.com/ispong/spark-star">Github开源</a></li>
+        </ul>
+        <ul id="web-nav-ul-mobile">
+            <li><a href="#/README">帮助文档</a></li>
         </ul>
     </div>
     <div id="web-content">
@@ -42,14 +41,12 @@
             <div id="func-1">
                 <img class="func-img" src="https://img.isxcode.com/picgo/20230304121336.png">
                 <div class="func-desc">
-                    <span>▪️&nbsp; 容器化部署</span>
-                    <p>一行Docker命令即可完成部署。</p>
-                    <span>▪️&nbsp; 集群部署</span>
-                    <p>配置集群数据源和共享磁盘后，实现集群部署，提升高可用性和稳定性。</p>
-                    <span>▪️&nbsp; 可选配中间件</span>
-                    <p>内置H2数据库，用户亦可配置MySQL、Oracle数据库等，或配置Redis提高响应速度。</p>
+                    <span>▪️&nbsp; Docker一键部署</span>
+                    <p>能够快速地将应用程序打包到容器中，并且可以在不同的环境中快速部署。</p>
+                    <span>▪️&nbsp; 大集群秒速落地</span>
+                    <p>能够快速响应业务需求，缩短了系统开发和部署的时间，提高了业务的敏捷性。</p>
                     <span>▪️&nbsp; 代码开源</span>
-                    <p>社区版代码已开源，用户可自行二次开发实现更新快速部署。</p>
+                    <p>能够让全球的开发者协同开发，共同完善代码，提高代码的质量和稳定性。经过众多开发者和用户的测试和使用，可以更加可靠和稳定。</p>
                 </div>
             </div>
             <div id="func-2">
@@ -62,7 +59,7 @@
                     <span> ▪️&nbsp; 非结构化数据源</span>
                     <p>包括：Hdfs、MongoDB、Doris、Clickhouse、Hbase、OSS、FTP、S3、Redis等。</p>
                     <span> ▪️&nbsp; 实时数据源</span>
-                    <p>包括：Redis、Kafka、RabbitMQ、RocketMQ、ActiveMQ等。</p>
+                    <p>包括：Redis、Kafka、RabbitMQ、RocketMQ、ActiveMQ、IOT等。</p>
                 </div>
             </div>
             <div id="func-3">
@@ -71,9 +68,9 @@
                     <span>▪️&nbsp; 3种基础作业</span>
                     <p>包括：离线同步作业、SparkSql作业、实时同步作业。</p>
                     <span>▪️&nbsp; 数据采集</span>
-                    <p>支持大数据采集，包括CSV文件采集到Hive、Excel文件采集到Hdfs等。</p>
+                    <p>包括：CSV文件采集到Hive、Excel文件采集到Hdfs等。</p>
                     <span> ▪️&nbsp; 数据查询</span>
-                    <p>支持大数据查询，基于Spark两种模式：Per-job模式和Session模式。</p>
+                    <p>支持大数据秒速查询返回，基于Spark两种模式：Per-job模式和Session模式。</p>
                     <span> ▪️&nbsp; 其他作业</span>
                     <p>包括：Shell脚本作业、ETL作业、Python作业、自定义Spark函数作业、自定义插件作业等。</p>
                 </div>
@@ -231,7 +228,8 @@
         </div>
         <div id="web-link">
             <div id="web-link-name">关于我们</div>
-            <div id="web-link-company">至轻信息科技有限公司</div>
+<!--            <div id="web-link-company">至轻信息科技有限公司</div>-->
+            <div id="web-link-company">至轻云大数据平台创业团队</div>
             <img id="web-link-wechat" src="https://img.isxcode.com/picgo/20230303190611.png"/>
             <div id="web-link-wechat-describe">扫码添加至轻云产品顾问</div>
             <div id="web-link-email">联系邮箱: ispong@outlook.com</div>
