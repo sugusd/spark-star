@@ -310,6 +310,25 @@
     height: 50vh;
 }
 
+@media screen and (max-width: 1920px) {
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .image-container:hover img {
+        transform: scale(1.7);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .image-container img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+}
+
 /* vip */
 #web-content-vip {
     padding-top: var(--per-card-padding-top);
