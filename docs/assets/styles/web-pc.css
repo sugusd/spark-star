@@ -182,7 +182,7 @@
 .func-desc p {
     font-size: 0.9rem;
     text-indent: 2rem;
-    line-height: 1.4rem;
+    line-height: 1.3rem !important;
 }
 
 #show-func-link-1 {
