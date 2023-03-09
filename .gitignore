@@ -42,5 +42,6 @@ main.*.txt
 *.chunk.js
 *.chunk.js.map
 *.chunk.map
+star-backend/src/main/resources/static/*
 star-backend/src/main/resources/templates/index.html
 star-backend/star-package/**

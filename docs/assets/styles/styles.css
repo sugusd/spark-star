@@ -397,3 +397,15 @@ body .sidebar-toggle span:nth-child(3) {
 .notFound {
     line-height: 150px;
 }
+
+.markdown-section code {
+    color: black !important;
+}
+
+.markdown-section p.tip:before {
+    background-color: #000;
+}
+
+.markdown-section p.tip {
+    border-left: 4px solid #000;
+}

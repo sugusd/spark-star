@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && rm -rf ../star-backend/src/main/resources/static && mv build/static ../star-backend/src/main/resources/ && rm -rf ../star-backend/src/main/resources/templates && mkdir -p ../star-backend/src/main/resources/templates && mv build/index.html ../star-backend/src/main/resources/templates/ && rm -rf ../star-backend/star-package && mkdir -p ../star-backend/star-package && cp ../star-dist/target/spark-star-1.2.0-bin.tar.gz ../star-backend/star-package/ && cp -r ../star-dist/src/main/bin ../star-backend/star-package/",
+    "build": "react-scripts build && rm -rf ../star-backend/src/main/resources/static && mv build/static ../star-backend/src/main/resources/ && rm -rf ../star-backend/src/main/resources/templates && mkdir -p ../star-backend/src/main/resources/templates && mv build/index.html ../star-backend/src/main/resources/templates/ && mv build/* ../star-backend/src/main/resources/static/  && rm -rf ../star-backend/star-package && mkdir -p ../star-backend/star-package && cp ../star-dist/target/spark-star-1.2.0-bin.tar.gz ../star-backend/star-package/ && cp -r ../star-dist/src/main/bin ../star-backend/star-package/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
