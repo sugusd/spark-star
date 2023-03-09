@@ -82,8 +82,6 @@
                                 <argument>build</argument>
                                 <argument>-t</argument>
                                 <argument>isxcode/spark-star:${parent.version}</argument>
-                                <argument>-f</argument>
-                                <argument>../Dockerfile</argument>
                                 <argument>.</argument>
                             </arguments>
                         </configuration>

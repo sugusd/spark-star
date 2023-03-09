@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -12,18 +12,18 @@
         <relativePath/>
     </parent>
 
-	<groupId>com.isxcode.star</groupId>
-	<artifactId>spark-star-parent</artifactId>
-	<version>1.2.0</version>
-	<name>spark-star</name>
-	<description>spark-star</description>
-	<packaging>pom</packaging>
+    <groupId>com.isxcode.star</groupId>
+    <artifactId>spark-star-parent</artifactId>
+    <version>1.2.0</version>
+    <name>spark-star</name>
+    <description>spark-star</description>
+    <packaging>pom</packaging>
 
-	<modules>
+    <modules>
         <module>star-api</module>
         <module>star-common</module>
         <module>star-client</module>
-		<module>star-server</module>
+        <module>star-server</module>
         <module>star-plugins</module>
         <module>star-dist</module>
         <module>star-local-test</module>

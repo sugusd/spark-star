@@ -1,10 +1,7 @@
 FROM openjdk:8
 
-WORKDIR ../spark-star
-
 # 拷贝安装包
-COPY ./star-dist/src/main/bin /star-package
-COPY ./star-dist/target/spark-star-1.2.0-bin.tar.gz /star-package
+COPY star-package /star-package
 
 # 后端
 COPY ./target/star-backend-1.2.0.jar /star-backend.jar
@@ -18,4 +15,4 @@ RUN echo 'java -jar /star-backend.jar --spring.profiles.active=prod' >> /start.s
 CMD [ "sh","/start.sh" ]
 
 # docker build -t isxcode/spark-star:0.0.1 -f ./Dockerfile  .
-# docker run --restart=always --name spark-star -p 30111:8080 -v /Users/ispong/h2:/star-data -d isxcode/spark-star:0.0.1
+# docker run -p 30111:8080 -v /Users/ispong/data/star-data:/star-data -d isxcode/spark-star:0.0.1
