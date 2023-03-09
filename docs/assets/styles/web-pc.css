@@ -1,6 +1,6 @@
 :root {
     --nav-height: 3.8rem;
-    --nav-img-height: 3.6rem;
+    --nav-img-height: 3rem;
     --per-card-height: 100vh;
     --per-card-width: 95vw;
     --per-card-padding-top: 15vh;
@@ -38,8 +38,13 @@
 
 #logo-img {
     height: var(--nav-img-height);
+    line-height: var(--nav-img-height);
     width: 7.2rem;
+    background: black;
+    border-radius: 10px;
     cursor: pointer;
+    color: white;
+    font-size: 1.5rem;
 }
 
 #web-nav-ul {
