@@ -3,7 +3,7 @@ name: deploy blogs
 on:
   push:
     branches:
-      - main
+      - demo
 
 env:
   REGISTRY: registry.cn-hongkong.aliyuncs.com
