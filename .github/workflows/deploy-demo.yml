@@ -26,7 +26,6 @@ jobs:
       matrix:
         language:
           - javascript
-          - java
         node:
           - '16'
 
