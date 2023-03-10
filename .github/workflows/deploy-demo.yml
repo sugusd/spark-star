@@ -1,25 +1,113 @@
-name: deploy website
+name: deploy demo
 
 on:
   push:
     branches:
-      - dev
+      - main
+
+env:
+  REGISTRY: registry.cn-hongkong.aliyuncs.com
+  IMAGE_NAME: isxcode/zhiqingyun
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  JDK_VERSION: 8.0.232
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript
+          - java
+        node:
+          - '16'
 
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v3
+        id: npm-cache
         with:
-            host: isxcode.com
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets.PASSWORD }}
-            rm: true
-            source: "./docs"
-            target: "/data/spark-star/"
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Npm install
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+        run: |
+          cd star-website
+          npm install
+          npm run build
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt-hotspot'
+          java-version: ${{ env.JDK_VERSION }}
+
+      - name: Build with Maven
+        run: |
+          mvn package -pl star-website -DskipTests
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: deploy
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: isxcode.com
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script_stop: false
+          script: |
+            docker stop zhiqingyun-demo
+            docker rm zhiqingyun-demo
+            docker rmi ${{ steps.meta.outputs.tags }}
+            docker pull ${{ steps.meta.outputs.tags }}
+            docker run --restart=always --name zhiqingyun-demo -p 30211:8080 -d ${{ steps.meta.outputs.tags }}
