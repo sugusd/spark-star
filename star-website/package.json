@@ -29,10 +29,7 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-      "rules": {
-          "no-undef": "off",
-          "no-restricted-globals": "off",
+    ],"rules": {
           "no-unused-vars": "off"
       }
   },
