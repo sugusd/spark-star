@@ -52,10 +52,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-        run: |
-          cd star-website
-          npm install
-          npm run build
 
       - name: Cache local Maven repository
         uses: actions/cache@v3
@@ -73,7 +69,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn package -pl star-website -DskipTests
+          mvn package -DskipTests
 
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
