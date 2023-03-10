@@ -1,10 +1,11 @@
 FROM openjdk:8
 
 # 拷贝安装包
-COPY star-package /star-package
+COPY ./star-dist/src/main/bin  /star-package/
+COPY ./star-dist/target/spark-star-1.2.0-bin.tar.gz /star-package/
 
 # 后端
-COPY ./target/star-backend-1.2.0.jar /star-backend.jar
+COPY ./star-backend/target/star-backend-1.2.0.jar /star-backend.jar
 
 VOLUME ["/star-data"]
 
