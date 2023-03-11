@@ -154,7 +154,7 @@ function App() {
 
     const {control, handleSubmit, reset} = useForm({});
 
-    const onSubmit = (data) => {
+    const onSubmit = (data:any) => {
 
         axios({
             method: 'post',

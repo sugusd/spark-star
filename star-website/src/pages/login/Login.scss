@@ -1,0 +1,54 @@
+.login-div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 600px;
+    width: 400px;
+}
+
+.logo-img {
+    background: black;
+    width: 10rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    border-radius: 1rem;
+    margin: 5rem auto 7rem;
+    cursor: pointer;
+}
+
+.login-input {
+    display: block;
+    width: 70%;
+    height: 1.5rem;
+    margin: 2rem auto auto;
+    border: none;
+    border-bottom: black solid 1px;
+    outline: none;
+    text-indent: 5px;
+    font-size: 1rem;
+}
+
+.login-btn {
+    display: block;
+    width: 6rem;
+    background: none;
+    border: none;
+    margin: 3rem auto auto;
+    font-size: 2rem;
+    cursor: pointer;
+    &:hover {
+        border: none;
+    }
+}
+
+.welcome-font {
+    font-size: 0.8rem;
+    color: grey;
+    text-align: center;
+    width: 100%;
+    margin: 6rem auto auto;
+}

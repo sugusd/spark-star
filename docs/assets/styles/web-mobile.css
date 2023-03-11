@@ -26,6 +26,9 @@
 
     #web-content-show-shell {
         width: 90%;
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
     }
 
     #web-content-function-ul {
