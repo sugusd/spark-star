@@ -6,8 +6,7 @@ import {Link, LinkProps, Outlet, useMatch, useNavigate, useResolvedPath} from "r
 
 function CustomLink({ children, to, ...props }: LinkProps) {
     let resolved = useResolvedPath(to);
-    let match = useMatch({ path: resolved.pathname, end: true });
-
+    let match = useMatch({path: resolved.pathname + "*", end: true });
     return (
         <li>
             <Link
@@ -40,7 +39,7 @@ function Index() {
             <div className={"index-menu"}>
                 <ul className={"index-menu-ul"}>
                     <CustomLink to="/monitor">
-                        健康中心
+                        监控中心
                     </CustomLink>
                     <CustomLink to="/project">
                         项目管理
@@ -50,9 +49,7 @@ function Index() {
                     }}>
                         计算集群
                     </CustomLink>
-                    <CustomLink to={"2"} onClick={() => {
-                        message.warning("请上传企业许可证！")
-                    }}>
+                    <CustomLink to={"/datasource"}>
                         数据源
                     </CustomLink>
                     <CustomLink to={"3"} onClick={() => {
@@ -93,7 +90,12 @@ function Index() {
                     <CustomLink to={"10"} onClick={() => {
                         message.warning("请上传企业许可证！")
                     }}>
-                        用户管理
+                        后台管理
+                    </CustomLink>
+                    <CustomLink to={"12"} onClick={() => {
+                        message.warning("请上传企业许可证！")
+                    }}>
+                        用户中心
                     </CustomLink>
                     <CustomLink to={"11"} onClick={() => {
                         message.warning("请上传企业许可证！")

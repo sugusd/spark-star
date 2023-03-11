@@ -1,0 +1,33 @@
+.datasource-nav {
+    height: 3rem;
+    border-bottom: black solid 2px;
+}
+
+.datasource-nav-ul {
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    & li {
+        font-size: 1rem;
+        height: 2rem;
+        line-height: 2rem;
+        width: 9rem;
+        text-align: center;
+        border-right: lightgray solid 3px;
+        & a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+}
+
+
+
+
+
+
