@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "dotenv -e ./config/.env.local webpack server --hot",
-    "build": "react-scripts build && rm -rf ../star-backend/src/main/resources/static && mv build/static ../star-backend/src/main/resources/ && rm -rf ../star-backend/src/main/resources/templates && mkdir -p ../star-backend/src/main/resources/templates && mv build/index.html ../star-backend/src/main/resources/templates/ && mv build/* ../star-backend/src/main/resources/static/",
+    "build": "dotenv -e ./config/.env.demo webpack && rm -rf ../star-backend/src/main/resources/static && mv build/static ../star-backend/src/main/resources/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

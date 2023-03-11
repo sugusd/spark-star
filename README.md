@@ -130,6 +130,14 @@ public class ExampleController {
 }
 ```
 
+#### Docker编译
+
+```bash
+mvn clean package -DskipTests
+docker build -t isxcode/spark-star:test .
+docker run -d isxcode/spark-star:test
+```
+
 ***
 
 **Thanks for free JetBrains Open Source license**

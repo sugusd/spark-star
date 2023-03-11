@@ -4,7 +4,7 @@ function Index() {
     return (
         <div className="App">
             <header className="App-header">
-                Index
+                欢迎使用至轻云大数据平台
             </header>
         </div>
     );

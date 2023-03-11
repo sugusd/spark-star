@@ -11,7 +11,7 @@ const config = {
     index: './src/index.tsx'
   },
   output: {
-    path: path.resolve(__dirname, "./build"),
+    path: path.resolve(__dirname, "./build/static"),
     publicPath: process.env.PUBLIC_PATH,
   },
   devServer: {
@@ -26,20 +26,23 @@ const config = {
     },
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
   },
-  plugins: [
-    // new CopyPlugin({
-    //   patterns: [
-    //     {from: './public/assert', to: './assert'},
-    //   ],
-    // }),
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    }),
-    new CleanWebpackPlugin(),
-    new Dotenv({
-      path: process.env.DOTENV_CONFIG,
-    })
-  ],
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {from: './public/static/favicon.png', to: '../static'},
+                {from: './public/static/manifest.json', to: '../static'},
+                {from: './public/static/robots.txt', to: '../static'},
+                {from: './public/index.html', to: '../templates'},
+            ],
+        }),
+        new HtmlWebpackPlugin({
+            template: './public/index.html'
+        }),
+        new CleanWebpackPlugin(),
+        new Dotenv({
+            path: process.env.DOTENV_CONFIG,
+        })
+    ],
   module: {
     rules: [
       {

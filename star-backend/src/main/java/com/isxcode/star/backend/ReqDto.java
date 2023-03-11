@@ -22,4 +22,8 @@ public class ReqDto {
     private String port;
 
     private String applicationId;
+
+    private String account;
+
+    private String age;
 }

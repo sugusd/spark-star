@@ -127,4 +127,13 @@ public class StarBackendApplication {
         return serverService.stopJob(reqDto);
     }
 
+    @PostMapping("/login")
+    public StarData login(@RequestBody ReqDto reqDto) {
+
+        if ("admin".equals(reqDto.getAccount()) && "ispong123".equals(reqDto.getPassword())) {
+            return StarData.builder().build();
+        }
+        throw new RuntimeException("登录失败");
+    }
+
 }
