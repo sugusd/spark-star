@@ -21,7 +21,6 @@
 
 .index-content {
     width: 85vw;
-    background: aqua;
     position: absolute;
     right: 0;
     height: 100vh;
@@ -66,6 +65,7 @@
     left: 0;
     height: 100vh;
     padding-top: 1rem;
+    border-right: black solid 2px;
 }
 
 .index-menu-ul {

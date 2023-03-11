@@ -20,7 +20,7 @@ function Login() {
         }).then(function (response) {
             message.success("登录成功").then(() => {});
             localStorage.setItem('Authorization', "true");
-            navigate("/index");
+            navigate("/");
         }).catch(function (error) {
             message.error(error.response.data.message).then(() => {});
             reset()
