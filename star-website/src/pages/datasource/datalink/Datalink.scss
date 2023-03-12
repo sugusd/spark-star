@@ -1,0 +1,99 @@
+.datalink-main {
+    height: 60vh;
+    width: 90%;
+    margin: auto;
+}
+
+.datalink-opt-div {
+    height: 2rem;
+    display: inline-flex;
+}
+
+.datalink-add-datasource-btn {
+    width: 8rem;
+    border: black solid 2px;
+    background: black;
+    color: white;
+    font-size: 0.9rem;
+    height: 2rem;
+}
+
+.datalink-search-div {
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.datalink-search-btn {
+    width: 4rem;
+    border: none;
+    background: black;
+    color: white;
+    font-size: 0.9rem;
+    height: 2rem;
+    margin-left: 1rem;
+}
+
+.datalink-search-input {
+    border: black solid 1px;
+    margin: 0 0 0 44rem;
+    width: 14rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+}
+
+.datalink-table-div {
+    margin-top: 1rem;
+}
+
+.datalink-table {
+    width: 100%;
+    border-collapse: collapse;
+    & tr {
+        border-bottom: #eceef5 solid 1px;
+        height: 40px;
+        text-align: left;
+    }
+    & td {
+        font-size: 0.9rem;
+    }
+    & td:first-child {
+        text-align: center;
+    }
+    & th:first-child {
+        text-align: center;
+    }
+    & td:nth-child(2) {
+        text-align: center;
+    }
+    & th:nth-child(2) {
+        text-align: center;
+    }
+    td:nth-child(6) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+    }
+}
+
+.datalink-table-head {
+    background: #f2f2f2;
+    height: 2.3rem;
+}
+
+.success-span {
+    color: #1E8E3E;
+}
+
+.error-span {
+    color: red;
+}
+
+.opt-a {
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+.page-div {
+
+}

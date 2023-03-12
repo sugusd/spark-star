@@ -9,7 +9,7 @@ function CustomLink({children, to, ...props}: LinkProps) {
     return (
         <li>
             <Link
-                className={match ? "1" : "2"}
+                className={match ? "active-link-x" : "un-active-link-x"}
                 to={to}
                 {...props}
                 onClick={props.onClick}

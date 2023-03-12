@@ -2,7 +2,7 @@ import React from 'react';
 import './index.scss'
 import {message} from "antd";
 import {Link, LinkProps, Outlet, useMatch, useNavigate, useResolvedPath} from "react-router-dom";
-
+import "./ant-design.scss"
 
 function CustomLink({ children, to, ...props }: LinkProps) {
     let resolved = useResolvedPath(to);
@@ -39,7 +39,7 @@ function Index() {
             <div className={"index-menu"}>
                 <ul className={"index-menu-ul"}>
                     <CustomLink to="/monitor">
-                        监控中心
+                        首页
                     </CustomLink>
                     <CustomLink to="/project">
                         项目管理

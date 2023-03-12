@@ -1,0 +1,15 @@
+.ant-space-item a {
+    color: black;
+}
+
+.ant-pagination-item-active {
+    border-color: black !important;
+    border-radius: 0 !important;
+    & a {
+        color: black !important;
+    }
+}
+
+.ant-pagination-item-ellipsis {
+
+}
