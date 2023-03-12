@@ -17,7 +17,7 @@ function CustomLink({children, to, ...props}: LinkProps) {
                 {children}
             </Link>
         </li>
-    );
+    )
 }
 function Datasource() {
     return <>
@@ -34,7 +34,7 @@ function Datasource() {
         <div className={"datasource-content"}>
             <Outlet/>
         </div>
-    </>;
+    </>
 }
 
 export default Datasource;

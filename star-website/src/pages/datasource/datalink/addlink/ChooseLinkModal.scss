@@ -1,0 +1,25 @@
+.choose-link-modal .ant-modal-body {
+    height: 300px;
+}
+
+.choose-link-div {
+    width: 90%;
+    height: 90%;
+    margin: 30px auto auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.datasource-type {
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+    border: black solid 2px;
+    font-size: 1.2rem;
+    &:hover {
+        background: black;
+        color: white;
+    }
+}

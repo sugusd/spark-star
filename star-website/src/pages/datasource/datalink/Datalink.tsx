@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Outlet} from "react-router-dom";
 import "./Datalink.scss"
-import {Space, Table} from "antd";
+import {Button, Input, Space, Table} from "antd";
 import {ColumnsType} from "antd/es/table";
-import {ChooseLinkModel} from "./addlink/ChooseLinkModel";
+import {ChooseLinkModal} from "./addlink/ChooseLinkModal";
 
 function Datalink() {
     interface DataType {
@@ -25,13 +25,14 @@ function Datalink() {
             title: '名称',
             dataIndex: 'address',
             key: '1',
-            width: 140,
+            fixed: 'left',
+            width: 60,
         },
         {
             title: '类型',
             dataIndex: 'address',
             key: '2',
-            width: 100,
+            width: 40,
         },
         {
             title: '连接信息',
@@ -43,25 +44,25 @@ function Datalink() {
             title: '备注',
             dataIndex: 'address',
             key: '4',
-            width: 150,
+            width: 100,
         },
         {
             title: '创建人',
             dataIndex: 'address',
             key: '5',
-            width: 150,
+            width: 60,
         },
         {
             title: '状态',
             dataIndex: 'address',
             key: '6',
-            width: 150,
+            width: 50,
         },
         {
             title: '操作',
             key: 'operation',
             fixed: 'right',
-            width: 140,
+            width: 90,
             render: (_: any, record: DataType) => <Space size="middle">
                 <a>删除</a>
                 <a>编辑</a>
@@ -79,36 +80,22 @@ function Datalink() {
         });
     }
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-
     const [isModalVisible, setIsModalVisible] = useState(false);
     const handleOk = () => setIsModalVisible(true);
     const handleCancel = () => setIsModalVisible(false);
 
-    return<>
+    return <>
         <div className={"datalink-main"}>
             <div className={"datalink-opt-div"}>
-                <button onClick={()=>handleOk()} className={"datalink-add-datasource-btn"}>添加数据源</button>
-                <div className={"datalink-search-div"}>
-                    <input className={"datalink-search-input"} placeholder={"名称/类型/连接信息/备注/创建人"}/>
-                    <button className={"datalink-search-btn"}>搜索</button>
-                </div>
+                <Button onClick={() => handleOk()} className={"datalink-add-datasource-btn"}>添加数据源</Button>
+                <Button className={"datalink-search-btn"}>搜索</Button>
+                <Input className={"datalink-search-input"} placeholder={"名称/类型/连接信息/备注/创建人"}/>
             </div>
             <div className={"datalink-table-div"}>
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
+                <Table columns={columns} dataSource={data} scroll={{x: 1500, y: 430}}/>
             </div>
         </div>
-        <ChooseLinkModel  handleCancel={handleCancel} handleOk={handleOk} isModalVisible={isModalVisible}/>
+        <ChooseLinkModal handleCancel={handleCancel} handleOk={handleOk} isModalVisible={isModalVisible}/>
     </>;
 }
 
