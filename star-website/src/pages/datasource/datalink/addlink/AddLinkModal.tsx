@@ -1,15 +1,64 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Input, Modal} from "antd";
+import React, {ReactNode, useEffect, useState} from 'react';
+import {Button, Form, Input, message, Modal, Tabs, TabsProps} from "antd";
 import './AddLinkModal.scss'
-import TextArea from "antd/es/input/TextArea";
 
 export const AddLinkModal = (
-  props: {
-    isModalVisible: any,
-    handleOk: any,
-    handleCancel: any
-  }
+    props: {
+        isModalVisible: any,
+        handleOk: any,
+        handleCancel: any
+    }
 ) => {
+
+    const onChange = (key: string) => {
+        console.log(key);
+    };
+
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: `基础`,
+            children: <>
+
+                <Form.Item label="Host:" name="username">
+                    <Input/>
+                </Form.Item>
+                <Form.Item label="Port:" name="username">
+                    <Input/>
+                </Form.Item>
+                <Form.Item label="Database:" name="username">
+                    <Input/>
+                </Form.Item>
+                <Form.Item label="Username:" name="username">
+                    <Input/>
+                </Form.Item>
+                <Form.Item label="Password:" name="username">
+                    <Input/>
+                </Form.Item>
+                <Form.Item label="Url:" name="username">
+                    <Input/>
+                </Form.Item>
+            </>,
+        },
+        {
+            key: '2',
+            label: `可选`,
+            children: "请上传企业许可证！",
+        },
+        {
+            key: '3',
+            label: `高级`,
+            children: "请上传企业许可证！",
+        },
+    ];
+
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
 
     return <>
         <Modal title="新建数据源"
@@ -17,49 +66,33 @@ export const AddLinkModal = (
                open={props.isModalVisible}
                onOk={props.handleOk}
                onCancel={props.handleCancel}
-               width={600}
-               className={"add-link-modal"}>
+               width={600}>
 
-            <div className={"add-datasource-div"}>
-                <div className={"source-host-div"}>
-                    <label className={"source-label"}>数据源名称:</label>
-                    <Input className={"link-name-input"}/>
-                </div>
-                <div className={"source-comment-div"}>
-                    <label className={"source-label"}>备注:</label>
-                    <TextArea className={"source-comment"}></TextArea>
-                </div>
-                <div className={"source-host-div"}>
-                    <label className={"source-label"}>Host:</label>
-                    <Input className={"link-name-input"}/>
-                    <label className={"source-label"}>Port:</label>
-                    <Input className={"link-name-input"}/>
-                </div>
-                <div className={"source-host-div"}>
-                    <label className={"source-label"}>Database:</label>
-                    <Input className={"link-name-input"}/>
-                    <a className={"advance-a"}>高级配置</a>
-                </div>
-                <div className={"source-host-div"}>
-                    <label className={"source-label"}>Username:</label>
-                    <Input className={"link-name-input"}/>
-                </div>
-                <div className={"source-host-div"}>
-                    <label className={"source-label"}>Password:</label>
-                    <Input className={"link-name-input"}/>
-                </div>
-                <div className={"source-host-div"}><label className={"source-label"}>Url:</label><Input
-                    className={"link-name-input-long"}/></div>
-                <div className={"test-click-div"}>
-                    <Button className={"test-link-btn"}>测试连接</Button>
-                    <Button className={"save-link-btn"} onClick={props.handleCancel}>保存</Button>
-                </div>
-                <div className={"link-log"}>
-                    连接日志
-                </div>
-            </div>
+            <Form labelCol={{span: 4}}
+                  wrapperCol={{span: 18}}
+                  style={{maxWidth: 600}}
+                  initialValues={{remember: true}}
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  autoComplete="off"
+            >
+                <Form.Item label="数据源名称" name="username">
+                    <Input/>
+                </Form.Item>
+
+                <Form.Item label="备注" name="password">
+                    <Input/>
+                </Form.Item>
+
+                <Tabs defaultActiveKey="1" items={items} onChange={onChange}/>
+
+                <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                    <Button type="primary">测试连接</Button>
+                    <Button type="primary" htmlType="submit" onClick={props.handleCancel}>保存</Button>
+                </Form.Item>
+            </Form>
         </Modal>;
-    </>
+    </>;
 };
 
 const todoReq = {

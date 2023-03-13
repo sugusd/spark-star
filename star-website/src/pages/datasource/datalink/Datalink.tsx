@@ -5,12 +5,17 @@ import {Button, Input, Space, Table} from "antd";
 import {ColumnsType} from "antd/es/table";
 import {ChooseLinkModal} from "./addlink/ChooseLinkModal";
 
+interface DataType {
+    key: React.Key;
+    name: string;
+    address: string;
+}
+
 function Datalink() {
-    interface DataType {
-        key: React.Key;
-        name: string;
-        address: string;
-    }
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleOk = () => setIsModalVisible(true);
+    const handleCancel = () => setIsModalVisible(false);
 
     const columns: ColumnsType<DataType> = [
         {
@@ -64,9 +69,9 @@ function Datalink() {
             fixed: 'right',
             width: 90,
             render: (_: any, record: DataType) => <Space size="middle">
-                <a>删除</a>
-                <a>编辑</a>
-                <a>检测</a>
+                <Button className={"text-btn"}>删除</Button>
+                <Button className={"text-btn"}>编辑</Button>
+                <Button className={"text-btn"}>检测</Button>
             </Space>,
         },
     ];
@@ -80,21 +85,13 @@ function Datalink() {
         });
     }
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const handleOk = () => setIsModalVisible(true);
-    const handleCancel = () => setIsModalVisible(false);
-
     return <>
-        <div className={"datalink-main"}>
-            <div className={"datalink-opt-div"}>
-                <Button onClick={() => handleOk()} className={"datalink-add-datasource-btn"}>添加数据源</Button>
-                <Button className={"datalink-search-btn"}>搜索</Button>
-                <Input className={"datalink-search-input"} placeholder={"名称/类型/连接信息/备注/创建人"}/>
-            </div>
-            <div className={"datalink-table-div"}>
-                <Table columns={columns} dataSource={data} scroll={{x: 1500, y: 430}}/>
-            </div>
-        </div>
+        <Space>
+            <Button type="primary" onClick={() => handleOk()}>添加数据源</Button>
+            <Input placeholder={"名称/类型/连接信息/备注/创建人"}/>
+            <Button type="primary" className={"datalink-search-btn"}>搜索</Button>
+        </Space>
+        <Table columns={columns} dataSource={data} scroll={{x: 1800, y: 400}}/>
         <ChooseLinkModal handleCancel={handleCancel} handleOk={handleOk} isModalVisible={isModalVisible}/>
     </>;
 }
