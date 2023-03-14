@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.util.UUID;
 @RequestMapping
 @SpringBootApplication
 @RequiredArgsConstructor
+@EnableJpaRepositories
+@EnableTransactionManagement
 public class StarBackendApplication {
 
     private final ServerService serverService;

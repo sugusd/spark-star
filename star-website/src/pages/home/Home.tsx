@@ -33,7 +33,7 @@ function Home() {
         {
             key: 5,
             label: '作业流',
-            onClick: () => message.warning("请上传企业许可证！")
+            onClick: () => navigate("/work")
         },
         {
             key: 6,

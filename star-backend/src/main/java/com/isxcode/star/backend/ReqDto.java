@@ -2,8 +2,12 @@ package com.isxcode.star.backend;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ReqDto {
+
+    private String id;
 
     private String name;
 
@@ -26,4 +30,10 @@ public class ReqDto {
     private String account;
 
     private String age;
+
+    private List<String> ids;
+
+    private String url;
+
+    private String type;
 }

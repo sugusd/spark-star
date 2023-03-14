@@ -7,6 +7,7 @@ import Project from "./pages/project/Project";
 import Datasource from "./pages/datasource/Datasource";
 import Datalink from "./pages/datasource/datalink/Datalink";
 import Driver from "./pages/datasource/driver/Driver";
+import Work from "./pages/work/Work";
 
 export default function App() {
     return <>
@@ -20,6 +21,7 @@ export default function App() {
                         <Route path={'/monitor'} element={<RequireAuth><Monitor/></RequireAuth>}/>
                         <Route path={'/project'} element={<RequireAuth><Project/></RequireAuth>}/>
                         <Route path={'/datasource'} element={<RequireAuth><Datasource/></RequireAuth>}/>
+                        <Route path={'/work'} element={<RequireAuth><Work/></RequireAuth>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

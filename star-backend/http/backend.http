@@ -1,0 +1,57 @@
+###
+POST http://localhost:8080/datasource/addDatasource
+Content-Type: application/json
+
+{
+    "name": "测试数据源3",
+    "type": "mysql8.29",
+    "url": "jdbc:mysql://121.89.247.94:30102/ispong_db?serverTimezone=Asia/Shanghai",
+    "username": "root",
+    "password": "Define123..."
+}
+
+###
+GET http://localhost:8080/datasource/queryDatasource
+
+
+###
+POST http://localhost:8080/datasource/delDatasource
+Content-Type: application/json
+
+{
+    "id": "98f0fb33-95aa-45c8-812f-216b6cd02252"
+}
+
+###
+POST http://localhost:8080/datasource/delDatasources
+Content-Type: application/json
+
+{
+    "ids": ["89aea5d7-9257-47ed-9e47-e7ff007bd40d",
+    "6f4da8d7-be97-45f2-80c4-58a076b1ddbb"]
+}
+
+###
+POST http://localhost:8080/datasource/updateDatasource
+Content-Type: application/json
+
+{
+    "id":"6f4da8d7-be97-45f2-80c4-58a076b1ddbb",
+    "name": "lisi"
+}
+
+###
+POST http://localhost:8080/datasource/getDatasource
+Content-Type: application/json
+
+{
+    "id":"3d35c229-2da1-49bc-9c79-5cfb8c309b81"
+}
+
+###
+POST http://localhost:8080/datasource/checkDatasource
+Content-Type: application/json
+
+{
+    "id":"26c8c372-e0f0-4bd4-b417-904f646532b5"
+}
